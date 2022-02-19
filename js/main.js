@@ -349,11 +349,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (guessedWord === currentWord) {
         gameOver = true;
-        updateWordIndex();
-        updateTotalGames();
-        updateStatsPostWin();
-        resetGameState();
-
         const interval = 2000;
         setTimeout(() => {
 
@@ -375,7 +370,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         setTimeout(() => {
           $('#alert').show();
-
+          updateWordIndex();
+          updateTotalGames();
+          updateStatsPostWin();
+          resetGameState();
         }, 3000);
 
         setTimeout(() => {
@@ -391,17 +389,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (guessedWords.length === 6 && guessedWord !== currentWord) {
         gameOver = true;
-        updateWordIndex();
-        updateTotalGames();
-        updateStatsPostLoss();
-        resetGameState();
 
         var popUp = document.getElementById('alert');
         popUp.textContent = `Ah...nerd...the word is ${currentWord.toUpperCase()}.`;
 
         setTimeout(() => {
           $('#alert').show();
-
+          updateWordIndex();
+          updateTotalGames();
+          updateStatsPostLoss();
+          resetGameState();
           return;
         }, 2000);
       }
