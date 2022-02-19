@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let guessedWords = [[]];
 
   let gameOver = false;
+  let typingDisabled = false;
 
   const words = ['teamo', 'goofy', 'erupt', 'rodya', 'yemms', 'wilde', 'lodge',
   'oingo', 'koala', 'spicy', 'mynah', 'lemon', 'stews', 'oscar', 'volvo', 'gecko',
@@ -318,6 +319,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       window.localStorage.setItem("availableSpace", availableSpace);
 
+      typingDisabled = true;
+
       const interval = 400;
       currentWordArr.forEach((letter, index) => {
         setTimeout(() => {
@@ -339,6 +342,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }, index * interval);
       });
+
+      typingDisabled = false;
 
       guessedWordCount += 1;
       window.localStorage.setItem('guessedWordCount', guessedWordCount);
@@ -445,7 +450,7 @@ document.addEventListener("DOMContentLoaded", () => {
       keys[i].addEventListener("click", ({ target }) => {
         const key = target.getAttribute("data-key");
 
-        if (gameOver) {
+        if (gameOver || typingDisabled) {
           return;
         }
 
@@ -481,7 +486,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const name = event.key;
         const code = event.code;
 
-        if (gameOver) {
+        if (gameOver || typingDisabled) {
           return;
         }
 
