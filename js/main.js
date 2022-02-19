@@ -338,12 +338,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
           if (index === 4) {
             preserveGameState();
+            typingDisabled = false;
           }
 
         }, index * interval);
       });
-
-      typingDisabled = false;
 
       guessedWordCount += 1;
       window.localStorage.setItem('guessedWordCount', guessedWordCount);
