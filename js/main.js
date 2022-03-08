@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let typingDisabled = false;
 
   const words = ['teamo', 'goofy', 'erupt', 'rodya', 'yemms', 'wilde', 'lodge',
-  'oingo', 'koala', 'spicy', 'mynah', 'lemon', 'stews', 'zebra', 'gecko', 'birds',
+  'oingo', 'koala', 'spicy', 'mynah', 'lemon', 'stews', 'zebra', 'gecko', 'dandy', 'lions',
   'black', 'widow', 'thing', 'penne', 'treks', 'water', 'hippo', 'bathe', 'cygne',
   'sudsy', 'bones', 'hammy', 'ikeas', 'smirk', 'chefs', 'croak', 'rhino', 'banan',
   'moist', 'peach', 'smack', 'baker', 'thigh', 'yoked', 'shark', 'goose', 'cream',
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   'mouth', 'durak', 'besar', 'alexb', 'lubed', 'masks', 'larry', 'crisp', 'queen',
   'speed', 'ucute', 'snowy', 'toads', 'umami', 'spoon', 'tanks', 'meaty', 'thong',
   'dream', 'movie', 'boxer', 'pants', 'hotty', 'baths', 'heart', 'jazzy', 'sucks',
-  'berry', 'curly', 'beach', 'caddy', 'froze', 'sweet', 'cheek', 'fuzzy',
+  'berry', 'curly', 'beach', 'caddy', 'froze', 'sweet', 'cheek', 'fuzzy', 'birds',
   'teach', 'balls', 'latte', 'pasta', 'goats', 'hairy', 'rohan', 'geese', 'flick',
   'dinos', 'booty', 'tippy', 'beast', 'tacos', 'dates', 'boobs', 'mrsir',
   'bajet', 'dante', 'snack', 'sushi', 'egret', 'burds', 'trips', 'pizza', 'apish',
