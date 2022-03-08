@@ -14,25 +14,24 @@ document.addEventListener("DOMContentLoaded", () => {
   'black', 'widow', 'thing', 'penne', 'treks', 'water', 'hippo', 'bathe', 'cygne',
   'sudsy', 'bones', 'hammy', 'ikeas', 'smirk', 'chefs', 'croak', 'rhino', 'banan',
   'moist', 'peach', 'smack', 'baker', 'thigh', 'yoked', 'shark', 'goose', 'cream',
-  'mamme', 'erics', 'horny', 'shave', 'ocean', 'frogs', 'tasty', 'crack',
+  'mamme', 'erics', 'horny', 'shave', 'ocean', 'frogs', 'tasty', 'crack', 'titty', 'mamag',
   'quack', 'beard', 'cutie', 'beaky', 'dicks', 'vodka', 'fruit', 'salad', 'pipes',
   'gnome', 'tales', 'shrek', 'froth', 'honey', 'chair', 'booby', 'crave', 'stump',
   'train', 'lemot', 'monks', 'brain', 'freud', 'plane', 'beefy', 'dhruv', 'bisou',
-  'merci', 'views', 'thick', 'grabs', 'bosom', 'kiwis', 'throb', 'witty', 'belle',
-  'meals', 'mummy', 'quake', 'south', 'naked', 'tight', 'feast', 'peaky',
+  'views', 'thick', 'bosom', 'kiwis', 'throb', 'witty', 'belle', 'beans', 'choke',
+  'mummy', 'quake', 'south', 'naked', 'tight', 'feast', 'peaky', 'juicy', 'crepe',
   'lorax', 'chimp', 'quads', 'ponds', 'stats', 'books', 'glove', 'frome', 'angel',
   'smile', 'cooks', 'blind', 'shred', 'apple', 'bball', 'spank', 'lists', 'sleep',
   'mouth', 'durak', 'besar', 'alexb', 'lubed', 'masks', 'larry', 'crisp', 'queen',
   'speed', 'ucute', 'snowy', 'toads', 'umami', 'spoon', 'tanks', 'meaty',
   'dream', 'movie', 'boxer', 'pants', 'hotty', 'baths', 'heart', 'jazzy', 'sucks',
   'berry', 'curly', 'beach', 'caddy', 'froze', 'sweet', 'cheek', 'fuzzy',
-  'teach', 'balls', 'latte', 'pasta', 'goats', 'hairy', 'rohan',
+  'teach', 'balls', 'latte', 'pasta', 'goats', 'hairy', 'rohan', 'geese', 'flick',
   'dinos', 'booty', 'tippy', 'beast', 'tacos', 'dates', 'boobs', 'mrsir',
   'bajet', 'dante', 'snack', 'sushi', 'egret', 'burds', 'trips', 'pizza', 'apish',
   'cados', 'quaad', 'socks', 'track', 'vlogs', 'snail', 'grape', 'notes', 'razor',
-  'babka', 'llama', 'dapup', 'titty', 'mamag', 'poems', 'geese', 'flick',
-  'walks', 'yemen', 'bikes', 'throw', 'shake', 'juicy', 'licks',
-  'beans', 'choke', 'crepe', 'soaks', 'nerds'];
+  'babka', 'llama', 'dapup', 'poems', 'walks', 'yemen', 'bikes', 'throw', 'shake',
+  'licks', 'soaks', 'nerds'];
 
   let currentWord = words[currentWordIndex];
 
