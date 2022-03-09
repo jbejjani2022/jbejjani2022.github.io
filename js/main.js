@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const words = ['teamo', 'goofy', 'erupt', 'rodya', 'yemms', 'wilde', 'lodge',
   'oingo', 'koala', 'spicy', 'mynah', 'lemon', 'stews', 'zebra', 'gecko', 'dandy', 'lions',
   'black', 'widow', 'thing', 'penne', 'treks', 'water', 'hippo', 'bathe', 'cygne',
-  'sudsy', 'bones', 'hammy', 'ikeas', 'smirk', 'chefs', 'croak', 'rhino', 'banan',
+  'sudsy', 'bones', 'hammy', 'ikeas', 'smirk', 'chefs', 'croak', 'rhino', 'banan', 'grego',
   'moist', 'peach', 'smack', 'baker', 'thigh', 'yoked', 'shark', 'goose', 'cream',
   'mamme', 'erics', 'horny', 'shave', 'ocean', 'frogs', 'tasty', 'crack', 'titty', 'mamag',
   'quack', 'beard', 'cutie', 'beaky', 'dicks', 'vodka', 'fruit', 'salad', 'pipes',
