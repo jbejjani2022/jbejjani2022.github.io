@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   'oingo', 'koala', 'spicy', 'mynah', 'lemon', 'stews', 'zebra', 'gecko', 'dandy', 'lions',
   'thing', 'thong', 'black', 'widow', 'frome', 'penne', 'treks', 'water', 'bathe', 'cygne',
   'sudsy', 'bathe', 'bones', 'hammy', 'ikeas', 'croak', 'rhino', 'banan', 'grego', 'hippo', 'chefs',
-  'moist', 'peach', 'smack', 'baker', 'thigh', 'yoked', 'shark', 'goose', 'cream',
+  'peach', 'smack', 'baker', 'thigh', 'yoked', 'shark', 'goose', 'cream',
   'mamme', 'erics', 'horny', 'shave', 'ocean', 'frogs', 'tasty', 'crack', 'titty', 'mamag',
   'quack', 'beard', 'cutie', 'beaky', 'dicks', 'vodka', 'fruit', 'salad', 'pipes',
   'gnome', 'tales', 'shrek', 'froth', 'honey', 'chair', 'booby', 'crave', 'stump',
