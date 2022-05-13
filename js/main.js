@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const words = ['titty', 'mamag',
   'quack', 'beard', 'cutie', 'beaky', 'dicks', 'vodka', 'fruit', 'salad', 'pipes',
-  'gnome', 'tales', 'shrek', 'froth', 'honey', 'chair', 'booby', 'crave', 'stump',
+  'gnome', 'tales', 'shrek', 'froth', 'chair', 'booby', 'crave', 'stump', 'maman',
   'train', 'lemot', 'monks', 'brain', 'freud', 'plane', 'beefy', 'dhruv', 'bisou',
   'views', 'thick', 'bosom', 'kiwis', 'throb', 'witty', 'belle', 'beans', 'choke',
   'mummy', 'quake', 'south', 'naked', 'tight', 'feast', 'peaky', 'juicy', 'crepe',
