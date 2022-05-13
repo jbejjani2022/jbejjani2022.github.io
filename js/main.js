@@ -9,12 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let gameOver = false;
   let typingDisabled = false;
 
-  const words = ['teamo', 'goofy', 'erupt', 'rodya', 'yemms', 'wilde', 'lodge',
-  'oingo', 'koala', 'spicy', 'mynah', 'lemon', 'stews', 'zebra', 'gecko', 'dandy', 'lions',
-  'thing', 'thong', 'black', 'widow', 'frome', 'penne', 'treks', 'water', 'bathe', 'cygne',
-  'sudsy', 'bathe', 'bones', 'hammy', 'ikeas', 'croak', 'rhino', 'banan', 'grego', 'hippo', 'chefs',
-  'moist', 'peach', 'smack', 'baker', 'thigh', 'yoked', 'shark', 'goose', 'cream',
-  'mamme', 'erics', 'horny', 'shave', 'ocean', 'frogs', 'tasty', 'crack', 'titty', 'mamag',
+  const words = ['titty', 'mamag',
   'quack', 'beard', 'cutie', 'beaky', 'dicks', 'vodka', 'fruit', 'salad', 'pipes',
   'gnome', 'tales', 'shrek', 'froth', 'honey', 'chair', 'booby', 'crave', 'stump',
   'train', 'lemot', 'monks', 'brain', 'freud', 'plane', 'beefy', 'dhruv', 'bisou',
@@ -31,11 +26,18 @@ document.addEventListener("DOMContentLoaded", () => {
   'bajet', 'dante', 'snack', 'sushi', 'egret', 'burds', 'trips', 'pizza', 'apish',
   'cados', 'quaad', 'socks', 'track', 'vlogs', 'snail', 'grape', 'notes', 'razor',
   'babka', 'llama', 'dapup', 'poems', 'walks', 'yemen', 'bikes', 'throw', 'shake',
-  'licks', 'soaks', 'nerds'];
+  'licks', 'soaks', 'nerds',
+  'teamo', 'goofy', 'erupt', 'rodya', 'yemms', 'wilde', 'lodge',
+  'oingo', 'koala', 'spicy', 'mynah', 'lemon', 'stews', 'zebra', 'gecko', 'dandy', 'lions',
+  'thing', 'thong', 'black', 'widow', 'frome', 'penne', 'treks', 'water', 'bathe', 'cygne',
+  'sudsy', 'bathe', 'bones', 'hammy', 'ikeas', 'croak', 'rhino', 'banan', 'grego', 'hippo', 'chefs',
+  'moist', 'peach', 'smack', 'baker', 'thigh', 'yoked', 'shark', 'goose', 'cream',
+  'mamme', 'erics', 'horny', 'shave', 'ocean', 'frogs', 'tasty', 'crack'];
 
   let currentWord = words[currentWordIndex];
 
   initLocalStorage();
+  fixStats();
   initHelpModal();
   initStatsModal();
   createSquares();
@@ -253,6 +255,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     else {
       window.localStorage.setItem('currentWordIndex', currentWordIndex + 1);
+    }
+  }
+
+  function fixStats() {
+    const totalGames = window.localStorage.getItem('totalGames') || 0;
+    if (totalGames < 50) {
+      window.localStorage.setItem('totalGames', 56);
+      window.localStorage.setItem('totalWins', 56);
+      window.localStorage.setItem('currentStreak', 56);
+
     }
   }
 
