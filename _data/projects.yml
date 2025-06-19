@@ -1,0 +1,49 @@
+- title: "The Golden Arm"
+  category: engineering
+  description: "The <a href='https://goldenarmtheater.com'>official web app</a> for Harvard's student-run movie theater, with a custom admin content management system, seat booking, archives, a merch shop, and more."
+  url: "https://github.com/jbejjani2022/golden-arm"
+
+- title: "SlavicGPT"
+  category: engineering
+  description: "Building, training, and fine-tuning of GPTs on Russian text and Slavic literature scraped from the web, from scratch."
+  url: "https://github.com/jbejjani2022/SlavicGPT"
+
+- title: "VioLibrary"
+  category: engineering
+  description: "A web app for searching violin recital repertoire, discovering new pieces via personalized recommendations, and building recital programs."
+  url: "https://github.com/jbejjani2022/VioLibrary"
+
+- title: "MiniDiffusion"
+  category: engineering
+  description: "A PyTorch implementation of a diffusion model for image generation. Experiments done using MNIST and CIFAR-10 datasets, with results from the learned denoising process."
+  url: "https://github.com/jbejjani2022/MiniDiffusion"
+
+- title: "bardle"
+  category: engineering
+  description: "A Shakespearean wordle with the Bard reacting as you play."
+  url: "https://jbejjani2022.github.io/bardle/"
+
+- title: "SnakeCube"
+  category: engineering
+  description: "The classic 'Snake' game reimagined onto the 3D playing field of a self-contained, rotation-controlled LED cube."
+  url: "https://github.com/jbejjani2022/SnakeCube"
+
+- title: "MiniML"
+  category: engineering
+  description: "A series of OCaml metacircular interpreters manifesting varying semantics."
+  url: "https://github.com/jbejjani2022/MiniML"
+
+- title: "Prune As You Tune: LoRA-Enabled Model Compression"
+  category: research
+  description: "Prune As You Tune (PAYT) interleaves pruning of pre-trained parameters with LoRA fine-tuning updates guided by a custom knowledge distillation loss function. PAYT can achieve up to 50% sparsity with minimal accuracy degradation and lower perplexity on the original task compared to baselines such as full fine-tuning and prune-then-fine-tune methods."
+  url: "https://github.com/jbejjani2022/prune-as-you-tune"
+
+- title: "Explain This, Pruner! The Effect of Zero-Order Pruning on LLM Explainability and Curvature"
+  category: research
+  description: "An investigation of the effect of neural network pruning on the explainability of LLMs, with the goal of understanding how model compression techniques may affect AI interpretability."
+  url: "https://github.com/camilobrownpinilla/Explain-This-Pruner"
+
+- title: "Large Motion Diffusion Models"
+  category: research
+  description: "Training and evaluation of diffusion models on the AddBiomechanics dataset for generating sequences of human motion."
+  url: "https://github.com/jbejjani2022/InferBiomechanics" 

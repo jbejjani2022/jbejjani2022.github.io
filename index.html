@@ -1,4 +1,90 @@
 ---
-layout: home
+layout: single
 author_profile: true
+classes: wide
 ---
+
+<style>
+.all-posts-link {
+  text-decoration: none;
+  font-size: 0.8em;
+}
+
+.all-posts-link:hover {
+  text-decoration: underline;
+}
+
+.project-section {
+  margin-bottom: 2em;
+}
+
+.project-item {
+  margin-bottom: 1.5em;
+}
+
+.project-title {
+  margin-bottom: 0.3em;
+}
+
+.project-description {
+  margin-bottom: 0.5em;
+}
+
+</style>
+
+<h2>About</h2>
+
+<p>I am an undergraduate at Harvard University studying computer science and statistics.</p>
+
+<h2>Engineering</h2>
+<div class="project-section">
+  {% assign engineering_projects = site.data.projects | where: "category", "engineering" %}
+  {% for project in engineering_projects limit:3 %}
+    <div class="project-item">
+      <h3 class="project-title">
+        {% if project.url %}
+          <a href="{{ project.url }}">{{ project.title }}</a>
+        {% else %}
+          {{ project.title }}
+        {% endif %}
+      </h3>
+      <div class="project-description">
+        {{ project.description }}
+      </div>
+    </div>
+  {% endfor %}
+  <div style="margin-top: 10px;">
+    <a href="/projects/#engineering-projects" class="all-posts-link">See All</a>
+  </div>
+</div>
+
+<h2>Research</h2>
+<div class="project-section">
+  {% assign research_projects = site.data.projects | where: "category", "research" %}
+  {% for project in research_projects limit:3 %}
+    <div class="project-item">
+      <h3 class="project-title">
+        {% if project.url %}
+          <a href="{{ project.url }}">{{ project.title }}</a>
+        {% else %}
+          {{ project.title }}
+        {% endif %}
+      </h3>
+      <div class="project-description">
+        {{ project.description }}
+      </div>
+    </div>
+  {% endfor %}
+  <div style="margin-top: 10px;">
+    <a href="/projects/#research-projects" class="all-posts-link">See All</a>
+  </div>
+</div>
+
+<h2>Recent Posts</h2>
+{% for post in site.posts limit:3 %}
+  {% include archive-single.html %}
+{% endfor %}
+
+<div style="margin-top: 20px;">
+  <a href="/blog/" class="all-posts-link">All Posts</a>
+</div>
