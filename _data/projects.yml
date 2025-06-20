@@ -5,7 +5,7 @@
 
 - title: "SlavicGPT"
   category: engineering
-  description: "Building, training, and fine-tuning of GPTs on Russian text and Slavic literature scraped from the web, from scratch."
+  description: "Building, training, and fine-tuning of GPTs on Russian text and Slavic literature scraped from the web."
   url: "https://github.com/jbejjani2022/SlavicGPT"
 
 - title: "VioLibrary"

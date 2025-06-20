@@ -6,35 +6,40 @@ classes: wide
 
 <style>
 .all-posts-link {
-  text-decoration: none;
-  font-size: 0.8em;
+  margin-top: 1.5em;
+  font-size: 0.9em;
 }
 
-.all-posts-link:hover {
+.all-posts-link a {
+  text-decoration: none;
+}
+
+.all-posts-link a:hover {
   text-decoration: underline;
 }
 
-.project-section {
-  margin-bottom: 2em;
+.about-section a {
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
 }
 
-.project-item {
-  margin-bottom: 1.5em;
-}
-
-.project-title {
-  margin-bottom: 0.3em;
-}
-
-.project-description {
-  margin-bottom: 0.5em;
+.about-section a:hover {
+  text-decoration: none;
 }
 
 </style>
 
 <h2>About</h2>
 
-<p>I am an undergraduate at Harvard University studying computer science and statistics.</p>
+<div class="about-section">
+<p>I study computer science and statistics at <a href="https://www.harvard.edu">Harvard University</a>. I am passionate about developing and understanding AI, building applications, and creating value from data. I love <a href="/music/">music</a> and <a href="/misc/">language</a>, too.</p>
+    
+<p>I am an undergraduate AI researcher at the <a href="https://kempnerinstitute.harvard.edu">Kempner Institute</a>, where I am working on multi-agent reasoning with language models under <a href="https://yilundu.github.io">Prof. Yilun Du</a> and <a href="https://shamulent.github.io">Prof. Sham Kakade</a>. I am also collaborating with Research Fellow <a href="https://kempnerinstitute.harvard.edu/people/our-people/aaron-walsman/">Aaron Walsman</a> to build <a href="https://github.com/aaronwalsman/mechagogue">mechagogue</a>, a pedagogical Reinforcement Learning repository with implementations of classical algorithms in JAX.</p>
+
+<p>Currently, I am a software engineer in Institutional Securities Technology at Morgan Stanley. During the year, I direct full-stack development at <a href="https://www.thecrimson.com">The Harvard Crimson</a>. You can also find me with the <a href="https://bachsocietyorchestra.org">Bach Society Orchestra</a>.</p>
+
+<p>Previously, I was a Machine Learning Engineer Intern at <a href="https://www.fadel.com">FADEL</a> and an AI Research Intern at the <a href="https://sladelab.seas.harvard.edu/">Slade Lab</a>.</p>
+</div>
 
 <h2>Engineering</h2>
 <div class="project-section">
@@ -53,8 +58,8 @@ classes: wide
       </div>
     </div>
   {% endfor %}
-  <div style="margin-top: 10px;">
-    <a href="/projects/#engineering-projects" class="all-posts-link">See All</a>
+  <div class="all-posts-link">
+    <a href="/projects/#engineering-projects">See All</a>
   </div>
 </div>
 
@@ -75,8 +80,8 @@ classes: wide
       </div>
     </div>
   {% endfor %}
-  <div style="margin-top: 10px;">
-    <a href="/projects/#research-projects" class="all-posts-link">See All</a>
+  <div class="all-posts-link">
+    <a href="/projects/#research-projects">See All</a>
   </div>
 </div>
 
@@ -85,6 +90,6 @@ classes: wide
   {% include archive-single.html %}
 {% endfor %}
 
-<div style="margin-top: 20px;">
-  <a href="/blog/" class="all-posts-link">All Posts</a>
+<div class="all-posts-link">
+  <a href="/blog/">See All</a>
 </div>
