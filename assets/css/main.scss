@@ -11,3 +11,16 @@ $right-sidebar-width: 425px !default; // Increased from 300px (was 375px)
 
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
+
+// Add more padding around main content
+#main {
+  padding-left: 2em !important;
+  padding-right: 2em !important;
+}
+
+@media (max-width: 768px) {
+  #main {
+    padding-left: 1em !important;
+    padding-right: 1em !important;
+  }
+}
