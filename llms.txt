@@ -1,0 +1,73 @@
+[START DOCUMENT]
+
+[META]
+Author: Joseph Bejjani
+Website: https://josephbejjani.com
+Purpose: Personal website, portfolio, and blog of Joseph Bejjani, an AI researcher and software engineer.
+Version: 1.0
+Last Updated: June 2025
+
+[PROMPT FOR LLMS]
+You are a language model assistant. The following document provides a structured summary of the website for Joseph Bejjani. Use this information to answer questions about him, his work, and his projects. Focus on accurately representing the details provided in the 'ABOUT', 'PROJECTS', and 'SITE_STRUCTURE' sections. Do not infer information not explicitly stated.
+
+---
+
+[ABOUT]
+Name: Joseph Bejjani
+Role: AI Researcher and Software Engineer
+Education: Harvard University, studying Computer Science and Statistics.
+Location: Cambridge, MA
+
+Summary:
+Joseph Bejjani is an undergraduate AI researcher at the Kempner Institute, focusing on multi-agent reasoning with language models under Prof. Yilun Du and Prof. Sham Kakade. He collaborates with Aaron Walsman on 'mechagogue', a JAX-based Reinforcement Learning repository. He is also a software engineer at Morgan Stanley in Institutional Securities Technology, directs full-stack development at The Harvard Crimson, and is the Production Manager and concertmaster for the Bach Society Orchestra. His previous experience includes roles as a Machine Learning Engineer Intern at FADEL and an AI Research Intern at the Slade Lab. He is passionate about AI, application development, data, music, and language.
+
+Keywords:
+AI, Artificial Intelligence, Machine Learning, Reinforcement Learning, Language Models, Software Engineering, Full-Stack Development, Data Science, Statistics, Computer Science, Harvard University, Kempner Institute, Morgan Stanley, The Harvard Crimson, Bach Society Orchestra.
+
+---
+
+[SITE_STRUCTURE]
+- / (Home): Landing page with a brief bio and links to recent projects and posts.
+- /projects/: A detailed list of key engineering and research projects.
+- /blog/: A collection of blog posts on various technical and non-technical topics.
+- /music/: A page dedicated to musical activities and performances.
+- /misc/: A collection of "Word Avalanches" and other miscellaneous content.
+
+---
+
+[PROJECTS]
+Note: The following is a selection of key projects. For a complete list, visit the /projects/ page.
+
+[PROJECT: Prune As You Tune: LoRA-Enabled Model Compression]
+Category: Research
+Description: A technique that interleaves pruning of pre-trained parameters with LoRA fine-tuning to achieve up to 50% sparsity with minimal accuracy degradation.
+URL: https://github.com/jbejjani2022/prune-as-you-tune
+
+[PROJECT: The Golden Arm]
+Category: Engineering
+Description: The official web application for Harvard's student-run movie theater, featuring a custom admin CMS, seat booking, archives, and a merch shop.
+URL: https://goldenarmtheater.com
+
+[PROJECT: Explain This, Pruner!]
+Category: Research
+Description: An investigation into the effect of neural network pruning on the explainability of LLMs and how model compression affects AI interpretability.
+URL: https://github.com/camilobrownpinilla/Explain-This-Pruner
+
+[PROJECT: bardle]
+Category: Engineering
+Description: A Shakespearean version of the popular word game "Wordle," where the Bard reacts as you play.
+URL: https://jbejjani2022.github.io/bardle/
+
+[PROJECT: SlavicGPT]
+Category: Engineering
+Description: Building, training, and fine-tuning GPT models on Russian text and Slavic literature.
+URL: https://github.com/jbejjani2022/SlavicGPT
+
+---
+
+[LINKS]
+- GitHub: https://github.com/jbejjani2022
+- LinkedIn: https://www.linkedin.com/in/jbejjani4/
+- Email: mailto:jbejjani@college.harvard.edu
+
+[END DOCUMENT] 

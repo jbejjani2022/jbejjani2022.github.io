@@ -13,6 +13,98 @@
   .project-description a:hover {
     text-decoration: none;
   }
+
+  /* Larger avatar in sidebar */
+  .author__avatar img {
+    max-width: 150px !important;
+    height: auto !important;
+  }
+
+  /* Mobile author profile redesign */
+  @media (max-width: 1024px) {
+    /* Set a specific size for the avatar's container */
+    .author__avatar {
+      display: block;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 1em;
+    }
+
+    /* Make the image fill the container and stay circular */
+    .author__avatar img {
+      width: 100% !important;
+      height: 100% !important;
+      max-width: 100% !important;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  
+    .author__content {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 0;
+    }
+
+    .author__urls-wrapper {
+      display: block;
+      text-align: center;
+    }
+  
+    /* Hide the default "Follow" button */
+    .author__urls-wrapper > button {
+      display: none;
+    }
+  
+    /* Display the links list */
+    .author__urls.social-icons {
+      display: block;
+      position: static;
+      background: none;
+      border: none;
+      box-shadow: none;
+      margin-top: 1em;
+      padding: 0;
+    }
+
+    .author__urls.social-icons::before,
+    .author__urls.social-icons::after {
+      display: none; /* remove dropdown arrows */
+    }
+  
+    .author__urls li {
+      display: inline-block;
+      margin: 0 2px; /* Reduced from 5px */
+      font-size: 1.5em; /* Increased from 1.25em */
+    }
+
+    .author__urls li .label {
+      display: none; /* Hide text labels by default */
+    }
+
+    .author__urls li i {
+      color: #6c757d;
+    }
+
+    .author__urls li a:hover i {
+      color: #2a7ae2;
+    }
+
+    /* Location on its own line */
+    li[itemprop="homeLocation"] {
+      display: block;
+      margin-bottom: 0.5em;
+      font-size: 1em; /* Reset font size for location */
+    }
+
+    /* Keep location text visible */
+    li[itemprop="homeLocation"] .label {
+      display: inline !important;
+      font-size: 1em;
+      vertical-align: middle;
+      color: #6c757d;
+    }
+  }
 </style>
 
 <!-- end custom head snippets -->

@@ -4,12 +4,10 @@ main:
     url: /
   - title: "Projects"
     url: /projects/
-  - title: "Music"
-    url: /music/
   - title: "Blog"
     url: /blog/
-  - title: "Misc."
-    url: /misc/
+  - title: "Music"
+    url: /music/
   # - title: "Quick-Start Guide"
   #   url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
   # - title: "Sample Posts"

@@ -6,8 +6,8 @@ search: false
 @charset "utf-8";
 
 // Custom sidebar width variables to increase spacing
-$right-sidebar-width-narrow: 325px !default; // Increased from 200px (was 275px)
-$right-sidebar-width: 425px !default; // Increased from 300px (was 375px)
+$right-sidebar-width-narrow: 300px !default; // Decreased from 325px
+$right-sidebar-width: 400px !default; // Decreased from 425px
 
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials

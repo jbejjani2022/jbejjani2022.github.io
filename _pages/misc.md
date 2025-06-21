@@ -69,7 +69,7 @@ classes: wide
 }
 </style>
 
-<h1>Word Avalanches <a href="https://www.reddit.com/r/WordAvalanches/wiki/index/" style="font-size: 0.5em; font-weight: normal; text-decoration: none;">what?</a></h1>
+<a href="https://www.reddit.com/r/WordAvalanches/wiki/index/" style="font-size: 0.8em; font-weight: normal; text-decoration: none;">what is this?</a>
 
 <div class="avalanche-container">
   {% for avalanche in site.data.avalanches %}
