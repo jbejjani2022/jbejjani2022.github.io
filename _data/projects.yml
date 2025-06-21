@@ -45,5 +45,5 @@
 
 - title: "Large Motion Diffusion Models"
   category: research
-  description: "Training and evaluation of diffusion models on the AddBiomechanics dataset for generating sequences of human motion."
+  description: "Training and evaluation of diffusion models on the AddBiomechanics dataset for generating sequences of human motion. Find our lightning talk at the 2025 Harvard Generative AI Symposium <a href='https://youtu.be/x0D_LVvm8WY?t=300'>here</a>."
   url: "https://github.com/jbejjani2022/InferBiomechanics" 
