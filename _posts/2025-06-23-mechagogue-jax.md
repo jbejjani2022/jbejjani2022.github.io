@@ -201,7 +201,7 @@ Just by changing the random seed, this result became 7.30 ± 0.20, going to show
 
 A 5M epoch run with MinAtar gave an agent with average return over 10 episodes of 16.70 ± 4.71. Strangely, the MinAtar agent's performance had very high variance across episodes, getting 53 bricks one episode and 0 bricks in the next, in one instance.
 
-The run with MinAtar took about ~2.5 hours on an A100 GPU, while MaxAtar took ~45 min. So, we at least achieved our goal of being a lot faster, thanks to JAX JIT compilation.
+The run with MinAtar took about ~2.5 hours on one H100 GPU, while MaxAtar took ~45 min. So, we at least achieved our goal of being a lot faster, thanks to JAX JIT compilation.
 
 Finally, here's an agent that plays a perfect policy (until the game gets too fast for it thanks to difficulty ramping...):
 
