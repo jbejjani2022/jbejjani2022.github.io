@@ -24,3 +24,10 @@ $right-sidebar-width: 400px !default; // Decreased from 425px
     padding-right: 1em !important;
   }
 }
+
+// Make inline code and code blocks smaller
+code,
+pre,
+.highlight pre {
+  font-size: 0.9em;
+}

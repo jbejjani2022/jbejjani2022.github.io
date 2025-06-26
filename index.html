@@ -39,6 +39,15 @@ classes: wide
 <p>Previously, I was a Machine Learning Engineer Intern at <a href="https://www.fadel.com">FADEL</a> and an AI Research Intern at the <a href="https://sladelab.seas.harvard.edu/">Slade Lab</a>.</p>
 </div>
 
+<h2>Recent Posts</h2>
+{% for post in site.posts limit:3 %}
+  {% include archive-single.html %}
+{% endfor %}
+
+<div class="all-posts-link">
+  <a href="/blog/">See All</a>
+</div>
+
 <h2>Engineering</h2>
 <div class="project-section">
   {% assign engineering_projects = site.data.projects | where: "category", "engineering" %}
@@ -81,13 +90,4 @@ classes: wide
   <div class="all-posts-link">
     <a href="/projects/#research-projects">See All</a>
   </div>
-</div>
-
-<h2>Recent Posts</h2>
-{% for post in site.posts limit:3 %}
-  {% include archive-single.html %}
-{% endfor %}
-
-<div class="all-posts-link">
-  <a href="/blog/">See All</a>
 </div>
