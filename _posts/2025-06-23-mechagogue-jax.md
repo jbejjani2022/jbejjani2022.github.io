@@ -7,10 +7,10 @@ classes: wide
 header:
   overlay_color: "#444"
   overlay_filter: "0.5"
-excerpt: "Some of my experiences while working on mechagogue, a Reinforcement Learning repository with from-scratch JAX implementations of classic RL algorithms."
+excerpt: "Some of my experiences while working on mechagogue, a reinforcement learning repository with from-scratch JAX implementations of classic RL algorithms."
 ---
 
-A couple months ago, I rewatched OpenAI's [multi-agent hide and seek](https://www.youtube.com/watch?v=kopoLzvh5jY) and decided I wanted to know more about Reinforcement Learning. I also wanted to learn JAX, a Python library that's designed for super fast, highly parallelized computation on GPUs and TPUs but has a lot of tricky-to-work-with "[sharp bits](https://docs.jax.dev/en/latest/notebooks/Common_Gotchas_in_JAX.html)" arising from its firm embrace of functional programming.
+A couple months ago, I rewatched OpenAI's [multi-agent hide and seek](https://www.youtube.com/watch?v=kopoLzvh5jY) and decided I wanted to know more about reinforcement learning so I could do work on multi-agent systems. I also wanted to learn JAX, a Python library that's designed for super fast, highly parallelized computation on GPUs and TPUs but has a lot of tricky-to-work-with "[sharp bits](https://docs.jax.dev/en/latest/notebooks/Common_Gotchas_in_JAX.html)" arising from its firm embrace of functional programming.
 
 In short, I wanted to be good at RL and be able to do RL really fast with JAX.
 
@@ -163,7 +163,7 @@ def generate_trajectories(
 
 ## Setting the random seed is great. But don't forget to also change it.
 
-Reinforcement Learning techniques can be fairly noisy and therefore sensitive to choice of random seed. So, when comparing methods (and especially trying to see if they give 'matching' results), it's important to use a few different random seeds for each and record the mean and standard deviation of your metrics.
+Reinforcement learning techniques can be fairly noisy and therefore sensitive to choice of random seed. So, when comparing methods (and especially trying to see if they give 'matching' results), it's important to use a few different random seeds for each and record the mean and standard deviation of your metrics.
 
 Crucially, while running experiments and tuning hyper-parameters to improve performance, you should switch out these random seeds from time to time in order to ensure you're not convincing yourself that you're generating real improvements when in reality you were unknowingly just finding hyper-parameters that work well with a particular set of fixed seeds.
 
