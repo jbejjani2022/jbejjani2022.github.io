@@ -14,7 +14,7 @@ A couple months ago, I rewatched OpenAI's [multi-agent hide and seek](https://ww
 
 In short, I wanted to be good at RL and do RL really fast with JAX.
 
-I started working with Kempner Institute Research Fellow [Aaron Walsman](https://kempnerinstitute.harvard.edu/people/our-people/aaron-walsman/) on early versions of his [mechagogue](https://github.com/aaronwalsman/mechagogue/tree/main), or 'teacher of machines' (where 'mecha' -> machine and 'gogue' -> teacher), an RL repository with from-scratch JAX implementations of classic RL algorithms aiming to be a go-to reference for RL researchers and learners. I figured that building something like this would be a solid way to get my hands into RL and JAX.
+I started working with Kempner Institute Research Fellow [Aaron Walsman](https://kempnerinstitute.harvard.edu/people/our-people/aaron-walsman/) on early versions of his [mechagogue](https://github.com/aaronwalsman/mechagogue/tree/main), or 'teacher of machines' (where 'mecha' -> machine and 'gogue' -> teacher), a repository with from-scratch JAX implementations of classic RL algorithms aiming to be a go-to reference for RL researchers and learners. I figured that building something like this would be a solid way to get my hands into RL and JAX.
 
 I first spent time following and reading the paper-trail of foundational RL algorithms to see how they built off of one another. Starting with off-policy algorithms, I went from [Deep Q-Networks](https://arxiv.org/pdf/1312.5602) (DQN), to [Deterministic Policy Gradient](https://proceedings.mlr.press/v32/silver14.html) (DPG), to [Deep DPG](https://arxiv.org/pdf/1509.02971) (DDPG), to the [Soft Actor-Critic](https://arxiv.org/pdf/1801.01290) (SAC) algorithm that many people like using today for robotics.
 
