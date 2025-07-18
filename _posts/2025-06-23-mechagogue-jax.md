@@ -34,7 +34,7 @@ Here's what I learned.
 
 JAX uses a functional approach for random number generation (and everything else). Its random functions are pure, so using the same key twice gives identical results. So, you need to split keys before each random operation to create independent random sequences for parallel computations. This explicit key management can take some getting used to but is key for reproducibility and parallelization safety.
 
-Compare this with the ease of making experiments reproducible in MinAtar—this was as straightforward as setting NumPy and PyTorch's random seed and seeding the RNG of the game environment:
+Compare this with the ease of making experiments reproducible in MinAtar—this was as straightforward as setting the random seed of NumPy, PyTorch, and the game environment:
 
 {% highlight python %}
 # Set seed for reproducibility
@@ -119,8 +119,8 @@ def generate_trajectories(
     max_steps: int = 1_000,
     ) -> Tuple[jnp.ndarray, jnp.ndarray]:
     """
-      Greedily rollout `episodes` full episodes with at most
-       `max_steps` frames each using the `model` policy.
+    Greedily roll out `episodes` full episodes with at most
+    `max_steps` frames each using the `model` policy.
     """
     def run_episode(key, _):
         key, reset_key = jrng.split(key)
@@ -189,7 +189,7 @@ As a baseline, I visualized an agent that follows a random-action policy in the 
 
 We can see that it gets around 2 hits before missing.
 
-We'd hope that the agent can do better after training a policy with DQN.
+We'd hope that the agent can do better after training a breakout-playing policy with DQN.
 
 After matching the MinAtar environment and training configuration as closely as possible (featuring a CNN Q-Network architecture, RMSProp optimizer, Huber loss, and difficulty ramping), and training for 5 million epochs, we got a pretty good breakout-player:
 
@@ -197,7 +197,7 @@ After matching the MinAtar environment and training configuration as closely as 
 
 The average return and std over 10 episodes for this agent was 12.70 ± 2.76.
 
-Just by changing the random seed, this result became 7.30 ± 0.20, going to show how noisy these methods can be and the importance of multiple trials with different seeds during evaluation.
+Just by changing the random seed, this result became 7.30 ± 0.20, going to show how noisy these methods can be and the importance of multiple trials with different seeds during evaluation. It would also be important to evaluate over more than 10 episodes.
 
 A 5M epoch run with MinAtar gave an agent with average return over 10 episodes of 16.70 ± 4.71. Strangely, the MinAtar agent's performance had very high variance across episodes, getting 53 bricks one episode and 0 bricks in the next, in one instance.
 
