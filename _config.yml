@@ -114,7 +114,7 @@ analytics:
 author:
   name             : "Joseph Bejjani"
   avatar           : "/assets/images/avatar.png" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "Computer Science & Statistics @ Harvard<br>AI Researcher & Engineer"
+  bio              : "" # "Computer Science & Statistics @ Harvard<br>AI Researcher & Engineer"
   location         : "Cambridge, MA"
   # email            : jbejjani@college.harvard.edu
   links:
