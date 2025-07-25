@@ -1,6 +1,6 @@
 - title: "The Golden Arm"
   category: engineering
-  description: "The <a href='https://goldenarmtheater.com'>official web app</a> for Harvard's student-run movie theater, with a proprietary content management system, seat booking, archives, merch shop, and more."
+  description: "The <a href='https://goldenarmtheater.com'>official web app</a> for Harvard's student-run movie theater, with a custom content management system, seat booking, archives, merch shop, and more."
   url: "https://github.com/jbejjani2022/golden-arm"
 
 - title: "SlavicGPT"
