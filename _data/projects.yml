@@ -40,7 +40,7 @@
 
 - title: "Explain This, Pruner! The Effect of Zero-Order Pruning on LLM Explainability and Curvature"
   category: research
-  description: "An investigation of the effect of neural network pruning on the explainability of LLMs, with the goal of understanding how model compression techniques may affect AI interpretability."
+  description: "An investigation of the effect of model compression on AI interpretability. Read our paper in <a href='https://www.thurj.org/spring-2025-research/jbejjanietal'>The Harvard Undergraduate Research Journal</a>."
   url: "https://github.com/camilobrownpinilla/Explain-This-Pruner"
 
 - title: "Large Motion Diffusion Models"
