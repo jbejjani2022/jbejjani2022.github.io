@@ -183,29 +183,27 @@ See some of Joelle Pineau et al.'s work on this issue, with efforts to enable re
 
 ## I got some cool results.
 
-As a baseline, I visualized an agent that follows a random-action policy in the MaxAtar environment:
+As a baseline, I visualized an agent that follows a random-action policy in the MaxAtar environment. We can see that it gets around 2 hits before missing:
 
 ![Random agent playing Breakout](/assets/breakout_gifs/breakout_rand.gif)
 
-We can see that it gets around 2 hits before missing.
+And here's an agent that plays a perfect policy (until the game gets too fast for it thanks to difficulty ramping):
 
-We'd hope that the agent can do better after training a breakout-playing policy with DQN.
+![Perfect-policy agent playing breakout](/assets/breakout_gifs/breakout_perfect.gif)
 
-After matching the MinAtar environment and training configuration as closely as possible (featuring a CNN Q-Network architecture, RMSProp optimizer, Huber loss, and difficulty ramping), and training for 5 million epochs, we got a pretty good breakout-player:
+We'd like to train a breakout-playing policy with DQN that hopefully does better than the random policy and gets as close to the perfect policy as possible.
+
+After matching the MinAtar environment and training configuration (featuring a CNN Q-Network architecture, RMSProp optimizer, Huber loss, and difficulty ramping), and training for 5 million epochs, we got a pretty good breakout-player:
 
 ![Trained agent playing breakout, seed 3214](/assets/breakout_gifs/breakout_5M_epochs_seed3214_sticky_ramping_1q.gif)
 
-The average return and std over 10 episodes for this agent was 12.70 ± 2.76.
+The average return and standard deviation over 10 episodes for this agent was 12.70 ± 2.76.
 
-Just by changing the random seed, this result became 7.30 ± 0.20, going to show how noisy these methods can be and the importance of multiple trials with different seeds during evaluation. It would also be important to evaluate over more than 10 episodes.
+Just by changing the random seed, this result became 7.30 ± 0.20, showing how noisy these methods can be and the importance of conducting many trials with different seeds during evaluation. It would also be worth evaluating over more than 10 episodes at a time.
 
-A 5M epoch run with MinAtar gave an agent with average return over 10 episodes of 16.70 ± 4.71. Strangely, the MinAtar agent's performance had very high variance across episodes, getting 53 bricks one episode and 0 bricks in the next, in one instance.
+A 5M epoch run with MinAtar gave an agent with average return over 10 episodes of 16.70 ± 4.71. The MinAtar agent's performance had very high variance across episodes, breaking 53 bricks one episode and 0 bricks in the next, for example.
 
 The run with MinAtar took about ~2.5 hours on one H100 GPU, while MaxAtar took ~45 min. So, we at least achieved our goal of being a lot faster, thanks to JAX JIT compilation.
-
-Finally, here's an agent that plays a perfect policy (until the game gets too fast for it thanks to difficulty ramping):
-
-![Perfect-policy agent playing breakout](/assets/breakout_gifs/breakout_perfect.gif)
 
 ## What's next?
 
