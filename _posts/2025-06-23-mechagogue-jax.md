@@ -183,7 +183,7 @@ See some of Joelle Pineau et al.'s work on this issue, with efforts to enable re
 
 ## I got some cool results.
 
-As a baseline, I visualized an agent that follows a random-action policy in the MaxAtar environment. We can see that it usually gets 1 hit before missing:
+As a baseline, I visualized an agent that follows a random-action policy in the MaxAtar environment. We can see that it gets around 1 hit before missing:
 
 ![Random agent playing Breakout](/assets/breakout_gifs/breakout_rand.gif)
 
