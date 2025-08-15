@@ -27,48 +27,37 @@ classes: wide
   text-decoration: none;
 }
 
+.section-title {
+  font-size: 1.25rem;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+.project-section {
+  margin-top: 0;
+}
+
 </style>
 
 <div class="about-section">
 <p>I study computer science and statistics at Harvard University. I am passionate about AI research and engineering. I love <a href="/music/">music</a> and <a href="/misc/">language</a>, too.</p>
     
-<p>I am an undergraduate AI researcher at the <a href="https://kempnerinstitute.harvard.edu">Kempner Institute</a> working on multi-agent reasoning with language models under <a href="https://yilundu.github.io">Yilun Du</a> and <a href="https://shamulent.github.io">Sham Kakade</a>. I am also collaborating with Research Fellow <a href="https://kempnerinstitute.harvard.edu/people/our-people/aaron-walsman/">Aaron Walsman</a> to build <a href="https://github.com/aaronwalsman/mechagogue">mechagogue</a>, a pedagogical reinforcement learning repository with implementations of classical algorithms in JAX.</p>
+<p>I am an undergraduate AI researcher at the <a href="https://kempnerinstitute.harvard.edu">Kempner Institute</a> working on multi-agent systems. I am currently working with Research Fellow <a href="https://kempnerinstitute.harvard.edu/people/our-people/aaron-walsman/">Aaron Walsman</a> on a large-scale evolutionary learning simulation to study the emergence of intelligence in populations of AI agents. Previously, I worked on building <a href="https://github.com/aaronwalsman/mechagogue">mechagogue</a>, a pedagogical reinforcement learning repository with implementations of classical algorithms in JAX. Before that, I worked on multi-agent reasoning with language models under <a href="https://yilundu.github.io">Yilun Du</a> and <a href="https://shamulent.github.io">Sham Kakade</a>.</p>
 
-<p>Currently, I am a Software Engineer Intern in Institutional Securities Technology at Morgan Stanley. Previously, I was a Machine Learning Engineer Intern at <a href="https://www.fadel.com">FADEL</a> and an AI Research Intern at <a href="https://sladelab.seas.harvard.edu/">The Slade Lab</a>.</p>
+<p>I interned as a software engineer in Institutional Securities Technology at Morgan Stanley. Before that, I was a Machine Learning Engineer Intern at <a href="https://www.fadel.com">FADEL</a> and an AI Research Intern at <a href="https://sladelab.seas.harvard.edu/">The Slade Lab</a>.</p>
 </div>
 
-<h2>Recent Posts</h2>
-{% for post in site.posts limit:3 %}
-  {% include archive-single.html %}
-{% endfor %}
-
-<div class="all-posts-link">
-  <a href="/blog/">See All</a>
-</div>
-
-<h2>Engineering</h2>
+<h2 class="section-title">Recent Posts</h2>
 <div class="project-section">
-  {% assign engineering_projects = site.data.projects | where: "category", "engineering" %}
-  {% for project in engineering_projects limit:3 %}
-    <div class="project-item">
-      <h3 class="project-title">
-        {% if project.url %}
-          <a href="{{ project.url }}">{{ project.title }}</a>
-        {% else %}
-          {{ project.title }}
-        {% endif %}
-      </h3>
-      <div class="project-description">
-        {{ project.description }}
-      </div>
-    </div>
+  {% for post in site.posts limit:3 %}
+    {% include archive-single.html %}
   {% endfor %}
   <div class="all-posts-link">
-    <a href="/projects/#engineering-projects">See All</a>
+    <a href="/blog/">See All</a>
   </div>
 </div>
 
-<h2>Research</h2>
+<h2 class="section-title">Research</h2>
 <div class="project-section">
   {% assign research_projects = site.data.projects | where: "category", "research" %}
   {% for project in research_projects limit:3 %}
@@ -87,5 +76,27 @@ classes: wide
   {% endfor %}
   <div class="all-posts-link">
     <a href="/projects/#research-projects">See All</a>
+  </div>
+</div>
+
+<h2 class="section-title">Engineering</h2>
+<div class="project-section">
+  {% assign engineering_projects = site.data.projects | where: "category", "engineering" %}
+  {% for project in engineering_projects limit:3 %}
+    <div class="project-item">
+      <h3 class="project-title">
+        {% if project.url %}
+          <a href="{{ project.url }}">{{ project.title }}</a>
+        {% else %}
+          {{ project.title }}
+        {% endif %}
+      </h3>
+      <div class="project-description">
+        {{ project.description }}
+      </div>
+    </div>
+  {% endfor %}
+  <div class="all-posts-link">
+    <a href="/projects/#engineering-projects">See All</a>
   </div>
 </div>

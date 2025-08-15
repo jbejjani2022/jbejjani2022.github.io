@@ -33,26 +33,6 @@ classes: wide
 </style>
 
 <div class="section-container">
-  <h2 class="section-header" id="engineering-projects">Engineering</h2>
-  
-  {% assign engineering_projects = site.data.projects | where: "category", "engineering" %}
-  {% for project in engineering_projects %}
-    <div class="project-container">
-      <h3 class="project-title">
-        {% if project.url %}
-          <a href="{{ project.url }}">{{ project.title }}</a>
-        {% else %}
-          {{ project.title }}
-        {% endif %}
-      </h3>
-      <div class="project-description">
-        {{ project.description }}
-      </div>
-    </div>
-  {% endfor %}
-</div>
-
-<div class="section-container">
   <h2 class="section-header" id="research-projects">Research</h2>
   
   {% assign research_projects = site.data.projects | where: "category", "research" %}
@@ -71,3 +51,23 @@ classes: wide
     </div>
   {% endfor %}
 </div> 
+
+<div class="section-container">
+  <h2 class="section-header" id="engineering-projects">Engineering</h2>
+  
+  {% assign engineering_projects = site.data.projects | where: "category", "engineering" %}
+  {% for project in engineering_projects %}
+    <div class="project-container">
+      <h3 class="project-title">
+        {% if project.url %}
+          <a href="{{ project.url }}">{{ project.title }}</a>
+        {% else %}
+          {{ project.title }}
+        {% endif %}
+      </h3>
+      <div class="project-description">
+        {{ project.description }}
+      </div>
+    </div>
+  {% endfor %}
+</div>

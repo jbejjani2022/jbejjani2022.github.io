@@ -1,5 +1,5 @@
 ---
-title: "What I've learned from doing RL with JAX"
+title: "What I've learned doing RL with JAX"
 date: 2025-06-25
 layout: single
 sidebar: false
