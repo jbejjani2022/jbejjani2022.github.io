@@ -40,9 +40,9 @@ classes: wide
 </style>
 
 <div class="about-section">
-<p>I study computer science and statistics at Harvard University. I am passionate about AI research and engineering. I love <a href="/music/">music</a> and <a href="/misc/">language</a>, too.</p>
+<p>I study computer science and statistics at Harvard University. I am broadly interested in problems in AI safety and alignment, multi-agent AI systems, and neuroevolution. I love <a href="/music/">music</a> and <a href="/misc/">language</a>, too.</p>
     
-<p>I am an undergraduate AI researcher at the <a href="https://kempnerinstitute.harvard.edu">Kempner Institute</a> working on multi-agent systems. I am currently working with Research Fellow <a href="https://kempnerinstitute.harvard.edu/people/our-people/aaron-walsman/">Aaron Walsman</a> on a large-scale evolutionary learning simulation to study the emergence of intelligence in populations of AI agents. Previously, I worked on building <a href="https://github.com/aaronwalsman/mechagogue">mechagogue</a>, a pedagogical reinforcement learning repository with implementations of classical algorithms in JAX. Before that, I worked on multi-agent reasoning with language models under <a href="https://yilundu.github.io">Yilun Du</a> and <a href="https://shamulent.github.io">Sham Kakade</a>.</p>
+<p>I am an undergraduate AI researcher at the <a href="https://kempnerinstitute.harvard.edu">Kempner Institute</a> working on AI safety and multi-agent systems with Professor <a href="https://xkianteb.github.io/"></a>Kianté Brantley</a> and Research Fellow <a href="https://kempnerinstitute.harvard.edu/people/our-people/aaron-walsman/">Aaron Walsman</a>. Before that, I worked on multi-agent reasoning with language models under Professor <a href="https://yilundu.github.io">Yilun Du</a> and Professor <a href="https://shamulent.github.io">Sham Kakade</a>.</p>
 
 <p>I interned as a software engineer in Institutional Securities Technology at Morgan Stanley. Before that, I was a Machine Learning Engineer Intern at <a href="https://www.fadel.com">FADEL</a> and an AI Research Intern at <a href="https://sladelab.seas.harvard.edu/">The Slade Lab</a>.</p>
 </div>
@@ -60,7 +60,7 @@ classes: wide
 <h2 class="section-title">Research</h2>
 <div class="project-section">
   {% assign research_projects = site.data.projects | where: "category", "research" %}
-  {% for project in research_projects limit:3 %}
+  {% for project in research_projects limit:5 %}
     <div class="project-item">
       <h3 class="project-title">
         {% if project.url %}
@@ -82,7 +82,7 @@ classes: wide
 <h2 class="section-title">Engineering</h2>
 <div class="project-section">
   {% assign engineering_projects = site.data.projects | where: "category", "engineering" %}
-  {% for project in engineering_projects limit:3 %}
+  {% for project in engineering_projects limit:5 %}
     <div class="project-item">
       <h3 class="project-title">
         {% if project.url %}

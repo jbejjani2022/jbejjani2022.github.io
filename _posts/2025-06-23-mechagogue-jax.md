@@ -28,7 +28,7 @@ There's a repo [gymnax](https://github.com/RobertTLange/gymnax) that provides JA
 
 As my first challenge inside MaxAtar, I decided to develop the Atari breakout game environment and use it to test and tune mechagogue's DQN. The idea was to verify that our JAX DQN was up to par by comparing it with results from MinAtar's DQN.
 
-Here's what I learned.
+Here are some things I learned.
 
 ## Reproducibility is key when running experiments. To do this in JAX, get ready to split and pass random keys everywhere.
 
