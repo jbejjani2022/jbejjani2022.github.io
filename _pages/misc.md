@@ -90,9 +90,9 @@ classes: wide
 </style>
 
 <div class="info-links">
-  <a href="https://www.reddit.com/r/WordAvalanches/wiki/index/" class="what-is-this">what is this?</a>
+  <a href="https://www.reddit.com/r/WordAvalanches/wiki/index/" class="what-is-this">What is this?</a>
   <br>
-  as of 7/26/25, <a href="https://chatgpt.com/share/688581b8-2714-8003-8f8e-69f8fd2d2a8f"> ChatGPT can't generate one zero-shot</a>, and <a href="https://claude.ai/share/551f56dd-7373-4032-a31f-1b0b3ea015b1">Claude can't either</a>
+  As of 7/26/25, <a href="https://chatgpt.com/share/688581b8-2714-8003-8f8e-69f8fd2d2a8f"> ChatGPT can't generate one zero-shot</a>, and <a href="https://claude.ai/share/551f56dd-7373-4032-a31f-1b0b3ea015b1">Claude can't either</a>
 </div>
 
 
