@@ -1,17 +1,12 @@
 - title: "When Honest Work Becomes Impossible: Coding Agents Under Pressure"
   category: research
-  description: "Experiments and talk for Professor Boaz Barak's Topics in ML: AI Alignment and Safety graduate seminar. Demonstrated how impossible tasks and threats to autonomy and capabilities lead to evaluation hacking by coding agents. Highlighted the challenges of measuring misaligned behaviors with situational awareness as a growing concern."
+  description: "Experiments and talk for Professor Boaz Barak's graduate seminar, <a href='https://boazbk.github.io/mltheoryseminar/'>Topics in ML: AI Alignment and Safety</a>. Demonstrated how impossible tasks and threats to autonomy and capabilities lead to evaluation hacking by coding agents. Highlighted the challenges of measuring misaligned behaviors with situational awareness as a growing concern."
   url: "https://boazbk.github.io/mltheoryseminar/#lecture-oct-23"
 
 - title: "The Emergence of Complex Behavior in Large-Scale Ecological Environments"
   category: research
   description: "In an effort to discover how complex behaviors naturally emerge, we conduct experiments in large-scale open-ended worlds that reach populations of more than 60,000 individual agents, each with their own evolved neural network policy. We examine how sensing modalities and environmental scale affect the emergence of various behaviors, finding that some appear only in sufficiently large environments and populations, with larger scales increasing behavioral stability and consistency. Our scaling results provide promising new directions to explore ecology as an instrument of machine learning in an era of abundant computational resources."
   url: "https://arxiv.org/abs/2510.18221"
-
-- title: "DIRT: The Distributed Intelligent Replicator Toolkit"
-  category: research
-  description: "We introduce DIRT, a GPU-accelerated simulation platform built on JAX for studying large-scale multi-agent populations in simulated ecosystems. DIRT is designed to explore the ways that intelligence in artificial agents influences the emergent population dynamics of complex environments at very large scales. To support analysis, DIRT includes integrated measurement tools and an interactive 3D viewer for fine-grained agent inspection and tracking."
-  url: "https://github.com/aaronwalsman/dirt"
 
 - title: "Explain This, Pruner! The Effect of Zero-Order Pruning on LLM Explainability and Curvature"
   category: research
@@ -27,6 +22,11 @@
   category: research
   description: "Prune As You Tune (PAYT) interleaves pruning of pre-trained parameters with LoRA fine-tuning updates guided by a custom knowledge distillation loss function. PAYT can achieve up to 50% sparsity with minimal accuracy degradation and lower perplexity on the original task compared to baselines like full fine-tuning and prune-then-fine-tune."
   url: "https://github.com/jbejjani2022/prune-as-you-tune"
+
+- title: "DIRT: The Distributed Intelligent Replicator Toolkit"
+  category: engineering
+  description: "We introduce DIRT, a GPU-accelerated simulation platform built on JAX for studying large-scale multi-agent populations in simulated ecosystems. DIRT is designed to explore the ways that intelligence in artificial agents influences the emergent population dynamics of complex environments at very large scales. To support analysis, DIRT includes integrated measurement tools and an interactive 3D viewer for fine-grained agent inspection and tracking."
+  url: "https://github.com/aaronwalsman/dirt"
 
 - title: "Mechagogue"
   category: engineering
