@@ -20,7 +20,7 @@
 
 - title: "Prune As You Tune: LoRA-Enabled Model Compression"
   category: research
-  description: "Prune As You Tune (PAYT) interleaves pruning of pre-trained parameters with LoRA fine-tuning updates guided by a custom knowledge distillation loss function. PAYT can achieve up to 50% sparsity with minimal accuracy degradation and lower perplexity on the original task compared to baselines like full fine-tuning and prune-then-fine-tune."
+  description: "Prune As You Tune (PAYT) interleaves pruning of pre-trained parameters with LoRA fine-tuning updates guided by a knowledge distillation loss function. PAYT can achieve up to 50% sparsity with minimal accuracy degradation and lower perplexity on the original task compared to baselines like full fine-tuning and prune-then-fine-tune."
   url: "https://github.com/jbejjani2022/prune-as-you-tune"
 
 - title: "DIRT: The Distributed Intelligent Replicator Toolkit"
