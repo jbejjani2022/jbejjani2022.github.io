@@ -1,6 +1,6 @@
 - title: "When Honest Work Becomes Impossible: Coding Agents Under Pressure"
   category: research
-  description: "Experiments and talk for Professor Boaz Barak's graduate seminar, <a href='https://boazbk.github.io/mltheoryseminar/'>Topics in Foundations of ML: AI Alignment and Safety</a>. Demonstrated how impossible tasks and threats to autonomy and capabilities lead to evaluation hacking by coding agents. Highlighted the challenges of measuring misaligned behaviors with situational awareness as a growing concern."
+  description: "Experiments and talk for Professor Boaz Barak's graduate seminar, <a href='https://boazbk.github.io/mltheoryseminar/'>Topics in Foundations of ML: AI Alignment and Safety</a>. Demonstrated how impossible tasks and threats to autonomy and capabilities can elicit evaluation hacking by coding agents. Highlighted the challenges of measuring misaligned behaviors with situational awareness as a growing concern."
   url: "https://boazbk.github.io/mltheoryseminar/#lecture-oct-23"
 
 - title: "The Emergence of Complex Behavior in Large-Scale Ecological Environments"
