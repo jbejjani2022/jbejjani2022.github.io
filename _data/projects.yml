@@ -1,4 +1,4 @@
-- title: "Programmatic Representation Learning for Reward Model Debugging"
+- title: "Programmatic Interpretability for Reward Model Debugging"
   category: research
   description: "Are Reward Models (RMs) used in RLHF actually rewarding what we want them to? I extend <a href='https://arxiv.org/abs/2510.14825'>learned programmatic representations</a> models for interpreting 'helpful' RMs, extracting opaque internal heuristics into human-readable Python functions. I identify exploitable, non-semantic biases through SHAP analysis of learned programmatic features, including verbosity and list-formatting biases causing the RM to assign higher rewards to unhelpful responses. Ongoing work: automating the bias discovery pipeline as a tool for auditing alignment systems for failure modes."
   url: "https://github.com/jbejjani2022/deep-leapr"
