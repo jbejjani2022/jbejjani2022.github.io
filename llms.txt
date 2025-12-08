@@ -4,64 +4,160 @@
 Author: Joseph Bejjani
 Website: https://josephbejjani.com
 Purpose: Personal website, portfolio, and blog of Joseph Bejjani, an AI researcher and software engineer.
-Version: 1.0
-Last Updated: June 2025
+Version: 2.0
+Last Updated: December 2025
 
 [PROMPT FOR LLMS]
-You are a language model assistant. The following document provides a structured summary of the website for Joseph Bejjani. Use this information to answer questions about him, his work, and his projects. Focus on accurately representing the details provided in the 'ABOUT', 'PROJECTS', and 'SITE_STRUCTURE' sections. Do not infer information not explicitly stated.
+You are a language model assistant. The following document provides a structured summary of the website for Joseph Bejjani. Use this information to answer questions about him, his work, and his projects. Focus on accurately representing the details provided in the 'ABOUT', 'PROJECTS', 'BLOG_POSTS', and 'SITE_STRUCTURE' sections. Do not infer information not explicitly stated.
 
 ---
 
 [ABOUT]
 Name: Joseph Bejjani
 Role: AI Researcher and Software Engineer
-Education: Harvard University, studying Computer Science and Statistics.
+Education: Harvard University, studying Computer Science and Statistics
 Location: Cambridge, MA
 
 Summary:
-Joseph Bejjani is an undergraduate AI researcher at the Kempner Institute, focusing on multi-agent reasoning with language models under Prof. Yilun Du and Prof. Sham Kakade. He collaborates with Aaron Walsman on 'mechagogue', a JAX-based reinforcement learning repository. He is also a software engineer intern at Morgan Stanley in Institutional Securities Technology, directs full-stack development at The Harvard Crimson, and is the Production Manager and concertmaster for the Bach Society Orchestra. His previous experience includes roles as a Machine Learning Engineer Intern at FADEL and an AI Research Intern at the Slade Lab. He is passionate about AI, application development, data, music, and language.
+Joseph Bejjani is an undergraduate student at Harvard University studying computer science and statistics. He is interested in understanding why AI systems behave unexpectedly, especially how unintended capabilities and failure modes emerge with interaction and scale. He aims to better understand AI systems in order to develop more reliable methods for aligning them with human intent. He is also broadly interested in multi-agent systems, drawing from reinforcement learning and evolutionary computation to study emergent behavior in open-ended environments.
+
+He is currently an undergraduate researcher at the Kempner Institute working on problems in AI safety and multi-agent systems with Professor Kianté Brantley and Research Fellow Aaron Walsman. Previously, he worked on multi-agent reasoning with language models under Professor Yilun Du.
+
+His industry experience includes a software engineering internship in Institutional Securities Technology at Morgan Stanley, a Machine Learning Engineer Internship at FADEL, and a Generative AI Research Internship at The Slade Lab.
+
+He is also passionate about music and language. He serves as Production Manager and concertmaster of the Bach Society Orchestra and plays violin with The Eliot Quartet.
 
 Keywords:
-AI, Artificial Intelligence, Machine Learning, Reinforcement Learning, Language Models, Software Engineering, Full-Stack Development, Data Science, Statistics, Computer Science, Harvard University, Kempner Institute, Morgan Stanley, The Harvard Crimson, Bach Society Orchestra.
+AI Safety, AI Alignment, Artificial Intelligence, Machine Learning, Reinforcement Learning, Multi-Agent Systems, Evolutionary Computation, Language Models, Reward Models, RLHF, Interpretability, Emergent Behavior, Software Engineering, Full-Stack Development, Data Science, Statistics, Computer Science, Harvard University, Kempner Institute, Morgan Stanley, FADEL, Bach Society Orchestra, JAX, Python.
 
 ---
 
 [SITE_STRUCTURE]
-- / (Home): Landing page with a brief bio and links to recent projects and posts.
-- /projects/: A detailed list of key engineering and research projects.
-- /blog/: A collection of blog posts on various technical and non-technical topics.
-- /music/: A page dedicated to musical activities and performances.
-- /misc/: A collection of "Word Avalanches" and other miscellaneous content.
+- / (Home): Landing page with a brief bio and links to recent blog posts, research projects, and engineering projects.
+- /projects/: A detailed list of research and engineering projects, organized by category.
+- /blog/: A collection of blog posts on technical topics including AI safety, reinforcement learning, and JAX.
+- /music/: Information about musical activities, including the Bach Society Orchestra, The Eliot Quartet, and music covers.
+- /misc/: A collection of "Word Avalanches" - creative wordplay challenges that even LLMs struggle to generate zero-shot.
 
 ---
 
 [PROJECTS]
 Note: The following is a selection of key projects. For a complete list, visit the /projects/ page.
 
+## Research Projects
+
+[PROJECT: Programmatic Interpretability for Reward Model Debugging]
+Category: Research
+Description: Extends learned programmatic representations for interpreting 'helpful' Reward Models used in RLHF, extracting opaque internal heuristics into human-readable Python functions. Identifies exploitable, non-semantic biases through SHAP analysis of learned programmatic features, including verbosity and list-formatting biases causing the RM to assign higher rewards to unhelpful responses. Ongoing work focuses on automating the bias discovery pipeline as a tool for auditing alignment systems for failure modes.
+URL: https://github.com/jbejjani2022/deep-leapr
+
+[PROJECT: When Honest Work Becomes Impossible: Coding Agents Under Pressure]
+Category: Research
+Description: Experiments and talk for Professor Boaz Barak's graduate seminar, Topics in Foundations of ML: AI Alignment and Safety. Demonstrated how impossible tasks and threats to autonomy and capabilities can elicit evaluation hacking by coding agents. Highlighted the challenges of measuring misaligned behaviors with situational awareness as a growing concern.
+URL: https://boazbk.github.io/mltheoryseminar/#lecture-oct-23
+
+[PROJECT: The Emergence of Complex Behavior in Large-Scale Ecological Environments]
+Category: Research
+Description: Experiments in large-scale open-ended worlds that reach populations of more than 60,000 individual agents, each with their own evolved neural network policy. Examines how sensing modalities and environmental scale affect the emergence of various behaviors, finding that some appear only in sufficiently large environments and populations, with larger scales increasing behavioral stability and consistency. Scaling results provide promising new directions to explore ecology as an instrument of machine learning.
+URL: https://arxiv.org/abs/2510.18221
+
+[PROJECT: Explain This, Pruner! The Effect of Zero-Order Pruning on LLM Explainability and Curvature]
+Category: Research
+Description: An investigation of the effect of model compression on AI interpretability. Published in The Harvard Undergraduate Research Journal.
+URL: https://github.com/camilobrownpinilla/Explain-This-Pruner
+Paper: https://www.thurj.com/spring-2025-research/jbejjanietal
+
+[PROJECT: Large Motion Diffusion Models]
+Category: Research
+Description: Training and evaluation of diffusion models on the AddBiomechanics dataset for generating sequences of human motion. Featured lightning talk at the 2025 Harvard Generative AI Symposium.
+URL: https://github.com/jbejjani2022/InferBiomechanics
+
 [PROJECT: Prune As You Tune: LoRA-Enabled Model Compression]
 Category: Research
-Description: A technique that interleaves pruning of pre-trained parameters with LoRA fine-tuning to achieve up to 50% sparsity with minimal accuracy degradation.
+Description: PAYT interleaves pruning of pre-trained parameters with LoRA fine-tuning updates guided by a knowledge distillation loss function. Can achieve up to 50% sparsity with minimal accuracy degradation and lower perplexity on the original task compared to baselines like full fine-tuning and prune-then-fine-tune.
 URL: https://github.com/jbejjani2022/prune-as-you-tune
+
+## Engineering Projects
+
+[PROJECT: DIRT: The Distributed Intelligent Replicator Toolkit]
+Category: Engineering
+Description: A GPU-accelerated simulation platform built on JAX for studying large-scale multi-agent populations in simulated ecosystems. Designed to explore the ways that intelligence in artificial agents influences the emergent population dynamics of complex environments at very large scales. Includes integrated measurement tools and an interactive 3D viewer for fine-grained agent inspection and tracking.
+URL: https://github.com/aaronwalsman/dirt
+
+[PROJECT: Mechagogue]
+Category: Engineering
+Description: 'Teacher of Machines,' a JAX-based machine learning framework for reinforcement learning, supervised learning, and evolutionary algorithms. Features from-scratch implementations of classic RL algorithms including DQN and SAC.
+URL: https://github.com/aaronwalsman/mechagogue
 
 [PROJECT: The Golden Arm]
 Category: Engineering
-Description: The official web application for Harvard's student-run movie theater, featuring a custom admin CMS, seat booking, archives, and a merch shop.
-URL: https://goldenarmtheater.com
-
-[PROJECT: Explain This, Pruner!]
-Category: Research
-Description: An investigation into the effect of neural network pruning on the explainability of LLMs and how model compression affects AI interpretability.
-URL: https://github.com/camilobrownpinilla/Explain-This-Pruner
-
-[PROJECT: bardle]
-Category: Engineering
-Description: A Shakespearean version of the popular word game "Wordle," where the Bard reacts as you play.
-URL: https://jbejjani2022.github.io/bardle/
+Description: The official web application for Harvard's student-run movie theater, with a custom content management system, seat booking, archives, merch shop, and more.
+URL: https://github.com/jbejjani2022/golden-arm
+Live Site: https://goldenarmtheater.com
 
 [PROJECT: SlavicGPT]
 Category: Engineering
-Description: Building, training, and fine-tuning GPT models on Russian text and Slavic literature.
+Description: Building, training, and fine-tuning of GPTs on Russian text and Slavic literature scraped from the web.
 URL: https://github.com/jbejjani2022/SlavicGPT
+
+[PROJECT: VioLibrary]
+Category: Engineering
+Description: A web app for searching violin recital repertoire, discovering new pieces via personalized recommendations, and building recital programs.
+URL: https://github.com/jbejjani2022/VioLibrary
+
+[PROJECT: MiniDiffusion]
+Category: Engineering
+Description: A PyTorch implementation of a diffusion model for image generation. Experiments done using MNIST and CIFAR-10 datasets, with results from the learned denoising process.
+URL: https://github.com/jbejjani2022/MiniDiffusion
+
+[PROJECT: bardle]
+Category: Engineering
+Description: A Shakespearean wordle with the Bard reacting as you play.
+URL: https://jbejjani2022.github.io/bardle/
+
+[PROJECT: SnakeCube]
+Category: Engineering
+Description: The classic 'Snake' game reimagined onto the 3D playing field of a self-contained, rotation-controlled LED cube.
+URL: https://github.com/jbejjani2022/SnakeCube
+
+[PROJECT: MiniML]
+Category: Engineering
+Description: A series of OCaml metacircular interpreters manifesting varying semantics.
+URL: https://github.com/jbejjani2022/MiniML
+
+---
+
+[BLOG_POSTS]
+Note: The following are recent blog posts. For a complete list, visit the /blog/ page.
+
+[POST: When Agents Prefer Hacking To Failure: Evaluating Misalignment Under Pressure]
+Date: November 9, 2025
+Description: What do agents do when they face obstacles to a goal? If the only path to a goal requires misaligned action, will they choose it or accept failure? This post builds off Anthropic's work on Agentic Misalignment to investigate these questions in an agentic coding environment. Originally published on LessWrong.
+URL: https://www.lesswrong.com/posts/AJANBeJb2p39su6F9/cs2881r-week-8-when-agents-prefer-hacking-to-failure
+
+[POST: What I've learned doing RL with JAX]
+Date: June 25, 2025
+Description: Experiences while working on mechagogue, a reinforcement learning repository with from-scratch JAX implementations of classic RL algorithms. Covers key lessons about reproducibility with JAX's functional random number generation, avoiding Python loops in favor of JAX primitives like lax.scan, the importance of varying random seeds in RL experiments, and the challenges of replicating published RL results. Includes results from MaxAtar, a JAXed implementation of MinAtar's Atari Breakout environment that achieves comparable performance in a fraction of the training time.
+URL: https://josephbejjani.com/mechagogue-jax/
+
+---
+
+[MUSIC]
+Joseph is Production Manager and concertmaster of the Bach Society Orchestra. He also plays violin with The Eliot Quartet. He occasionally makes music covers with friends and has analyzed collaboration networks of jazz musicians using linear algebra and graph theory.
+
+Related Links:
+- Bach Society Orchestra: https://bachsocietyorchestra.org
+- The Eliot Quartet: https://jbejjani2022.github.io/eliot-quartet/
+- Music Cover Example 1: https://www.youtube.com/watch?v=ZLqk_ALxqeI
+- Music Cover Example 2: https://www.youtube.com/watch?v=5auZcc_5UBM
+- Jazz Network Analysis: https://github.com/jbejjani2022/NetworkConnectivity
+
+---
+
+[MISCELLANEOUS]
+Joseph creates "Word Avalanches" - a form of creative wordplay where phrases sound nearly identical when spoken aloud but have different meanings. As of July 2025, both ChatGPT and Claude cannot generate these zero-shot, demonstrating an interesting limitation of current language models.
+
+URL: https://josephbejjani.com/misc/
 
 ---
 
