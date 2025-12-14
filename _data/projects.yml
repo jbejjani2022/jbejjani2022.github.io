@@ -6,7 +6,7 @@
 - title: "Programmatic Interpretability for Reward Model Debugging"
   category: research
   description: "Are Reward Models (RMs) used in RLHF actually rewarding what we want them to? I extend <a href='https://arxiv.org/abs/2510.14825'>learned programmatic representations</a> models for interpreting 'helpful' RMs, extracting opaque internal heuristics into human-readable Python functions. I identify exploitable, non-semantic biases through SHAP analysis of learned programmatic features, including verbosity and list-formatting biases causing the RM to assign higher rewards to unhelpful responses. Ongoing work: automating the bias discovery pipeline as a tool for auditing alignment systems for failure modes."
-  url: "https://drive.google.com/file/d/1AnTsihsp3tALTJGJ1_BLBM78wLPr2u52/view?usp=sharing"
+  url: "https://drive.google.com/file/d/1wR5Y1xRprA9m4iy0uN0seGKCG2yrVlL5/view?usp=sharing"
 
 - title: "When Honest Work Becomes Impossible: Coding Agents Under Pressure"
   category: research
