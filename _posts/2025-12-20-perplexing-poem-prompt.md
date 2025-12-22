@@ -1,6 +1,6 @@
 ---
 title: "Do LLMs understand their adversarial prompts?"
-date: 2025-12-20
+date: 2025-12-22
 layout: single
 sidebar: false
 classes: wide
