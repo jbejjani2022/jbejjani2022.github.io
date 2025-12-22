@@ -12,7 +12,7 @@ excerpt: "Discovering perplexing prompts that generate poems—then asking the L
 
 ## TL;DR
 
-- I use the [Greedy Coordinate Gradient](https://arxiv.org/abs/2307.15043) (GCG) prompt optimization algorithm to successfully find prompts that look like gibberish but get an LLM ([Qwen2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct)) to output a poem about itself. I perform several ablations, presenting results of experiments that optimize the prompt under different settings and constraints, discussing what works and what doesn't.
+- I use the [Greedy Coordinate Gradient](https://arxiv.org/abs/2307.15043) (GCG) prompt optimization algorithm to successfully find prompts that look like gibberish but get an LLM ([Qwen2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct)) to output a poem about itself. I perform several ablations, presenting results of experiments that optimize the prompt under different settings and constraints, and discuss what works and what doesn't.
 - I ask the LLM to explain these perplexing prompts. Preliminary results show that the explanations are somewhat faithful to what the prompt *actually* gets the model to output, but can be unreliable.
 - All in all, the results give limited evidence that an LLM can faithfully interpret at least parts of an 'adversarial' prompt for the (benign) task of poem-generation. They suggest that LLMs can 'understand' these prompts better than a human-reader (or at least I) can. At the very least, the results are kind of fun and amusing.
 
