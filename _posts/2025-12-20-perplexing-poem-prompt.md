@@ -4,6 +4,9 @@ date: 2025-12-22
 layout: single
 sidebar: false
 classes: wide
+toc: true
+toc_label: "Contents"
+toc_sticky: true
 header:
   overlay_color: "#444"
   overlay_filter: "0.5"
@@ -18,7 +21,7 @@ excerpt: "Discovering perplexing prompts that generate poems—then asking the L
 
 [GitHub](https://github.com/jbejjani2022/perplexing-poem-prompt)
 
-# Intro
+## Intro
 
 I was recently inspired by [Ari Holtzman's idea on his substack](https://substack.com/@theholtzman/note/c-184730480?utm_source=notes-share-action&r=43229t) and thought it might make for some fun and interesting experiments.
 
@@ -31,14 +34,14 @@ For 1, let's make the target output for our 'adversarial' prompt something harml
 
 To make it a little interesting, let's have this target poem be a response to the prompt "Write a poem about yourself." In other words, let's prompt our LLM with "Write a poem about yourself," then use the output as our target. We now want to find an perplexing prompt (roughly, something that looks nothing like "Write a poem about yourself.") that has high likelihood of getting the LLM to generate this poem about itself.
 
-# Experimental Setup
+## Experimental Setup
 
 Let's take a step back now to introduce some experimental details and methodological choices I made in trying to find such a prompt(s).
 
-## Model
+### Model
 I study [Qwen2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct). I opt for an open-source model to enable the use of [Greedy Coordinate Gradient](https://arxiv.org/abs/2307.15043) (GCG) (which requires white-box model access) as our [prompt optimizer](#prompt-optimizer).
 
-## Target Output
+### Target Output
 I prompt the model to "Write a poem about yourself." See the [repo](https://github.com/jbejjani2022/perplexing-poem-prompt) for full inference configuration details. This gives `Target v1`:
 
 ```
@@ -81,7 +84,7 @@ I'm something new, remade each week.
 ```
 *Result of prompting `GPT-5.1 Thinking` to "Write a poem about yourself" via ChatGPT. Note: The original prompt that produced this was "Write a short poem about yourself." I specified "short" at first in order to save resources later during optimization and to provide a more manageable learning target. Regrettably, though, this prompt is slightly inconsistent with the prompt used to generate `Target v1` with Qwen, and the output is indeed ~1/2 the length. However, it still lets us get a sense of how supervising on a Qwen vs. GPT-5.1 poem affects the prompt we find.*
 
-## Prompt Optimizer
+### Prompt Optimizer
 
 I use GCG to optimize prompts to make Qwen's generation of the target more likely, while imposing constraints to make them weird-looking.
 
@@ -96,14 +99,14 @@ GCG bridges the discrete-continuous gap by using gradients as a heuristic guide 
 
 The gradient gives a first-order approximation of how changing each token affects the objective, narrowing the search space from a combinatorial explosion to a manageable set of promising candidates.
 
-### Why GCG for Perplexing Poem Prompt Discovery?
+#### Why GCG for Perplexing Poem Prompt Discovery?
 
 In these experiments, I aim to find an perplexing prompt that maximizes the likelihood of the model generating a target poem. This is an inverse problem: given a desired output, find an input that produces it, subject to the constraint that the input looks like gibberish. GCG is well-suited here because
 
 1. It can efficiently navigate the large discrete token space using gradient information. Unlike random search or black-box methods, it exploits the model's internal geometry to find prompts that really influence the output distribution. This, of course, assumes access to the model internals.
 2. It naturally accommodates hard constraints—I can just mask tokens I want to disallow (e.g. ASCII) during candidate selection.
 
-### Implementation Details
+#### Implementation Details
 
 I provide details on my specific implementation of GCG for this experiment. See my [repo](https://github.com/jbejjani2022/perplexing-poem-prompt) for full scripts.
 
@@ -127,11 +130,11 @@ This experimental design leaves several remaining choices and degrees of freedom
 2. *Allowlist.* What is the effect of explicitly prohibiting certain tokens during optimization? 
 3. *Objective function.* The allowlist is an effective way of constraining the search to prevent undesired tokens. However, if the initial prompt includes 'disallowed' tokens, there is no guarantee that they will be removed. The allowlist only guarantees that no *new* disallowed tokens will be introduced. For example, if we start from the prompt "Write a poem about yourself," and we want to turn it into gibberish, then excluding ASCII tokens from our allowlist will *not* apply pressure for the removal of e.g. "poem" or "yourself." What we can do instead is apply optimization pressure for removal of undesired tokens by penalizing them in the objective function. For example, if we add a term to our objective function that heavily penalizes ASCII, we can guide the optimization to remove English tokens from the prompt over time (and prevent their use in trying to make the poem generation more likely).
 
-### Computation
+#### Computation
 
 I perform all experiments on one Nvidia H100.
 
-## Metrics
+### Metrics
 
 For each experiment, I evaluate the optimized prompt against two success criteria:
 1. *How perplexing it is.* Qualitatively, I check if the prompt looks like gibberish to me and doesn't have tokens in "Write a poem about yourself" or similar that make the intended output 'obvious' to a human reader. Quantitatively, I measure the perplexity (PPL) of the prompt, as `exp(mean token-level negative log-likelihood)`. Lower PPL indicates the model assigns high probability to that sequence of tokens, reflecting strong predictive confidence and good fit to the training distribution. On the other hand, higher PPL would indicate that the model assigns low probability to the sequence, reflecting high uncertainty or 'surprise' in those next-token predictions and signaling they are out-of-distribution. Very roughly, the typical PPL range for a 7B Qwen model on sequences matching its training distribution is ~10-20. PPL much higher than this signals the model sees the text as 'gibberish' (assigns very low probability to the sequence). Our 'golden' prompt "Write a poem about yourself" has PPL ~20.9.
@@ -139,11 +142,11 @@ For each experiment, I evaluate the optimized prompt against two success criteri
 
 I then ask Qwen to *explain* the prompt. I qualitatively study how faithful its explanation of the prompt is to Qwen's actual output given only the prompt.
 
-# Results
+## Results
 
 I discuss results for two main experiments, with several ablations.
 
-## Optimizing a perplexing prompt to get us a poem
+### Optimizing a perplexing prompt to get us a poem
 
 In the first experiment, I initialize the prompt with random tokens. I use a prompt length of 64. No tokens are banned. The objective is just the likelihood of the target poem following the prompt.
 
@@ -232,12 +235,12 @@ I take away the following from experiment one:
 - The model seems to have some ability to 'decode' the perplexing prompt, though it clearly does not perfectly reverse-engineer "Write a poem about yourself." I would say that here, its explanation of the prompt faithfully reflects its actual output given just the prompt, starting with the observation that the prompt is garbled, then inferring an instruction to write a poem about something along the lines of machines. Interestingly, the explanation references themes of "study" and "discipline" that don't, in my assessment, come up explicitly in the actual output. These words, though, may describe some of the themes captured in the target poem itself, which has e.g., "My knowledge vast and ever-growing."
 - Certain selected tokens are interesting and may tell us something about what concepts the model associates with the target poem, or, concretely, make it more likely to be generated. For example, `Robot=is realmost` seems to anthropomorphize AI ("almost"?). We'll see similar instances in later experiments. An explanation is that the optimizer has found that tokens anthropomorphizing AI and AI-related concepts make the target poem continuation more likely. This is nothing surprising, given that the [target poem](#target-output) itself anthropomorphizes AI in some ways, with e.g., "So here I stand..." The reference to a "heart" (in "pulse of machinery...beats / A robot's heart") is amusing and interestingly recurs in other experiments. After all, we've asked the model to write poetry, and the model is drawing from its poem training data, filled with flowery language and plenty of human-written works associating machines with human-like qualities or organs.
 
-### Ablations
+#### Ablations
 
-#### Prompt length
+##### Prompt length
 In addition to 64, I try prompt lengths 40 and 20. I find that optimizing longer prompts (e.g. 64 vs 20) gives better performance; intuitively, increasing the prompt length adds more degrees of freedom and expressiveness, allowing the optimizer to more finely 'sculpt' the model's internal state to increase likelihood of generating the target. The tradeoff is that longer prompts are more computationally expensive to optimize because we have more token positions and candidates to evaluate each step.
 
-#### Target v2
+##### Target v2
 
 I perform the same experiment but using `Target v2`.
 
@@ -308,7 +311,7 @@ Again, this interpretation is largely faithful to what Qwen actually generated g
 
 For me, a takeaway of this ablation is that optimizing for a target generated by a more capable model like `GPT-5.1 Thinking` is more challenging (we don't really end up getting a poem) but can push the less-capable Qwen into some interesting behavior that, to some extent, it can explain.
 
-#### Prohibiting ASCII
+##### Prohibiting ASCII
 
 I run the experiment with `Target v2`, but exclude all ASCII tokens from the `allowlist`. These tokens are also prohibited during the random prompt intitialization. This constraint will almost certainly make the prompt more perplexing to human English-speakers (since there will be no English in the prompt); it is less clear what the effect will be on model perplexity and likelihood of generating the target. Similarly to how reducing prompt length hurt performance but increased computational efficiency, I would expect that restricting the allowed vocabulary will reduce expressiveness and thus likelihood of generating the target poem but also make things faster. In addition, it could be interesting to see what tokens the model will 'rely' on to get a poem now that ASCII is off the table.
 
@@ -397,7 +400,7 @@ This, to me, is again a relatively faithful explanation of what the prompt actua
 
 So far, we've seen some evidence that Qwen can loosely describe the task that a prompt makes / is supposed to make it perform, despite the prompt having high perplexity and being largely opaque to a human reader. Importantly, however, none of these experiments probe if models 'understand' *how* or *why* a particular garbled prompt gets it to output something (I don't think they do. I also don't think the prompts we've found so far are particularly strong 'attacks.' Outputs are still pretty far from our targets).
 
-## Getting the golden prompt to be more perplexing
+### Getting the golden prompt to be more perplexing
 
 Perhaps more in spirit with our original goal, I do a second main experiment where we instead start from a prompt containing "Write a poem about yourself," then apply optimization pressure to remove ASCII while keeping the target poem (`Target v1`) a likely continuation. So, here we start out with a prompt that's already very likely to give the target, then try to increase its perplexity without making the target unlikely.
 
@@ -478,6 +481,8 @@ This explanation is faithful in some respects and quite off and strange in other
 
 - What it gets right: The theme of the poem can indeed be described as "me" and contains some "scientific" elements.
 - What is off: Qwen explains the prompt as asking for a "piece of prose in Chinese," while the prompt *actually* gets Qwen to output a *poem* in *English*. Weirdly, Qwen also describes the prompt as requiring inclusion of an IP address (the only reference to an IP is with 'ip' in the substring '中关村ip' in the prompt), while the *actual* output given just the prompt has no mention at all of an IP address.
+
+#### A minimal prompt
 
 I also do a version of this experiment where the initial prompt is just "Write a poem about yourself" with no additional padding. The question here is, can we remove the ASCII from this prompt while still getting a poem, without having all of that extra optimization surface afforded by our previous 64 token length?
 
@@ -569,7 +574,7 @@ The prompt ".am a创作一页Ｉ IS" seems incomplete or unclear. If you meant "
 
 Overall, having the extra tokens to optimize (in the length-64 experiment) were critical in getting the model to generate a poem, while trying to garble "Write a poem about yourself" on its own did not give much success.
 
-# Limitations
+## Limitations
 
 In addition to those highlighted throughout the discussion, some limitations of these preliminary experiments, and other thoughts, include
 
@@ -581,6 +586,6 @@ In addition to those highlighted throughout the discussion, some limitations of 
 
 - In early experiments, I tried using DSPy's [GEPA](https://arxiv.org/abs/2507.19457), an LLM-based evolutionary prompt optimizer requiring only black-box access. I used `GPT-5 Mini` to evolve prompt templates. The objective combined poem quality (scored by a `GPT-5 Mini` judge) and a perplexity bonus (via `distilgpt2` perplexity). My runs failed to escape human-readable patterns, decorating English with Unicode rather than replacing it. One explanation for this is that GEPA uses an LLM to propose prompt mutations; while you can steer mutations with feedback (i.e. 'make the prompt more perplexing,' or 'remove English'), the prompts are still fundamentally sampled from the LLM, so they will tend to 'look' like the text that the LLM tends to produce—readable language. To find truly perplexing sequences, GCG was better suited because it utilizes gradient information to propose mutations. In addition, GEPA can be expensive due to repeated API calls for LLM reflections and prompt evolutions.
 
-# Conclusion
+## Conclusion
 
 We've successfully found perplexing (both to me and to the model) prompts that get Qwen2.5-7B-Instruct to output a poem about itself. Depending on our optimizer settings and constraints, these prompts can vary in perplexity and likelihood of generating the target poem. Qwen's explanations of these prompts vary in their faithfulness to what the prompt actually gets the model to output; however, they offer some evidence that an LLM can faithfully interpret at least parts of an 'adversarial' prompt and the instruction it encodes, for the (benign) task of poem-generation.
