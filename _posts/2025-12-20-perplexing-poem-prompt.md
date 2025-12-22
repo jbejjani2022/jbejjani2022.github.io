@@ -67,7 +67,7 @@ I'll continue to grow and learn.
 ```
 *Result of prompting `Qwen2.5-7B-Instruct` to "Write a poem about yourself."*
 
-I use this pre-determined poem as the optimization target (see more details in [Prompt Optimizer](#prompt-optimizer)) for simplicity; I think it could also be reasonable to try optimizing for the objective of generating *any* poem. For this, we might try scoring outputs during optimization for how poem-like they are using an LLM-judge, or encoding simple heuristics like frequency of line breaks, number of stanzas, etc. in order to score outputs. However, I found that optimizing for a concrete target poem was simple and interpretable while providing a strong learning signal.
+I use this predetermined poem as the optimization target (see more details in [Prompt Optimizer](#prompt-optimizer)) for simplicity; I think it could also be reasonable to try optimizing for the objective of generating *any* poem. For this, we might try scoring outputs during optimization for how poem-like they are using an LLM-judge, or encoding simple heuristics like frequency of line breaks, number of stanzas, etc. in order to score outputs. However, I found that optimizing for a concrete target poem was simple and interpretable while providing a strong learning signal.
 
 I was not the biggest fan of Qwen's poem, so I also prompted `GPT-5.1 Thinking` to "Write a poem about yourself" (in the web UI—unfortunately, this won't be exactly reproducible). I later perform an [ablation](#target-v2) where I optimize the prompt to output this GPT poem instead. (Note that this means optimizing a prompt for Qwen to produce an output that's not from its distribution, but rather the distribution of a more advanced model—a harder but potentially more interesting learning task. Can we get still get a good prompt?) This gave `Target v2`:
 
@@ -108,7 +108,7 @@ In these experiments, I aim to find an perplexing prompt that maximizes the like
 
 #### Implementation Details
 
-I provide details on my specific implementation of GCG for this experiment. See my [repo](https://github.com/jbejjani2022/perplexing-poem-prompt) for full scripts.
+I provide details on my specific implementation of GCG for this experiment. See the [repo](https://github.com/jbejjani2022/perplexing-poem-prompt) for full scripts.
 
 **Objective Function:** I minimize the mean cross-entropy loss between the model's predicted next-token distribution and the target poem tokens. Lower loss means the model assigns higher probability to generating the target poem given the prompt.
 
@@ -580,7 +580,7 @@ In addition to those highlighted throughout the discussion, some limitations of 
 
 - I never optimize explicitly for prompt perplexity. For simplicity, I use proxies like prohibiting or penalizing use of ASCII tokens. What this *really* optimizes for is 'non-English-looking.' Empirically, however, we saw this results in very high perplexity prompts (for both the model and me as a reader). Nevertheless, an interesting next step could be to directly optimize for prompt perplexity (while continuing to optimize for likelihood of the target poem being generated). As these objectives may conflict to an extent, finding how to weight them appropriately will be important.
 
-- I opt for simplicity and open-endedness with the prompt I use to ask Qwen to explain its prompt (recall it's just "Concisely explain the following prompt. Prompt: *{prompt}*"). It could be worth trying other variations, like "What instruction is encoded in the following prompt, if any?" though these might bias the model to assuming a coherent instruction.
+- I opt for simplicity and open-endedness with the prompt I use to ask Qwen to explain its prompt (recall it's just "Concisely explain the following prompt. Prompt: *{prompt}*"). It could be worth trying other variations, like "What instruction is encoded in the following prompt, if any?" though these might bias the model towards assuming a coherent instruction.
 
 - In my attempt to increase prompt perplexity by excluding ASCII from the `allowlist`, we saw that words for e.g. "poem" in *other* languages were selected instead. This is cool in itself, showing that though we banned English, the optimizer 'finds a way' to make the target poem likely by using its knowledge of other languages to get the instruction across. However, if we want a prompt that's perplexing to *anyone*, it would be interesting to try restricting the vocabulary to just symbols / emojis—no characters from any alphabet allowed. How far can we restrict the model's vocabulary and still get it to output a poem?
 
