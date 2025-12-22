@@ -31,3 +31,34 @@ pre,
 .highlight pre {
   font-size: 0.9em;
 }
+
+// Make code blocks wrap instead of horizontal scroll
+div.highlighter-rouge,
+figure.highlight,
+pre,
+code {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+// Ensure highlighted code within pre also wraps
+.highlight pre,
+pre.highlight {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+// Screen reader only - visually hidden but accessible
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
