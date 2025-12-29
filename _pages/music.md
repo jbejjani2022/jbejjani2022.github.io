@@ -44,9 +44,9 @@ classes: wide
 
 <div class="about-section">
 <br>
-    <p>I am Production Manager and concertmaster of the <a href="https://bachsocietyorchestra.org">Bach Society Orchestra</a>. I also play violin with <a href="https://jbejjani2022.github.io/eliot-quartet/">The Eliot Quartet</a>.</p>
+    <p>I am Production Manager and concertmaster of the <a href="https://bachsocietyorchestra.org" target="_blank">Bach Society Orchestra</a>. I also play violin with <a href="https://jbejjani2022.github.io/eliot-quartet/" target="_blank">The Eliot Quartet</a>.</p>
 
-    <p>I make covers with my friends sometimes, like <a href="https://www.youtube.com/watch?v=ZLqk_ALxqeI">this</a> one and <a href="https://www.youtube.com/watch?v=5auZcc_5UBM">this</a>.</p>
+    <p>I make covers with my friends sometimes, like <a href="https://www.youtube.com/watch?v=ZLqk_ALxqeI" target="_blank">this</a> one and <a href="https://www.youtube.com/watch?v=5auZcc_5UBM" target="_blank">this</a>.</p>
 
-    <p>I used linear algebra and graph theory to <a href="https://github.com/jbejjani2022/NetworkConnectivity">analyze a collaboration network of jazz musicians</a>.</p>
+    <p>I used linear algebra and graph theory to <a href="https://github.com/jbejjani2022/NetworkConnectivity" target="_blank">analyze a collaboration network of jazz musicians</a>.</p>
 </div>

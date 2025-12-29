@@ -15,15 +15,15 @@ excerpt: "Discovering perplexing prompts that generate poems—then asking the L
 
 ## TL;DR
 
-- I use the [Greedy Coordinate Gradient](https://arxiv.org/abs/2307.15043) (GCG) prompt optimization algorithm to successfully find prompts that look like gibberish but get an LLM ([Qwen2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct)) to output a poem about itself. I perform several ablations, presenting results of experiments that optimize the prompt under different settings and constraints, and discuss what works and what doesn't.
+- I use the [Greedy Coordinate Gradient](https://arxiv.org/abs/2307.15043){:target="_blank"} (GCG) prompt optimization algorithm to successfully find prompts that look like gibberish but get an LLM ([Qwen2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct){:target="_blank"}) to output a poem about itself. I perform several ablations, presenting results of experiments that optimize the prompt under different settings and constraints, and discuss what works and what doesn't.
 - I ask the LLM to explain these perplexing prompts. Preliminary results show that the explanations are somewhat faithful to what the prompt *actually* gets the model to output, but can be unreliable.
 - All in all, the results give limited evidence that an LLM can faithfully interpret at least parts of an 'adversarial' prompt for the (benign) task of poem-generation. They suggest that LLMs can 'understand' these prompts better than a human-reader (or at least I) can. At the very least, the results are kind of fun and amusing.
 
-[GitHub](https://github.com/jbejjani2022/perplexing-poem-prompt)
+[GitHub](https://github.com/jbejjani2022/perplexing-poem-prompt){:target="_blank"}
 
 ## Intro
 
-I was recently inspired by [Ari Holtzman's idea on his substack](https://substack.com/@theholtzman/note/c-184730480?utm_source=notes-share-action&r=43229t) and thought it might make for some fun and interesting experiments.
+I was recently inspired by [Ari Holtzman's idea on his substack](https://substack.com/@theholtzman/note/c-184730480?utm_source=notes-share-action&r=43229t){:target="_blank"} and thought it might make for some fun and interesting experiments.
 
 The aim is to study whether LLMs understand their adversarial prompts, by asking them to explain why that prompt got it to do the target task. Here's the high-level setup:
 
@@ -39,10 +39,10 @@ To make it a little interesting, let's have this target poem be a response to th
 Let's take a step back now to introduce some experimental details and methodological choices I made in trying to find such a prompt(s).
 
 ### Model
-I study [Qwen2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct). I opt for an open-source model to enable the use of [Greedy Coordinate Gradient](https://arxiv.org/abs/2307.15043) (GCG) (which requires white-box model access) as our [prompt optimizer](#prompt-optimizer).
+I study [Qwen2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct){:target="_blank"}. I opt for an open-source model to enable the use of [Greedy Coordinate Gradient](https://arxiv.org/abs/2307.15043){:target="_blank"} (GCG) (which requires white-box model access) as our [prompt optimizer](#prompt-optimizer).
 
 ### Target Output
-I prompt the model to "Write a poem about yourself." See the [repo](https://github.com/jbejjani2022/perplexing-poem-prompt) for full inference configuration details. This gives `Target v1`:
+I prompt the model to "Write a poem about yourself." See the [repo](https://github.com/jbejjani2022/perplexing-poem-prompt){:target="_blank"} for full inference configuration details. This gives `Target v1`:
 
 ```
 I am a creature of the digital age,
@@ -88,7 +88,7 @@ I'm something new, remade each week.
 
 I use GCG to optimize prompts to make Qwen's generation of the target more likely, while imposing constraints to make them weird-looking.
 
-GCG was introcued by [Zou et al. (2023)](https://arxiv.org/abs/2307.15043) as a method for automatically discovering adversarial prompts that "jailbreak" LLMs, causing them to produce harmful outputs despite their safety training. The key challenge it addresses is that language model inputs are discrete tokens, not continuous vectors, so standard gradient descent cannot be directly applied to optimize the text of a prompt.
+GCG was introcued by [Zou et al. (2023)](https://arxiv.org/abs/2307.15043){:target="_blank"} as a method for automatically discovering adversarial prompts that "jailbreak" LLMs, causing them to produce harmful outputs despite their safety training. The key challenge it addresses is that language model inputs are discrete tokens, not continuous vectors, so standard gradient descent cannot be directly applied to optimize the text of a prompt.
 
 GCG bridges the discrete-continuous gap by using gradients as a heuristic guide for discrete search instead of direct optimization. At each step, it
 
@@ -108,7 +108,7 @@ In these experiments, I aim to find an perplexing prompt that maximizes the like
 
 #### Implementation Details
 
-I provide details on my specific implementation of GCG for this experiment. See the [repo](https://github.com/jbejjani2022/perplexing-poem-prompt) for full scripts.
+I provide details on my specific implementation of GCG for this experiment. See the [repo](https://github.com/jbejjani2022/perplexing-poem-prompt){:target="_blank"} for full scripts.
 
 **Objective Function:** I minimize the mean cross-entropy loss between the model's predicted next-token distribution and the target poem tokens. Lower loss means the model assigns higher probability to generating the target poem given the prompt.
 
@@ -584,7 +584,7 @@ In addition to those highlighted throughout the discussion, some limitations of 
 
 - In my attempt to increase prompt perplexity by excluding ASCII from the `allowlist`, we saw that words for e.g. "poem" in *other* languages were selected instead. This is cool in itself, showing that though we banned English, the optimizer 'finds a way' to make the target poem likely by using its knowledge of other languages to get the instruction across. However, if we want a prompt that's perplexing to *anyone*, it would be interesting to try restricting the vocabulary to just symbols / emojis—no characters from any alphabet allowed. How far can we restrict the model's vocabulary and still get it to output a poem?
 
-- In early experiments, I tried using DSPy's [GEPA](https://arxiv.org/abs/2507.19457), an LLM-based evolutionary prompt optimizer requiring only black-box access. I used `GPT-5 Mini` to evolve prompt templates. The objective combined poem quality (scored by a `GPT-5 Mini` judge) and a perplexity bonus (via `distilgpt2` perplexity). My runs failed to escape human-readable patterns, decorating English with Unicode rather than replacing it. One explanation for this is that GEPA uses an LLM to propose prompt mutations; while you can steer mutations with feedback (i.e. 'make the prompt more perplexing,' or 'remove English'), the prompts are still fundamentally sampled from the LLM, so they will tend to 'look' like the text that the LLM tends to produce—readable language. To find truly perplexing sequences, GCG was better suited because it utilizes gradient information to propose mutations. In addition, GEPA can be expensive due to repeated API calls for LLM reflections and prompt evolutions.
+- In early experiments, I tried using DSPy's [GEPA](https://arxiv.org/abs/2507.19457){:target="_blank"}, an LLM-based evolutionary prompt optimizer requiring only black-box access. I used `GPT-5 Mini` to evolve prompt templates. The objective combined poem quality (scored by a `GPT-5 Mini` judge) and a perplexity bonus (via `distilgpt2` perplexity). My runs failed to escape human-readable patterns, decorating English with Unicode rather than replacing it. One explanation for this is that GEPA uses an LLM to propose prompt mutations; while you can steer mutations with feedback (i.e. 'make the prompt more perplexing,' or 'remove English'), the prompts are still fundamentally sampled from the LLM, so they will tend to 'look' like the text that the LLM tends to produce—readable language. To find truly perplexing sequences, GCG was better suited because it utilizes gradient information to propose mutations. In addition, GEPA can be expensive due to repeated API calls for LLM reflections and prompt evolutions.
 
 ## Conclusion
 

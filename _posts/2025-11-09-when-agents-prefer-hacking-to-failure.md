@@ -7,5 +7,5 @@ layout: single
 author_profile: true
 ---
 
-This post was originally published on [LessWrong](https://www.lesswrong.com/posts/AJANBeJb2p39su6F9/cs2881r-week-8-when-agents-prefer-hacking-to-failure).
+This post was originally published on [LessWrong](https://www.lesswrong.com/posts/AJANBeJb2p39su6F9/cs2881r-week-8-when-agents-prefer-hacking-to-failure){:target="_blank"}.
 

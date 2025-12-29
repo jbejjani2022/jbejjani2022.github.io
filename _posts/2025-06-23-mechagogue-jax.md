@@ -10,21 +10,21 @@ header:
 excerpt: "Some of my experiences while working on mechagogue, a reinforcement learning repository with from-scratch JAX implementations of classic RL algorithms."
 ---
 
-A couple months ago, I rewatched OpenAI's [multi-agent hide and seek](https://www.youtube.com/watch?v=kopoLzvh5jY) and decided I wanted to know more about reinforcement learning so that I could do work on multi-agent systems. I also wanted to learn JAX, a Python library that's designed for super-fast, highly-parallelized computation on GPUs and TPUs but has a lot of tricky-to-work-with "[sharp bits](https://docs.jax.dev/en/latest/notebooks/Common_Gotchas_in_JAX.html)" arising from its firm embrace of functional programming.
+A couple months ago, I rewatched OpenAI's [multi-agent hide and seek](https://www.youtube.com/watch?v=kopoLzvh5jY){:target="_blank"} and decided I wanted to know more about reinforcement learning so that I could do work on multi-agent systems. I also wanted to learn JAX, a Python library that's designed for super-fast, highly-parallelized computation on GPUs and TPUs but has a lot of tricky-to-work-with "[sharp bits](https://docs.jax.dev/en/latest/notebooks/Common_Gotchas_in_JAX.html){:target="_blank"}" arising from its firm embrace of functional programming.
 
 In short, I wanted to be good at RL and do RL really fast with JAX.
 
-I started working with Kempner Institute Research Fellow [Aaron Walsman](https://kempnerinstitute.harvard.edu/people/our-people/aaron-walsman/) on early versions of his [mechagogue](https://github.com/aaronwalsman/mechagogue/tree/main), or 'teacher of machines' (where 'mecha' -> machine and 'gogue' -> teacher), a repository with from-scratch JAX implementations of classic RL algorithms aiming to be a go-to reference for RL researchers and learners. I figured that building something like this would be a solid way to get my hands into RL and JAX.
+I started working with Kempner Institute Research Fellow [Aaron Walsman](https://kempnerinstitute.harvard.edu/people/our-people/aaron-walsman/){:target="_blank"} on early versions of his [mechagogue](https://github.com/aaronwalsman/mechagogue/tree/main){:target="_blank"}, or 'teacher of machines' (where 'mecha' -> machine and 'gogue' -> teacher), a repository with from-scratch JAX implementations of classic RL algorithms aiming to be a go-to reference for RL researchers and learners. I figured that building something like this would be a solid way to get my hands into RL and JAX.
 
-I first spent time following and reading the paper-trail of foundational RL algorithms to see how they built off of one another. Starting with off-policy algorithms, I went from [Deep Q-Networks](https://arxiv.org/pdf/1312.5602) (DQN), to [Deterministic Policy Gradient](https://proceedings.mlr.press/v32/silver14.html) (DPG), to [Deep DPG](https://arxiv.org/pdf/1509.02971) (DDPG), to the [Soft Actor-Critic](https://arxiv.org/pdf/1801.01290) (SAC) algorithm that many people like using today for robotics.
+I first spent time following and reading the paper-trail of foundational RL algorithms to see how they built off of one another. Starting with off-policy algorithms, I went from [Deep Q-Networks](https://arxiv.org/pdf/1312.5602){:target="_blank"} (DQN), to [Deterministic Policy Gradient](https://proceedings.mlr.press/v32/silver14.html){:target="_blank"} (DPG), to [Deep DPG](https://arxiv.org/pdf/1509.02971){:target="_blank"} (DDPG), to the [Soft Actor-Critic](https://arxiv.org/pdf/1801.01290){:target="_blank"} (SAC) algorithm that many people like using today for robotics.
 
-The authors of the original DQN paper test their algorithm on Atari 2600 games. Aaron showed me [MinAtar](https://github.com/kenjyoung/MinAtar), a repo of mini versions of these Atari games with implementations of DQN and SAC to test in the game environments. We thought it would be cool and instructive to see if we could match or beat MinAtar's posted results at a fraction of the training time, using JAX.
+The authors of the original DQN paper test their algorithm on Atari 2600 games. Aaron showed me [MinAtar](https://github.com/kenjyoung/MinAtar){:target="_blank"}, a repo of mini versions of these Atari games with implementations of DQN and SAC to test in the game environments. We thought it would be cool and instructive to see if we could match or beat MinAtar's posted results at a fraction of the training time, using JAX.
 
 So, I started working on MaxAtar, our JAXed, mechagogian take on MinAtar.
 
 While working on mechagogue, we were guided by a couple design decisions we thought would make it easier to use and learn from: implement each RL algorithm in its own, stand-alone file, and similarly, keep the environments separate. With this architecture, we could see ourselves easily mixing and matching algorithms and environments with flexibility over training configuration. We also wanted each algorithm's file to serve as a kind of one-stop reference or study guide for that RL method.
 
-There's a repo [gymnax](https://github.com/RobertTLange/gymnax) that provides JAX implementations of RL environments while mirroring the classic [Gymnasium API](https://gymnasium.farama.org). In mechagogue, however, we try to more fully embrace the functional structure of JAX, allowing ourselves to stray from Gymnasium.
+There's a repo [gymnax](https://github.com/RobertTLange/gymnax){:target="_blank"} that provides JAX implementations of RL environments while mirroring the classic [Gymnasium API](https://gymnasium.farama.org){:target="_blank"}. In mechagogue, however, we try to more fully embrace the functional structure of JAX, allowing ourselves to stray from Gymnasium.
 
 As my first challenge inside MaxAtar, I decided to develop the Atari breakout game environment and use it to test and tune mechagogue's DQN. The idea was to verify that our JAX DQN was up to par by comparing it with results from MinAtar's DQN.
 
@@ -176,9 +176,9 @@ This is in part due to the points above.
 Benchmark environments are often non-deterministic. Combined with the variance intrinsic to RL methods, this makes reproducing results in RL challenging.
 
 See some of Joelle Pineau et al.'s work on this issue, with efforts to enable reproducibility in evaluating RL algorithms:
-- [Deep Reinforcement Learning that Matters](https://arxiv.org/abs/1709.06560)
-- [RE-EVALUATE: Reproducibility in Evaluating Reinforcement Learning Algorithms](https://openreview.net/forum?id=HJgAmITcgm)
-- [Benchmarking Batch Deep Reinforcement Learning Algorithms](https://arxiv.org/abs/1910.01708)
+- [Deep Reinforcement Learning that Matters](https://arxiv.org/abs/1709.06560){:target="_blank"}
+- [RE-EVALUATE: Reproducibility in Evaluating Reinforcement Learning Algorithms](https://openreview.net/forum?id=HJgAmITcgm){:target="_blank"}
+- [Benchmarking Batch Deep Reinforcement Learning Algorithms](https://arxiv.org/abs/1910.01708){:target="_blank"}
 
 
 ## I got some cool results.
