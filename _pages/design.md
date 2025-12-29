@@ -44,5 +44,5 @@ classes: wide
 
 <div class="about-section">
 <br>
-    <p>I made and maintain applications like <a href="https://goldenarmtheater.com" target="_blank">goldenarmtheater.com</a> (<a href="https://github.com/jbejjani2022/golden-arm" target="_blank">GitHub</a>), <a href="https://works-of-arts-marcella-vlahos.vercel.app/" target="_blank">marcellavlahos.com</a> (<a href="https://github.com/jbejjani2022/works-of-arts" target="_blank">GitHub</a>), and <a href="https://lepetitdesk.com" target="_blank">lepetitdesk.com</a> (<a href="https://github.com/jbejjani2022/le-petit-desk" target="_blank">GitHub</a>).</p>
+    <p>I made and maintain applications like <a href="https://goldenarmtheater.com" target="_blank">goldenarmtheater.com</a> (<a href="https://github.com/jbejjani2022/golden-arm" target="_blank">GitHub</a>), <a href="https://marcellavlahos.com" target="_blank">marcellavlahos.com</a> (<a href="https://github.com/jbejjani2022/works-of-arts" target="_blank">GitHub</a>), and <a href="https://lepetitdesk.com" target="_blank">lepetitdesk.com</a> (<a href="https://github.com/jbejjani2022/le-petit-desk" target="_blank">GitHub</a>).</p>
 </div>
