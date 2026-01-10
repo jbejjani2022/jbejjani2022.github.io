@@ -1,6 +1,6 @@
 - title: "Evolutionary Alignment"
   category: research
-  description: "Is Evolution Strategies (ES) robust to reward hacking? In this work, we show that ES discovers qualitatively and geometrically different solutions than GRPO during LLM fine-tuning, and that these differences matter in safety-relevant alignment tasks."
+  description: "We show that Evolution Strategies, a zero-order optimization algorithm, discovers qualitatively and geometrically different solutions than GRPO during LLM fine-tuning, and that these differences can matter in safety-relevant alignment tasks."
   url: "https://drive.google.com/file/d/16McClLBCSU7pgTV-NyVssfjJYrDlq8hF/view?usp=sharing"
 
 - title: "Programmatic Interpretability for Reward Model Debugging"
