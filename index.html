@@ -50,7 +50,7 @@ classes: wide
 
 <h2 class="section-title">Recent Posts</h2>
 <div class="project-section">
-  {% for post in site.posts limit:3 %}
+  {% for post in site.posts limit:5 %}
     {% include archive-single.html %}
   {% endfor %}
   <div class="all-posts-link">
@@ -61,7 +61,7 @@ classes: wide
 <h2 class="section-title">Research</h2>
 <div class="project-section">
   {% assign research_projects = site.data.projects | where: "category", "research" %}
-  {% for project in research_projects limit:5 %}
+  {% for project in research_projects limit:3 %}
     <div class="project-item">
       <h3 class="project-title">
         {% if project.url %}
@@ -83,7 +83,7 @@ classes: wide
 <h2 class="section-title">Engineering</h2>
 <div class="project-section">
   {% assign engineering_projects = site.data.projects | where: "category", "engineering" %}
-  {% for project in engineering_projects limit:5 %}
+  {% for project in engineering_projects limit:3 %}
     <div class="project-item">
       <h3 class="project-title">
         {% if project.url %}
