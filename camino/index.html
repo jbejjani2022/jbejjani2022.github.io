@@ -1,0 +1,1525 @@
+---
+layout: null
+sitemap: false
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Camino de Joey, Xander, y Miller</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐚</text></svg>">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #F5F0E8;
+  --terracotta: #C45D3E;
+  --navy: #1B2D45;
+  --gold: #D4A843;
+  --charcoal: #2C2C2C;
+  --white: #FFFFFF;
+  --panel-bg: #FFFFFF;
+  --sidebar-width: 380px;
+}
+
+html, body { height: 100%; font-family: 'DM Sans', sans-serif; color: var(--charcoal); background: var(--bg); }
+body { display: flex; flex-direction: column; }
+
+/* Header */
+.header {
+  background: var(--navy);
+  color: var(--white);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 1000;
+  position: relative;
+  flex-shrink: 0;
+}
+.header-shell { font-size: 28px; line-height: 1; }
+.header h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+}
+.header .subtitle {
+  font-size: 13px;
+  opacity: 0.7;
+  margin-top: 2px;
+}
+
+/* Main layout */
+.main {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Sidebar */
+.sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  background: var(--bg);
+  overflow-y: auto;
+  border-right: 1px solid rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar::-webkit-scrollbar { width: 6px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 3px; }
+
+/* Stats bar */
+.stats-bar {
+  padding: 16px 20px;
+  background: linear-gradient(135deg, rgba(196,93,62,0.08), rgba(27,45,69,0.06));
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  font-size: 13px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.stat { display: flex; align-items: center; gap: 4px; }
+.stat-icon { font-size: 15px; }
+.stat-divider { opacity: 0.3; }
+
+/* Day list */
+.day-list { padding: 8px 0; }
+
+.day-item {
+  padding: 12px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: background 0.2s;
+  border-left: 3px solid transparent;
+}
+.day-item:hover { background: rgba(0,0,0,0.03); }
+.day-item.active {
+  background: rgba(196,93,62,0.06);
+  border-left-color: var(--terracotta);
+}
+
+.day-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.day-dot.walk { background: var(--terracotta); }
+.day-dot.rest, .day-dot.transport { background: var(--navy); }
+.day-dot.final { background: var(--gold); }
+
+.day-item-info { flex: 1; min-width: 0; }
+.day-item-label {
+  font-weight: 500;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.day-item-meta {
+  font-size: 12px;
+  opacity: 0.6;
+  margin-top: 1px;
+}
+
+/* Detail panel */
+.detail-panel {
+  padding: 0 20px 24px;
+  display: none;
+}
+.detail-panel.visible { display: block; }
+
+.detail-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  font-size: 13px;
+  font-weight: 500;
+}
+.detail-nav-btn, .detail-back {
+  color: var(--terracotta);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+  font-size: 13px;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+}
+.detail-nav-btn:hover, .detail-back:hover { text-decoration: underline; }
+.detail-nav-btn.hidden { visibility: hidden; }
+
+.detail-header {
+  margin-bottom: 16px;
+}
+.detail-day-label {
+  font-family: 'DM Serif Display', serif;
+  font-size: 13px;
+  color: var(--terracotta);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.detail-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 24px;
+  color: var(--navy);
+  line-height: 1.2;
+}
+.detail-distance {
+  font-size: 13px;
+  color: var(--terracotta);
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.detail-photos {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  margin-bottom: 16px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.detail-photos::-webkit-scrollbar { display: none; }
+
+.detail-photo-item {
+  flex: 0 0 85%;
+  scroll-snap-align: start;
+  min-width: 0;
+}
+.detail-photo-item:only-child { flex: 0 0 100%; }
+
+.detail-photo-img {
+  width: 100%;
+  height: 180px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: linear-gradient(135deg, var(--terracotta), var(--navy));
+  display: block;
+}
+
+.detail-photo-caption {
+  font-size: 11px;
+  color: #888;
+  margin-top: 4px;
+  text-align: center;
+}
+
+.detail-summary {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.detail-section {
+  margin-bottom: 18px;
+}
+.detail-section-title {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.detail-section-title.highlights { color: var(--navy); }
+.detail-section-title.food { color: var(--terracotta); }
+.detail-section-title.accommodation { color: #5B7B3A; }
+.detail-section-title.tips { color: var(--gold); }
+
+.accom-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 6px;
+}
+@media (max-width: 600px) {
+  .accom-cards { grid-template-columns: 1fr; }
+}
+.accom-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 12px;
+  line-height: 1.5;
+  background: #fafaf8;
+  position: relative;
+}
+.accom-card.recommended {
+  border-color: var(--terracotta);
+  background: #fdf8f6;
+}
+.accom-card-badge {
+  position: absolute;
+  top: -8px;
+  right: 10px;
+  background: var(--terracotta);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+.accom-card-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #888;
+  margin-bottom: 4px;
+}
+.accom-card-label.budget { color: #5B7B3A; }
+.accom-card-label.upgrade { color: var(--terracotta); }
+.accom-card-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+.accom-card-type {
+  font-size: 11px;
+  color: #888;
+  margin-bottom: 4px;
+}
+.accom-card-price {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.accom-card-booking {
+  font-size: 11px;
+  color: #666;
+  margin-bottom: 4px;
+}
+.accom-card-details {
+  font-size: 11px;
+  color: #555;
+  margin-bottom: 4px;
+}
+.accom-card-phone {
+  font-size: 11px;
+  color: var(--navy);
+}
+.accom-recommendation {
+  margin-top: 8px;
+  padding: 8px 10px;
+  background: #f5f0e8;
+  border-radius: 6px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #444;
+}
+
+.detail-section ul {
+  list-style: none;
+  padding: 0;
+}
+.detail-section li {
+  font-size: 13px;
+  line-height: 1.5;
+  padding: 4px 0;
+  padding-left: 16px;
+  position: relative;
+}
+.detail-section li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--terracotta);
+  font-weight: bold;
+}
+
+.detail-section p {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.detail-transport {
+  background: rgba(27,45,69,0.06);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: var(--navy);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Map */
+.map-container {
+  flex: 1;
+  position: relative;
+}
+#map { width: 100%; height: 100%; }
+
+/* Custom markers */
+.marker-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  border: 2px solid rgba(255,255,255,0.8);
+}
+.marker-circle:hover {
+  transform: scale(1.2);
+  box-shadow: 0 3px 12px rgba(0,0,0,0.35);
+}
+.marker-circle.active {
+  transform: scale(1.3);
+  box-shadow: 0 0 0 4px rgba(196,93,62,0.3), 0 3px 12px rgba(0,0,0,0.35);
+}
+.marker-circle.walk { background: var(--terracotta); }
+.marker-circle.rest, .marker-circle.transport { background: var(--navy); }
+.marker-circle.final { background: var(--gold); }
+
+/* Distance labels */
+.distance-label {
+  background: white;
+  color: var(--terracotta);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  white-space: nowrap;
+}
+
+/* Reset button */
+.reset-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1000;
+  background: var(--white);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.reset-btn:hover { background: #f0f0f0; }
+
+/* Legend */
+.legend {
+  position: absolute;
+  bottom: 24px;
+  left: 12px;
+  z-index: 1000;
+  background: rgba(255,255,255,0.95);
+  padding: 10px 14px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.legend-item { display: flex; align-items: center; gap: 8px; }
+.legend-line {
+  width: 24px;
+  height: 3px;
+  border-radius: 2px;
+}
+.legend-line.walking { background: var(--terracotta); }
+.legend-line.transport { background: var(--navy); border-top: 2px dashed var(--navy); height: 0; }
+.legend-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--terracotta);
+  border: 1.5px solid white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* Drag handle — hidden on desktop */
+.sheet-handle { display: none; }
+
+/* Mobile */
+@media (max-width: 768px) {
+  .main { flex-direction: column; }
+  .map-container { height: 100% !important; flex: 1; order: 1; }
+  .header h1 { font-size: 18px; }
+  .header .subtitle { font-size: 12px; }
+  .detail-photo-img { height: 140px; }
+
+  /* Sidebar becomes bottom sheet */
+  .sidebar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    min-width: 100%;
+    top: var(--sheet-top, calc(100vh - 108px));
+    transition: top 0.3s ease;
+    border-right: none;
+    border-top: none;
+    border-radius: 16px 16px 0 0;
+    z-index: 1001;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+    overflow: hidden;
+  }
+  .sidebar.dragging { transition: none; }
+
+  /* Drag handle */
+  .sheet-handle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+    cursor: grab;
+    flex-shrink: 0;
+    background: var(--bg);
+    border-radius: 16px 16px 0 0;
+    touch-action: none;
+  }
+  .sheet-handle span {
+    display: block;
+    width: 40px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(0,0,0,0.25);
+  }
+
+  /* Hide stats bar and legend on mobile */
+  .stats-bar { display: none; }
+  .legend { display: none; }
+
+  /* Mobile pills */
+  .mobile-pills {
+    display: flex;
+    gap: 8px;
+    padding: 12px 16px;
+    overflow-x: auto;
+    background: var(--bg);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    -webkit-overflow-scrolling: touch;
+    flex-shrink: 0;
+  }
+  .mobile-pills::-webkit-scrollbar { display: none; }
+  .mobile-pill {
+    flex-shrink: 0;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    background: white;
+    border: 1px solid rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .mobile-pill.active {
+    background: var(--terracotta);
+    color: white;
+    border-color: var(--terracotta);
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-pills { display: none; }
+}
+
+/* Footer */
+.footer {
+  background: var(--navy);
+  color: rgba(255,255,255,0.5);
+  padding: 8px 24px;
+  font-size: 11px;
+  text-align: center;
+}
+
+/* Animations */
+@keyframes markerAppear {
+  from { opacity: 0; transform: scale(0.3); }
+  to { opacity: 1; transform: scale(1); }
+}
+.marker-circle {
+  animation: markerAppear 0.4s ease-out both;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <span class="header-shell">🐚</span>
+  <div>
+    <h1>El Camino de Joey, Xander, y Miller: Porto → Santiago</h1>
+    <div class="subtitle">March 15–24, 2026 · 189 km on foot</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="sidebar" id="sidebar">
+    <div class="sheet-handle" id="sheetHandle"><span></span></div>
+    <div class="stats-bar">
+      <span class="stat"><span class="stat-icon">🚶</span> 189 km</span>
+      <span class="stat-divider">·</span>
+      <span class="stat"><span class="stat-icon">📅</span> 8 days</span>
+      <span class="stat-divider">·</span>
+      <span class="stat"><span class="stat-icon">🇵🇹🇪🇸</span></span>
+      <span class="stat-divider">·</span>
+      <span class="stat"><span class="stat-icon">⛪</span> Santiago</span>
+    </div>
+
+    <div class="mobile-pills" id="mobilePills"></div>
+
+    <div class="day-list" id="dayList"></div>
+    <div class="detail-panel" id="detailPanel"></div>
+  </div>
+
+  <div class="map-container">
+    <div id="map"></div>
+    <button class="reset-btn" id="resetBtn" title="Reset view">↩</button>
+    <div class="legend">
+      <div class="legend-item"><span class="legend-line walking"></span> Walking</div>
+      <div class="legend-item"><span class="legend-line transport"></span> Bus / Ferry</div>
+      <div class="legend-item"><span class="legend-dot"></span> Overnight stop</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────────────
+const itinerary = [
+  {
+    day: 0,
+    date: "March 15",
+    dayOfWeek: "Sunday",
+    label: "Arrive in Porto",
+    type: "rest",
+    lat: 41.1432,
+    lng: -8.6103,
+    distanceFromPrev: null,
+    transportFromPrev: null,
+    summary: "Fly in, explore Porto, prepare for the Camino",
+    highlights: [
+      "Cross Dom Luís I Bridge for panoramic views",
+      "Port wine tasting in Vila Nova de Gaia (try Taylor's or Kopke)",
+      "São Bento Train Station — stunning azulejo tile murals",
+      "Buy your Credencial (pilgrim passport) at Sé Cathedral",
+      "Mercado do Bolhão — Porto's iconic central market"
+    ],
+    food: [
+      "Francesinha at Café Santiago or Brasão — Porto's legendary meat/cheese/sauce sandwich",
+      "Vinho Verde — crisp, fizzy 'green wine', light and cheap",
+      "Pastéis de nata — Portuguese custard tarts",
+      "Royal Cocktail Club on Rua da Fábrica for evening cocktails"
+    ],
+    accommodation: {
+      budget: {
+        name: "Albergue de Peregrinos do Porto",
+        type: "private",
+        price: "€18/pp dorm · €25/pp for 3 in private room",
+        booking: "Website: albergueperegrinosporto.pt",
+        details: "Pilgrim-only. Kitchen, lockers, washer/dryer, WiFi, hammock garden. Also sells Credencials (€2). 2 km from Sé Cathedral.",
+        phone: "+351 962 150 991"
+      },
+      upgrade: {
+        name: "Porto Wine Hostel",
+        type: "hostel",
+        price: "€15–20/pp dorm · ~€50–70 private room",
+        booking: "Booking.com",
+        details: "Central location near Sé Cathedral. Free port wine at check-in. Kitchen, laundry, lounge, AC. Highly reviewed by Camino pilgrims.",
+        recommended: true
+      },
+      recommendation: "Book Porto Wine Hostel — better location for maximizing your one Porto day."
+    },
+    tips: "Book bus/train to Viana do Castelo for tomorrow morning. Download Camino Ninja app (free, offline maps).",
+    photos: [
+      { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Ribeira_%28Porto%29.jpg/960px-Ribeira_%28Porto%29.jpg", caption: "Ribeira waterfront, Porto" },
+      { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Puente_Don_Luis_I%2C_Oporto%2C_Portugal%2C_2012-05-09%2C_DD_08.JPG/960px-Puente_Don_Luis_I%2C_Oporto%2C_Portugal%2C_2012-05-09%2C_DD_08.JPG", caption: "Dom Lu\u00eds I Bridge" },
+      { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Azulejos_in_S%C3%A3o_Bento_train_station_01.jpg/960px-Azulejos_in_S%C3%A3o_Bento_train_station_01.jpg", caption: "Azulejos in S\u00e3o Bento Station" }
+    ]
+  },
+  {
+    day: 1,
+    date: "March 16",
+    dayOfWeek: "Monday",
+    label: "Viana do Castelo → Caminha",
+    type: "walk",
+    lat: 41.6936,
+    lng: -8.8319,
+    endLat: 41.8728,
+    endLng: -8.8389,
+    distanceFromPrev: "27 km walking",
+    transportFromPrev: "Bus/train Porto → Viana do Castelo (~1hr, €3–6)",
+    summary: "Bus to Viana, see Santa Luzia, walk the coast to the Spanish border",
+    highlights: [
+      "Funicular to Santuário de Santa Luzia — 360° views over town, river, and ocean",
+      "Walk through peaceful villages on ancient roads",
+      "Vila Praia de Âncora — beautiful coastal town, great lunch stop",
+      "Arrive at Caminha on the Minho River estuary — Portugal meets Spain"
+    ],
+    food: [
+      "Fresh fish and bacalhau (salt cod) in Caminha",
+      "Vinho Verde — your last glasses in Portugal",
+      "Pimientos de Padrón available near the border"
+    ],
+    accommodation: {
+      budget: {
+        name: "Albergue de Peregrinos de Caminha",
+        type: "municipal",
+        price: "€10/pp",
+        booking: "Walk-in, first-come-first-served",
+        details: "28 beds. Kitchen, fridge, microwave, washer, dryer. Opens ~2 PM. Credential required.",
+        phone: "+351 914 290 431"
+      },
+      upgrade: {
+        name: "Bom Caminha",
+        type: "private",
+        price: "€21/pp dorm · €40+ private room · +€12 pilgrim dinner",
+        booking: "Booking.com",
+        details: "Rated 8.9. 16 beds, pilgrim-only. Communal multi-course dinner with wine (€12) is a Camino highlight. Terrace, garden, kitchen. Staff help with Minho ferry info.",
+        phone: "+351 962 974 936",
+        recommended: true
+      },
+      recommendation: "Book Bom Caminha — the communal pilgrim dinner is worth it alone. Only 16 beds, reserve ahead."
+    },
+    tips: "Book the Minho river crossing NOW: contact a private boat operator (the old municipal ferry is unreliable — private water taxis handle most crossings). Message or call the day before to confirm, and plan to go early. Fallback: if the crossing is stopped due to weather or ops, you can detour inland via the bridge at Valença–Tui (adds time but saves the day). Set clocks forward 1 hour when crossing into Spain!",
+    photos: [
+      { url: "https://upload.wikimedia.org/wikipedia/commons/f/fb/Templo_SCJ_Santa_Luzia_1.JPG", caption: "Santu\u00e1rio de Santa Luzia, Viana do Castelo" },
+      { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Caminha_e_Camposancos.JPG/960px-Caminha_e_Camposancos.JPG", caption: "Caminha and Minho River estuary" }
+    ]
+  },
+  {
+    day: 2,
+    date: "March 17",
+    dayOfWeek: "Tuesday",
+    label: "Caminha → Baiona",
+    type: "walk",
+    lat: 41.8728,
+    lng: -8.8389,
+    endLat: 42.1186,
+    endLng: -8.8485,
+    distanceFromPrev: "34 km walking",
+    transportFromPrev: "Ferry across Minho River to A Guarda, Spain",
+    summary: "Ferry to Spain, Celtic ruins, wild Galician coast, medieval Baiona",
+    highlights: [
+      "Morning ferry across the Minho River — crossing into Spain",
+      "Monte de Santa Trega — Celtic hillfort ruins with panoramic Atlantic views (short detour, worth it)",
+      "Monastery of Santa María de Oia — 12th-century Cistercian masterpiece",
+      "First views of the Cíes Islands offshore",
+      "Baiona — stunning walled medieval town on a peninsula",
+      "Walk the Monterreal fortress walls at sunset — absurdly good views over the bay"
+    ],
+    food: [
+      "Pulpo a la gallega — Galician octopus with paprika and olive oil (welcome to Galicia!)",
+      "Empanada gallega — savory pie",
+      "Albariño wine — crisp white from Rías Baixas"
+    ],
+    accommodation: {
+      budget: {
+        name: "Albergue Estela do Mar",
+        type: "private",
+        price: "~€15/pp",
+        booking: "Bookable",
+        details: "20 beds. Each bunk has locker and light. Good kitchen. No heating — bring warm layers for March."
+      },
+      upgrade: {
+        name: "Hostel Albergue Baionamar",
+        type: "hostel",
+        price: "€18–22/pp dorm",
+        booking: "Booking.com",
+        details: "Rated 8.9+. Beachfront location. Kitchen, lounge, WiFi, washer/dryer. Friendly host. Near restaurants and Ribiera Beach.",
+        recommended: true
+      },
+      recommendation: "Book Baionamar on Booking.com. Guaranteed bed after a 34 km day."
+    },
+    tips: "This is the day most likely to become a grind — 34 km plus the Santa Trega detour, and the ferry crossing can eat into your morning. Start early. If it rains or the crossing delays you, be ready to push. The Monastery of Oia is a highlight — take time there, but watch your pace.",
+    photos: [
+      { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Santa_Trega._Castro._A_Guarda._Galiza.jpg/960px-Santa_Trega._Castro._A_Guarda._Galiza.jpg", caption: "Castro de Santa Trega, A Guarda" },
+      { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Monasterio_de_Santa_Maria_de_Oia_%28Pontevedra%29.jpg/960px-Monasterio_de_Santa_Maria_de_Oia_%28Pontevedra%29.jpg", caption: "Monastery of Santa Mar\u00eda de Oia" },
+      { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Fortaleza_de_Monterreal.jpg/960px-Fortaleza_de_Monterreal.jpg", caption: "Fortaleza de Monterreal, Baiona" }
+    ]
+  },
+  {
+    day: 3,
+    date: "March 18",
+    dayOfWeek: "Wednesday",
+    label: "Baiona → Vigo",
+    type: "walk",
+    lat: 42.1186,
+    lng: -8.8485,
+    endLat: 42.2328,
+    endLng: -8.7226,
+    distanceFromPrev: "27 km walking",
+    transportFromPrev: null,
+    summary: "Coastal paths with Cíes Islands views, arrive in vibrant Vigo",
+    highlights: [
+      "Best Cíes Islands views of the entire trip",
+      "Wild Atlantic coves and rocky coastline",
+      "Dramatic coastal walking through Nigrán",
+      "Vigo — Spain's largest fishing port, vibrant and underrated",
+      "Quick climb to Monte do Castro viewpoint — best city view of the Ría de Vigo and Cíes Islands"
+    ],
+    food: [
+      "Oysters at Rúa de las Ostras (Oyster Street) — shucked fresh, cheap, incredible",
+      "Navajas (razor clams)",
+      "Mesón Compostela for seafood dinner",
+      "More Albariño wine"
+    ],
+    accommodation: {
+      budget: {
+        name: "Albergue de Peregrinos de Vigo",
+        type: "municipal",
+        price: "€10/pp",
+        booking: "Walk-in, first-come-first-served",
+        details: "Xunta-run, 93 beds. Open all year. Clean, well-maintained. Very unlikely to fill in March. Credential required.",
+        recommended: true
+      },
+      upgrade: {
+        name: "R4 Hostel Vigo",
+        type: "hostel",
+        price: "€18–22/pp dorm",
+        booking: "Booking.com",
+        details: "Best private hostel in Vigo for pilgrims. Modern, well-located near old town and Camino route."
+      },
+      recommendation: "Walk in to the Xunta albergue — 93 beds in March means guaranteed. Save money for Vigo's oysters."
+    },
+    tips: "Vigo is a real city — enjoy the energy. The oyster street near the port is unmissable.",
+    photos: [
+      { url: "https://upload.wikimedia.org/wikipedia/commons/1/19/Islas_C%C3%ADes_vistas_desde_Monte_Ferro.JPG", caption: "C\u00edes Islands from Monte Ferro" },
+      { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/R%C3%BAa_das_Ostras.JPG/960px-R%C3%BAa_das_Ostras.JPG", caption: "R\u00faa das Ostras (Oyster Street), Vigo" }
+    ]
+  },
+  {
+    day: 4,
+    date: "March 19",
+    dayOfWeek: "Thursday",
+    label: "Vigo → Pontevedra",
+    type: "walk",
+    lat: 42.2328,
+    lng: -8.7226,
+    endLat: 42.4310,
+    endLng: -8.6443,
+    distanceFromPrev: "37 km walking",
+    transportFromPrev: null,
+    summary: "Longest day — through green sections out of Vigo, Redondela's viaducts, medieval bridges, into beautiful Pontevedra",
+    highlights: [
+      "Redondela — where Coastal and Central routes merge, charming town with viaducts",
+      "Medieval Ponte Sampaio bridge (site of a Napoleonic battle)",
+      "Galician forest trails through eucalyptus and pine",
+      "Views over the Vigo Estuary from hilltop sections",
+      "Pontevedra — one of the finest pedestrian old towns in all of Galicia",
+      "Basilica of Santa María la Mayor — stunning Renaissance facade in the old town core"
+    ],
+    food: [
+      "Raxo (marinated pork) and zorza (spiced pork) in Pontevedra's old town tapas bars",
+      "Pulpo a la gallega — always",
+      "Tapas crawl through Pontevedra's car-free historic center"
+    ],
+    accommodation: {
+      budget: {
+        name: "Albergue Virxe Peregrina",
+        type: "municipal",
+        price: "€10/pp",
+        booking: "Walk-in, first-come-first-served",
+        details: "Xunta-run. In the old town near Peregrina church. Well-maintained. Credential required."
+      },
+      upgrade: {
+        name: "Bulezen Urban Hostel",
+        type: "hostel",
+        price: "€18–20/pp dorm",
+        booking: "Booking.com",
+        details: "Excellent reviews. Minutes from old town. Bunks with curtains, lights, outlets, shelf. Kitchen, sunny terrace, lockers. Sheets + towel provided. Bed bug prevention protocol.",
+        recommended: true
+      },
+      recommendation: "Book Bulezen — after 37 km you deserve curtained bunks and a guarantee. The terrace is great for drying rain-soaked gear."
+    },
+    tips: "This is the longest day at 37 km — leave Vigo early (this is one of two pinch days along with Day 2). The official stage out of Vigo has nicer green sections than you'd expect, and the forest after Redondela is beautiful. Dinner in Pontevedra doesn't start until 8:30–9:00 PM (Spanish time).",
+    photos: [
+      { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Viaduto_de_Pontevedra%2C_Redondela.jpg/960px-Viaduto_de_Pontevedra%2C_Redondela.jpg", caption: "Viaduto de Pontevedra, Redondela" },
+      { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Plaza_de_la_Le%C3%B1a%2C_Pontevedra.JPG/960px-Plaza_de_la_Le%C3%B1a%2C_Pontevedra.JPG", caption: "Plaza de la Le\u00f1a, Pontevedra old town" },
+      { url: "https://upload.wikimedia.org/wikipedia/commons/4/4e/Pontevedra_capital_Basilica_Santa_Mar%C3%ADa_la_Mayor_fachada_plateresca-renacentista.jpg", caption: "Bas\u00edlica de Santa Mar\u00eda la Mayor" }
+    ]
+  },
+  {
+    day: 5,
+    date: "March 20",
+    dayOfWeek: "Friday",
+    label: "Pontevedra → Caldas de Reis",
+    type: "walk",
+    lat: 42.4310,
+    lng: -8.6443,
+    endLat: 42.6045,
+    endLng: -8.6423,
+    distanceFromPrev: "21 km walking",
+    transportFromPrev: null,
+    summary: "Gentle day through vineyards and forests to a Roman spa town",
+    highlights: [
+      "Galician vineyards with traditional granite emparrado trellises",
+      "Small granite villages with hórreos (traditional grain stores)",
+      "Ancient forest paths",
+      "Caldas de Reis — spa town with thermal hot springs since Roman times"
+    ],
+    food: [
+      "Caldo gallego — white bean and greens soup, ultimate pilgrim comfort food",
+      "Local tapas in Caldas de Reis"
+    ],
+    accommodation: {
+      budget: {
+        name: "Albergue de Peregrinos de Caldas de Reis",
+        type: "municipal",
+        price: "€10/pp",
+        booking: "Walk-in, first-come-first-served",
+        details: "Xunta-run. Clean, modern. Credential required."
+      },
+      upgrade: {
+        name: "Albergue As Pozas Termais",
+        type: "private",
+        price: "€15–18/pp",
+        booking: "Walk-in or book ahead by phone",
+        details: "One of the best albergues on the entire Camino Portugués. Beds with sheets, power outlets, blankets. Staircases to upper bunks (not ladders!). Terrace, laundry. Named for the nearby thermal springs.",
+        recommended: true
+      },
+      recommendation: "Walk in to As Pozas Termais — affordable and special. March is low season, you'll get beds. Book a day ahead for certainty."
+    },
+    tips: "Soak your feet in the thermal hot springs! Hotel Balneario Davila offers affordable soaking. This is a recovery day after yesterday's 37 km — enjoy it.",
+    photos: [
+      { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/H%C3%B3rreo_O_Roxal.JPG/960px-H%C3%B3rreo_O_Roxal.JPG", caption: "Traditional Galician h\u00f3rreo (granary)" },
+      { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Caldas_de_Reis-Ponte_Romano.JPG/960px-Caldas_de_Reis-Ponte_Romano.JPG", caption: "Roman bridge, Caldas de Reis" }
+    ]
+  },
+  {
+    day: 6,
+    date: "March 21",
+    dayOfWeek: "Saturday",
+    label: "Caldas de Reis → Padrón",
+    type: "walk",
+    lat: 42.6045,
+    lng: -8.6423,
+    endLat: 42.7390,
+    endLng: -8.6608,
+    distanceFromPrev: "18 km walking",
+    transportFromPrev: null,
+    summary: "Short, beautiful forest day to one of the Camino's most historic towns",
+    highlights: [
+      "Deep Galician forest — one of the prettiest stretches of the whole Camino",
+      "Church of Santa Mariña de Carracedo",
+      "Historic Puente Romano bridge into Padrón",
+      "Padrón — where St. James's body supposedly arrived by boat from Jerusalem",
+      "Optional: Herbón Monastery (~7 km extra) — communal pilgrim dinner, only 30 beds"
+    ],
+    food: [
+      "Pimientos de Padrón — THE famous peppers, grilled in olive oil and sea salt. They originated here.",
+      "Dulcinea Repostería Artesanal — best pastries on the entire Camino"
+    ],
+    accommodation: {
+      budget: {
+        name: "Albergue de Peregrinos de Padrón",
+        type: "municipal",
+        price: "€8–10/pp",
+        booking: "Walk-in, first-come-first-served",
+        details: "Xunta-run, 46 beds. Open all year. Accessible. Cross the bridge over River Sar, head uphill toward the convent. Credential required.",
+        recommended: true
+      },
+      upgrade: {
+        name: "Albergue & Rooms Murgadán",
+        type: "private",
+        price: "€15–18/pp dorm · €35–50 private room",
+        booking: "Booking.com",
+        details: "Private albergue with dorms and private rooms. Well-located in Padrón center."
+      },
+      recommendation: "Walk in to the Xunta albergue — 46 beds in March, no problem. Last trail night — keep it authentic."
+    },
+    tips: "This is your last night on the road. Savor it. Padrón is deeply historic and the peppers are a must. Tomorrow you walk to Santiago.",
+    photos: [
+      { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Caldas_de_Reis_Santa_Mar%C3%ADa.JPG/960px-Caldas_de_Reis_Santa_Mar%C3%ADa.JPG", caption: "Iglesia de Santa Mar\u00eda along the Camino" },
+      { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Igrexa_de_Santa_Mar%C3%ADa_de_Iria_Flavia%2C_Padr%C3%B3n.jpg/960px-Igrexa_de_Santa_Mar%C3%ADa_de_Iria_Flavia%2C_Padr%C3%B3n.jpg", caption: "Santa Mar\u00eda de Iria Flavia, Padr\u00f3n" }
+    ]
+  },
+  {
+    day: 7,
+    date: "March 22",
+    dayOfWeek: "Sunday",
+    label: "Padrón → Santiago de Compostela",
+    type: "walk",
+    lat: 42.7390,
+    lng: -8.6608,
+    endLat: 42.8802,
+    endLng: -8.5448,
+    distanceFromPrev: "25 km walking",
+    transportFromPrev: null,
+    summary: "The final walk — through forests to the Cathedral spires of Santiago",
+    highlights: [
+      "Galician forest and rural villages on the final approach",
+      "First glimpse of Santiago's Cathedral towers through the trees",
+      "Walking under the archway into Plaza del Obradoiro",
+      "The Cathedral of Santiago de Compostela — you made it!",
+      "Consider a cathedral roof/upper-area visit — one of the best ways to understand the building beyond the plaza"
+    ],
+    food: [
+      "Mercado de Abastos — Santiago's incredible food market",
+      "Tarta de Santiago — the famous almond cake",
+      "Celebratory tapas on Rúa do Franco and Rúa da Raíña",
+      "Pulpo, Albariño, empanada — the final feast"
+    ],
+    accommodation: {
+      budget: {
+        name: "Albergue Seminario Menor",
+        type: "municipal",
+        price: "€10/pp",
+        booking: "Walk-in, first-come-first-served",
+        details: "Large Xunta albergue. Can fill up — arrive by mid-afternoon. Basic but well-located."
+      },
+      upgrade: {
+        name: "Hospedería San Martín Pinario",
+        type: "hotel",
+        price: "€29/pp single · €45/double (breakfast included)",
+        booking: "Email: reservas@sanmartinpinario.eu",
+        details: "16th-century monastery directly across from the Cathedral. Private room, private bathroom, breakfast in vaulted dining room. Rated 9.8 location. Book pilgrim rooms by email only — not available on Booking.com at these rates.",
+        recommended: true
+      },
+      recommendation: "Email San Martín Pinario NOW for pilgrim rooms March 22. Sleeping in a monastery facing the Cathedral is the perfect ending. €29–45/pp with breakfast."
+    },
+    tips: "Pre-register for your Compostela tonight: https://oficinadelperegrino.com/en/sigle-register/",
+    photos: [
+      { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Santiago_cathedral_2021.jpg/960px-Santiago_cathedral_2021.jpg", caption: "Cathedral of Santiago de Compostela" },
+      { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/2013_-_Fachada_do_Obradoiro_desde_a_Alameda._Catedral_de_Santiago_de_Compostela-2.jpg/960px-2013_-_Fachada_do_Obradoiro_desde_a_Alameda._Catedral_de_Santiago_de_Compostela-2.jpg", caption: "Plaza del Obradoiro" }
+    ]
+  },
+  {
+    day: 8,
+    date: "March 23",
+    dayOfWeek: "Monday",
+    label: "Santiago — Mass, Compostela, Bus to Porto",
+    type: "final",
+    lat: 42.8802,
+    lng: -8.5448,
+    distanceFromPrev: null,
+    transportFromPrev: null,
+    summary: "Pilgrim's Office, noon mass at the Cathedral, bus back to Porto",
+    highlights: [
+      "Leave backpacks at lodging or lockers — the cathedral does NOT allow backpack access (security policy)",
+      "10:00 AM — Pilgrim's Office opens (Rúa Carretas 33). Bring QR code from pre-registration.",
+      "~10:30–11:00 AM — Receive your Compostela certificate",
+      "12:00 PM — Pilgrim's Mass at the Cathedral high altar (the iconic one)",
+      "~1:00 PM — Celebratory lunch",
+      "~3:00–4:00 PM — Bus to Porto (~3.5 hours, €15–20 via ALSA/FlixBus)",
+      "~6:30–7:30 PM — Arrive Porto"
+    ],
+    food: [
+      "Final tapas near the Cathedral before catching the bus"
+    ],
+    accommodation: {
+      budget: {
+        name: "Porto Wine Hostel (again)",
+        type: "hostel",
+        price: "€15–20/pp dorm",
+        booking: "Booking.com",
+        details: "Same spot as Night 0. Familiar, central, one last Porto evening.",
+        recommended: true
+      },
+      upgrade: {
+        name: "Star Inn Porto Aeroporto (or similar)",
+        type: "hotel",
+        price: "€40–60/room",
+        booking: "Booking.com",
+        details: "Budget airport hotel. Minimizes morning stress for 9 AM flight. But you lose your last Porto evening."
+      },
+      recommendation: "Stay in Porto center again. Set alarm for 5:45 AM, take 6 AM metro to airport. The last evening in Porto is worth it."
+    },
+    tips: "The Pilgrim's Office uses a QR/number system — register online the night before. March is low season, wait should be ~15–30 min. The noon mass reads out pilgrim nationalities — listen for 'Estados Unidos'!",
+    photos: [
+      { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Botafumeiro._Catedral_de_Santiago_de_Compostela.jpg/960px-Botafumeiro._Catedral_de_Santiago_de_Compostela.jpg", caption: "The Botafumeiro, Santiago Cathedral" },
+      { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Capilla_de_la_Oficina_de_Acogida_al_Peregrino.jpg/960px-Capilla_de_la_Oficina_de_Acogida_al_Peregrino.jpg", caption: "Pilgrim's Office chapel" }
+    ]
+  }
+];
+
+const routeWaypoints = {
+  portoToViana: [[41.1432, -8.6103], [41.3, -8.75], [41.5, -8.82], [41.6936, -8.8319]],
+  vianaToCaminha: [[41.6936, -8.8319], [41.75, -8.86], [41.8143, -8.8758], [41.8728, -8.8389]],
+  caminhaToBaiona: [[41.8728, -8.8389], [41.9013, -8.8742], [41.95, -8.88], [42.0, -8.87], [42.05, -8.86], [42.1186, -8.8485]],
+  baionaToVigo: [[42.1186, -8.8485], [42.15, -8.84], [42.18, -8.80], [42.20, -8.76], [42.2328, -8.7226]],
+  vigoToPontevedra: [[42.2328, -8.7226], [42.28, -8.72], [42.2836, -8.6496], [42.35, -8.65], [42.4310, -8.6443]],
+  pontevedraToCaldas: [[42.4310, -8.6443], [42.48, -8.64], [42.55, -8.64], [42.6045, -8.6423]],
+  caldasToPadron: [[42.6045, -8.6423], [42.65, -8.65], [42.7390, -8.6608]],
+  padronToSantiago: [[42.7390, -8.6608], [42.78, -8.63], [42.83, -8.58], [42.8802, -8.5448]],
+  santiagoToPorto: [[42.8802, -8.5448], [42.5, -8.5], [42.1, -8.55], [41.1432, -8.6103]]
+};
+
+// Route segments: which routeWaypoints key, type, and distance label
+const routeSegments = [
+  { key: 'portoToViana', type: 'transport', label: 'Bus ~1hr' },
+  { key: 'vianaToCaminha', type: 'walk', label: '27 km' },
+  { key: 'caminhaToBaiona', type: 'walk', label: '34 km' },
+  { key: 'baionaToVigo', type: 'walk', label: '27 km' },
+  { key: 'vigoToPontevedra', type: 'walk', label: '37 km' },
+  { key: 'pontevedraToCaldas', type: 'walk', label: '21 km' },
+  { key: 'caldasToPadron', type: 'walk', label: '18 km' },
+  { key: 'padronToSantiago', type: 'walk', label: '25 km' },
+  { key: 'santiagoToPorto', type: 'transport', label: 'Bus ~3.5hr' }
+];
+
+// ─── MAP SETUP ──────────────────────────────────────────────────────
+const map = L.map('map', { zoomControl: true, scrollWheelZoom: true });
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
+  maxZoom: 19
+}).addTo(map);
+
+// Fit bounds to all points
+const allPoints = itinerary.map(d => [d.lat, d.lng]);
+itinerary.forEach(d => { if (d.endLat) allPoints.push([d.endLat, d.endLng]); });
+const bounds = L.latLngBounds(allPoints);
+map.fitBounds(bounds, { padding: [40, 40] });
+
+// ─── ROUTE LINES ────────────────────────────────────────────────────
+routeSegments.forEach(seg => {
+  const coords = routeWaypoints[seg.key];
+  const isTransport = seg.type === 'transport';
+
+  // Glow/shadow line underneath
+  L.polyline(coords, {
+    color: isTransport ? 'rgba(27,45,69,0.15)' : 'rgba(196,93,62,0.15)',
+    weight: isTransport ? 7 : 10,
+    lineCap: 'round',
+    lineJoin: 'round'
+  }).addTo(map);
+
+  // Main line
+  L.polyline(coords, {
+    color: isTransport ? '#1B2D45' : '#C45D3E',
+    weight: isTransport ? 3 : 5,
+    opacity: isTransport ? 0.7 : 0.85,
+    dashArray: isTransport ? '8, 8' : null,
+    lineCap: 'round',
+    lineJoin: 'round'
+  }).addTo(map);
+
+  // Distance label at midpoint
+  const midIdx = Math.floor(coords.length / 2);
+  const midPoint = coords[midIdx];
+  L.marker(midPoint, {
+    icon: L.divIcon({
+      className: '',
+      html: `<div class="distance-label">${seg.label}</div>`,
+      iconSize: [60, 20],
+      iconAnchor: [30, 10]
+    }),
+    interactive: false
+  }).addTo(map);
+});
+
+// ─── MARKERS ────────────────────────────────────────────────────────
+const markers = [];
+let activeDay = null;
+
+// Get overnight location for each day (end point if walking, otherwise start)
+function getDayPosition(day) {
+  if (day.endLat) return [day.endLat, day.endLng];
+  return [day.lat, day.lng];
+}
+
+itinerary.forEach((day, i) => {
+  const pos = getDayPosition(day);
+  const typeClass = day.type === 'final' ? 'final' : day.type;
+  const marker = L.marker(pos, {
+    icon: L.divIcon({
+      className: 'day-marker',
+      html: `<div class="marker-circle ${typeClass}" style="animation-delay: ${i * 80}ms">${day.day}</div>`,
+      iconSize: [32, 32],
+      iconAnchor: [16, 16]
+    })
+  }).addTo(map);
+
+  marker.on('click', () => selectDay(i));
+  markers.push(marker);
+});
+
+// Also add start-point markers for walking days (to show where they start from)
+// Day 1 starts at Viana (not Caminha), so show that start marker
+itinerary.forEach((day, i) => {
+  if (day.endLat && day.lat !== day.endLat) {
+    // Start point is different from end point - add a small start marker
+    // We skip this to avoid clutter since the previous day's end marker covers it
+  }
+});
+
+// ─── SIDEBAR RENDERING ─────────────────────────────────────────────
+const dayListEl = document.getElementById('dayList');
+const detailPanelEl = document.getElementById('detailPanel');
+const mobilePillsEl = document.getElementById('mobilePills');
+
+function renderDayList() {
+  dayListEl.innerHTML = itinerary.map((day, i) => {
+    const typeClass = day.type === 'final' ? 'final' : day.type;
+    const dist = day.distanceFromPrev ? ` · ${day.distanceFromPrev.replace(' walking', '')}` : '';
+    return `
+      <div class="day-item" data-index="${i}" onclick="selectDay(${i})">
+        <div class="day-dot ${typeClass}">${day.day}</div>
+        <div class="day-item-info">
+          <div class="day-item-label">${day.label}</div>
+          <div class="day-item-meta">${day.dayOfWeek}, ${day.date}${dist}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Mobile pills
+  mobilePillsEl.innerHTML = itinerary.map((day, i) => `
+    <div class="mobile-pill" data-index="${i}" onclick="selectDay(${i})">Day ${day.day}</div>
+  `).join('');
+}
+
+function renderDetail(day) {
+  const sections = [];
+
+  if (day.transportFromPrev) {
+    sections.push(`<div class="detail-transport">🚌 ${day.transportFromPrev}</div>`);
+  }
+
+  if (day.highlights && day.highlights.length) {
+    sections.push(`
+      <div class="detail-section">
+        <div class="detail-section-title highlights">🏛 Highlights</div>
+        <ul>${day.highlights.map(h => `<li>${h}</li>`).join('')}</ul>
+      </div>
+    `);
+  }
+
+  if (day.food && day.food.length) {
+    sections.push(`
+      <div class="detail-section">
+        <div class="detail-section-title food">🍽 Food & Drink</div>
+        <ul>${day.food.map(f => `<li>${f}</li>`).join('')}</ul>
+      </div>
+    `);
+  }
+
+  if (day.accommodation) {
+    const acc = day.accommodation;
+    const renderCard = (opt, label) => {
+      if (!opt) return '';
+      const isRec = opt.recommended;
+      return `
+        <div class="accom-card${isRec ? ' recommended' : ''}">
+          ${isRec ? '<div class="accom-card-badge">Recommended</div>' : ''}
+          <div class="accom-card-label ${label}">${label}</div>
+          <div class="accom-card-name">${opt.name}</div>
+          <div class="accom-card-type">${opt.type}</div>
+          <div class="accom-card-price">${opt.price}</div>
+          <div class="accom-card-booking">${opt.booking}</div>
+          <div class="accom-card-details">${opt.details}</div>
+          ${opt.phone ? `<div class="accom-card-phone">📞 ${opt.phone}</div>` : ''}
+        </div>`;
+    };
+    sections.push(`
+      <div class="detail-section">
+        <div class="detail-section-title accommodation">🛏 Where to Stay</div>
+        <div class="accom-cards">
+          ${renderCard(acc.budget, 'budget')}
+          ${renderCard(acc.upgrade, 'upgrade')}
+        </div>
+        ${acc.recommendation ? `<div class="accom-recommendation">💡 ${acc.recommendation}</div>` : ''}
+      </div>
+    `);
+  }
+
+  if (day.tips) {
+    sections.push(`
+      <div class="detail-section">
+        <div class="detail-section-title tips">💡 Tips</div>
+        <p>${day.tips}</p>
+      </div>
+    `);
+  }
+
+  const dist = day.distanceFromPrev || '';
+
+  const dayIndex = itinerary.indexOf(day);
+  const hasPrev = dayIndex > 0;
+  const hasNext = dayIndex < itinerary.length - 1;
+
+  detailPanelEl.innerHTML = `
+    <div class="detail-nav">
+      <button class="detail-nav-btn${hasPrev ? '' : ' hidden'}" onclick="selectDay(${dayIndex - 1})">← Prev</button>
+      <span class="detail-back" onclick="deselectDay()">All days</span>
+      <button class="detail-nav-btn${hasNext ? '' : ' hidden'}" onclick="selectDay(${dayIndex + 1})">Next →</button>
+    </div>
+    <div class="detail-header">
+      <div class="detail-day-label">Day ${day.day} — ${day.dayOfWeek}, ${day.date}</div>
+      <div class="detail-title">${day.label}</div>
+      ${dist ? `<div class="detail-distance">${dist}</div>` : ''}
+    </div>
+    <div class="detail-photos">
+      ${(day.photos || []).map(p => `
+        <div class="detail-photo-item">
+          <img class="detail-photo-img" src="${p.url}" alt="${p.caption}" onerror="this.style.background='linear-gradient(135deg, #C45D3E, #1B2D45)'; this.style.opacity='0.6'; this.src='';">
+          <div class="detail-photo-caption">${p.caption}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="detail-summary">${day.summary}</div>
+    ${sections.join('')}
+  `;
+}
+
+// ─── INTERACTION ────────────────────────────────────────────────────
+function selectDay(index) {
+  activeDay = index;
+  const day = itinerary[index];
+  const pos = getDayPosition(day);
+
+  // Fly to marker
+  map.flyTo(pos, 12, { duration: 0.8 });
+
+  // Update marker styles
+  document.querySelectorAll('.marker-circle').forEach((el, i) => {
+    el.classList.toggle('active', i === index);
+  });
+
+  // Update sidebar
+  dayListEl.style.display = 'none';
+  detailPanelEl.classList.add('visible');
+  renderDetail(day);
+
+  // Scroll sidebar to top
+  document.getElementById('sidebar').scrollTop = 0;
+
+  // Update day list active state
+  document.querySelectorAll('.day-item').forEach((el, i) => {
+    el.classList.toggle('active', i === index);
+  });
+
+  // Update mobile pills
+  document.querySelectorAll('.mobile-pill').forEach((el, i) => {
+    el.classList.toggle('active', i === index);
+  });
+}
+
+function deselectDay() {
+  activeDay = null;
+  dayListEl.style.display = 'block';
+  detailPanelEl.classList.remove('visible');
+
+  document.querySelectorAll('.marker-circle').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.day-item').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.mobile-pill').forEach(el => el.classList.remove('active'));
+
+  map.fitBounds(bounds, { padding: [40, 40] });
+}
+
+// Reset button
+document.getElementById('resetBtn').addEventListener('click', () => deselectDay());
+
+// ─── MOBILE BOTTOM SHEET ──────────────────────────────────────────
+function isMobile() { return window.innerWidth <= 768; }
+
+const sidebar = document.getElementById('sidebar');
+const sheetHandle = document.getElementById('sheetHandle');
+// Snap positions (top values — higher = more collapsed / further down)
+function getSnaps() {
+  const h = window.innerHeight;
+  return {
+    full: h * 0.1,          // sheet top at 10vh
+    peek: h * 0.4,          // sheet top at 40vh
+    collapsed: h - 108      // enough room for handle + day pills
+  };
+}
+
+function setSheetPosition(top, animate) {
+  if (animate) {
+    sidebar.classList.remove('dragging');
+  } else {
+    sidebar.classList.add('dragging');
+  }
+  sidebar.style.setProperty('--sheet-top', top + 'px');
+}
+
+function snapSheet(targetTop, velocity) {
+  const snaps = getSnaps();
+  const positions = [snaps.full, snaps.peek, snaps.collapsed];
+
+  // Apply velocity bias — if swiping fast, bias toward direction
+  let biased = targetTop;
+  if (Math.abs(velocity) > 0.5) {
+    biased += velocity * 120; // positive=down (collapse), negative=up (expand)
+  }
+
+  // Find nearest snap
+  let closest = positions[0];
+  let minDist = Math.abs(biased - positions[0]);
+  for (let i = 1; i < positions.length; i++) {
+    const dist = Math.abs(biased - positions[i]);
+    if (dist < minDist) {
+      minDist = dist;
+      closest = positions[i];
+    }
+  }
+
+  setSheetPosition(closest, true);
+
+  // Update overflow based on position
+  if (closest === snaps.full) {
+    sidebar.style.overflowY = 'auto';
+  } else {
+    sidebar.style.overflowY = 'hidden';
+    sidebar.scrollTop = 0;
+  }
+
+  // Invalidate map size after transition
+  setTimeout(() => map.invalidateSize(), 350);
+}
+
+// Touch handlers
+let touchState = null;
+
+sheetHandle.addEventListener('touchstart', (e) => {
+  if (!isMobile()) return;
+  const touch = e.touches[0];
+  const currentY = parseFloat(sidebar.style.getPropertyValue('--sheet-top')) || getSnaps().collapsed;
+  touchState = {
+    startTouchY: touch.clientY,
+    startSheetY: currentY,
+    startTime: Date.now(),
+    lastY: touch.clientY,
+    lastTime: Date.now()
+  };
+  sidebar.classList.add('dragging');
+}, { passive: true });
+
+sheetHandle.addEventListener('touchmove', (e) => {
+  if (!touchState || !isMobile()) return;
+  const touch = e.touches[0];
+  const delta = touch.clientY - touchState.startTouchY;
+  let newY = touchState.startSheetY + delta;
+
+  // Clamp between full and collapsed
+  const snaps = getSnaps();
+  newY = Math.max(snaps.full, Math.min(snaps.collapsed, newY));
+
+  sidebar.style.setProperty('--sheet-top', newY + 'px');
+
+  touchState.lastY = touch.clientY;
+  touchState.lastTime = Date.now();
+}, { passive: true });
+
+sheetHandle.addEventListener('touchend', (e) => {
+  if (!touchState || !isMobile()) return;
+
+  const currentY = parseFloat(sidebar.style.getPropertyValue('--sheet-top')) || getSnaps().collapsed;
+  const elapsed = Date.now() - touchState.startTime;
+  const totalDelta = touchState.lastY - touchState.startTouchY;
+  const velocity = elapsed > 0 ? totalDelta / elapsed : 0; // px/ms, positive = downward
+
+  touchState = null;
+  snapSheet(currentY, velocity);
+}, { passive: true });
+
+// Also allow tapping the handle area to toggle between collapsed and peek
+sheetHandle.addEventListener('click', () => {
+  if (!isMobile()) return;
+  const currentY = parseFloat(sidebar.style.getPropertyValue('--sheet-top')) || getSnaps().collapsed;
+  const snaps = getSnaps();
+  // If collapsed, go to peek; if peek or full, collapse
+  if (Math.abs(currentY - snaps.collapsed) < 20) {
+    setSheetPosition(snaps.peek, true);
+  } else {
+    setSheetPosition(snaps.collapsed, true);
+  }
+});
+
+// Patch selectDay for mobile — expand to peek
+const _origSelectDay = selectDay;
+selectDay = function(index) {
+  _origSelectDay(index);
+  if (isMobile()) {
+    setSheetPosition(getSnaps().peek, true);
+    sidebar.scrollTop = 0;
+  }
+};
+
+// Patch deselectDay for mobile — collapse
+const _origDeselectDay = deselectDay;
+deselectDay = function() {
+  _origDeselectDay();
+  if (isMobile()) {
+    setSheetPosition(getSnaps().collapsed, true);
+  }
+};
+
+// Set initial collapsed position on load
+function initSheet() {
+  if (isMobile()) {
+    setSheetPosition(getSnaps().collapsed, false);
+    // Small delay to enable transitions
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        sidebar.classList.remove('dragging');
+      });
+    });
+  }
+}
+
+// Handle resize (e.g., orientation change)
+window.addEventListener('resize', () => {
+  if (isMobile()) {
+    // Re-snap to collapsed if no day selected, peek if day selected
+    if (activeDay !== null) {
+      setSheetPosition(getSnaps().peek, true);
+    } else {
+      setSheetPosition(getSnaps().collapsed, true);
+    }
+  } else {
+    // Reset sheet transform on desktop
+    sidebar.style.removeProperty('--sheet-top');
+    sidebar.classList.remove('dragging');
+  }
+  map.invalidateSize();
+});
+
+// Initialize
+renderDayList();
+initSheet();
+</script>
+
+</body>
+</html>
