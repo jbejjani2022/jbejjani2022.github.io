@@ -375,9 +375,13 @@ export default function App() {
     return () => clearInterval(intervalRef.current);
   }, [fetchData]);
 
-  const categories = ["All", ...new Set(items.map((i) => i.category).filter(Boolean))].sort(
-    (a, b) => (a === "All" ? -1 : b === "All" ? 1 : a.localeCompare(b))
-  );
+  // Category order = order of first appearance in the sheet
+  const categoryOrder = [...new Set(items.map((i) => i.category).filter(Boolean))];
+  const categories = ["All", ...categoryOrder];
+  const categoryIndex = (cat) => {
+    const i = categoryOrder.indexOf(cat);
+    return i === -1 ? categoryOrder.length : i;
+  };
 
   let filtered = items;
   if (activeCategory !== "All") {
@@ -390,6 +394,9 @@ export default function App() {
     filtered = [...filtered].sort((a, b) =>
       sortDir === "asc" ? a.price - b.price : b.price - a.price
     );
+  } else {
+    // Default: group by category in sheet-appearance order (stable sort preserves in-category order)
+    filtered = [...filtered].sort((a, b) => categoryIndex(a.category) - categoryIndex(b.category));
   }
 
   const cycleSortDir = () => {
