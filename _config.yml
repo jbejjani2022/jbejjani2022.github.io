@@ -201,6 +201,7 @@ exclude:
   - /docs # ignore Minimal Mistakes /docs
   - /test # ignore Minimal Mistakes /test
   - _posts/examples # hide example blog posts
+  - senior-sale-src # React source for senior-sale app; built output lives in /senior-sale/
 keep_files:
   - .git
   - .svn

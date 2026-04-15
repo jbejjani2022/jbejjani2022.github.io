@@ -1,0 +1,475 @@
+import { useState, useEffect, useCallback, useRef } from "react";
+import Papa from "papaparse";
+
+// ─── Configuration ───────────────────────────────────────────────
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSSPe6b7XJQGHZmrlaPPEjvzONoEief0tMr43Byc-3yxvhhSLLAAODtS9VlWkubP6F67oyDrbBj-KU8/pub?gid=0&single=true&output=csv";
+const CONTACT_NAME = "Xander Patton";
+const CONTACT_PHONE = "(816) 916-6595";
+const CONTACT_EMAIL = "xpatton@college.harvard.edu";
+const REFRESH_INTERVAL_MS = 60_000;
+
+// ─── Helpers ─────────────────────────────────────────────────────
+function toDriveDirectUrl(url) {
+  if (!url) return url;
+  const match = url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
+  if (match) return `https://lh3.googleusercontent.com/d/${match[1]}`;
+  return url;
+}
+
+function parseItems(csv) {
+  const { data } = Papa.parse(csv, { header: true, skipEmptyLines: true });
+  return data.map((row) => ({
+    name: (row.name || "").trim(),
+    category: (row.category || "").trim(),
+    price: parseFloat(row.price) || 0,
+    image: toDriveDirectUrl((row.image || "").trim()),
+    details: (row.details || "").trim(),
+    sold: (row.sold || "").trim().toUpperCase() === "TRUE",
+  }));
+}
+
+function formatPrice(price) {
+  if (price === 0) return "Free";
+  if (Number.isInteger(price)) return `$${price}`;
+  return `$${price.toFixed(2)}`;
+}
+
+// ─── Styles ──────────────────────────────────────────────────────
+const ACCENT = "#e85d04";
+
+const URL_RE = /(https?:\/\/[^\s]+)/g;
+
+function linkify(text) {
+  const parts = text.split(URL_RE);
+  return parts.map((part, i) => {
+    // Use a fresh regex test to avoid global lastIndex issues
+    if (/^https?:\/\//.test(part)) {
+      return (
+        <a key={i} href={part} target="_blank" rel="noopener noreferrer" style={{ color: ACCENT }}>
+          {part}
+        </a>
+      );
+    }
+    return part;
+  });
+}
+const BG = "#faf9f6";
+const CARD_BG = "#ffffff";
+const TEXT = "#1a1a1a";
+const MUTED = "#6b7280";
+const SOLD_COLOR = "#dc2626";
+
+const styles = {
+  body: {
+    margin: 0,
+    fontFamily: "'DM Sans', sans-serif",
+    background: BG,
+    color: TEXT,
+    minHeight: "100vh",
+  },
+  header: {
+    textAlign: "center",
+    padding: "48px 24px 32px",
+  },
+  title: {
+    fontFamily: "'Playfair Display', serif",
+    fontSize: "clamp(2rem, 5vw, 3.2rem)",
+    fontWeight: 900,
+    margin: 0,
+    letterSpacing: "-0.02em",
+  },
+  subtitle: {
+    fontSize: "1.1rem",
+    color: MUTED,
+    marginTop: 8,
+    fontStyle: "italic",
+  },
+  contact: {
+    marginTop: 20,
+    fontSize: "0.95rem",
+    color: TEXT,
+    lineHeight: 1.6,
+  },
+  contactLink: {
+    color: ACCENT,
+    textDecoration: "none",
+    fontWeight: 500,
+  },
+  filterBar: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "0 24px 24px",
+    maxWidth: 960,
+    margin: "0 auto",
+  },
+  chip: (active) => ({
+    padding: "6px 16px",
+    borderRadius: 999,
+    border: `1.5px solid ${active ? ACCENT : "#d1d5db"}`,
+    background: active ? ACCENT : "transparent",
+    color: active ? "#fff" : TEXT,
+    cursor: "pointer",
+    fontSize: "0.85rem",
+    fontWeight: 500,
+    transition: "all 0.15s",
+    whiteSpace: "nowrap",
+  }),
+  sortBtn: (active) => ({
+    padding: "6px 14px",
+    borderRadius: 999,
+    border: `1.5px solid ${active ? ACCENT : "#d1d5db"}`,
+    background: active ? ACCENT : "transparent",
+    color: active ? "#fff" : TEXT,
+    cursor: "pointer",
+    fontSize: "0.85rem",
+    fontWeight: 500,
+    transition: "all 0.15s",
+    whiteSpace: "nowrap",
+  }),
+  toggle: {
+    display: "flex",
+    alignItems: "center",
+    gap: 6,
+    fontSize: "0.85rem",
+    cursor: "pointer",
+    userSelect: "none",
+    whiteSpace: "nowrap",
+  },
+  grid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+    gap: 24,
+    padding: "0 24px 48px",
+    maxWidth: 1200,
+    margin: "0 auto",
+  },
+  card: (sold) => ({
+    background: CARD_BG,
+    borderRadius: 12,
+    overflow: "hidden",
+    boxShadow: "0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06)",
+    opacity: sold ? 0.55 : 1,
+    filter: sold ? "grayscale(40%)" : "none",
+    transition: "transform 0.15s, box-shadow 0.15s",
+    position: "relative",
+    cursor: "default",
+  }),
+  cardHover: {
+    transform: "translateY(-2px)",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.12)",
+  },
+  imgWrap: {
+    width: "100%",
+    aspectRatio: "4/3",
+    overflow: "hidden",
+    background: "#f3f4f6",
+    cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  img: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    display: "block",
+  },
+  imgPlaceholder: {
+    color: "#d1d5db",
+    fontSize: 48,
+  },
+  cardBody: {
+    padding: "14px 16px 18px",
+  },
+  itemName: {
+    fontWeight: 700,
+    fontSize: "1.05rem",
+    margin: 0,
+  },
+  categoryTag: {
+    display: "inline-block",
+    padding: "2px 10px",
+    borderRadius: 999,
+    background: "#f3f4f6",
+    color: MUTED,
+    fontSize: "0.75rem",
+    fontWeight: 500,
+    marginTop: 6,
+  },
+  price: {
+    fontSize: "1.2rem",
+    fontWeight: 700,
+    color: ACCENT,
+    marginTop: 8,
+  },
+  details: {
+    fontSize: "0.88rem",
+    color: MUTED,
+    marginTop: 8,
+    lineHeight: 1.5,
+    wordBreak: "break-word",
+  },
+  soldBadge: {
+    position: "absolute",
+    top: 12,
+    right: 12,
+    background: SOLD_COLOR,
+    color: "#fff",
+    fontWeight: 700,
+    fontSize: "0.8rem",
+    padding: "4px 12px",
+    borderRadius: 999,
+    letterSpacing: "0.05em",
+    zIndex: 2,
+  },
+  refreshBtn: {
+    padding: "6px 14px",
+    borderRadius: 999,
+    border: `1.5px solid ${ACCENT}`,
+    background: "transparent",
+    color: ACCENT,
+    cursor: "pointer",
+    fontSize: "0.85rem",
+    fontWeight: 500,
+    transition: "all 0.15s",
+    whiteSpace: "nowrap",
+  },
+  footer: {
+    textAlign: "center",
+    padding: "32px 24px",
+    fontSize: "0.85rem",
+    color: MUTED,
+  },
+  overlay: {
+    position: "fixed",
+    inset: 0,
+    background: "rgba(0,0,0,0.85)",
+    zIndex: 1000,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "zoom-out",
+  },
+  lightboxImg: {
+    maxWidth: "90vw",
+    maxHeight: "90vh",
+    objectFit: "contain",
+    borderRadius: 8,
+    cursor: "default",
+  },
+  closeBtn: {
+    position: "absolute",
+    top: 16,
+    right: 20,
+    background: "none",
+    border: "none",
+    color: "#fff",
+    fontSize: 32,
+    cursor: "pointer",
+    lineHeight: 1,
+  },
+  empty: {
+    textAlign: "center",
+    padding: "64px 24px",
+    color: MUTED,
+    fontSize: "1.1rem",
+  },
+  loading: {
+    textAlign: "center",
+    padding: "80px 24px",
+    color: MUTED,
+    fontSize: "1rem",
+  },
+};
+
+// ─── Components ──────────────────────────────────────────────────
+function Lightbox({ src, onClose }) {
+  useEffect(() => {
+    const handleKey = (e) => e.key === "Escape" && onClose();
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [onClose]);
+
+  if (!src) return null;
+  return (
+    <div style={styles.overlay} onClick={onClose}>
+      <button style={styles.closeBtn} onClick={onClose} aria-label="Close">
+        ×
+      </button>
+      <img
+        src={src}
+        alt="Full size"
+        style={styles.lightboxImg}
+        onClick={(e) => e.stopPropagation()}
+        referrerPolicy="no-referrer"
+      />
+    </div>
+  );
+}
+
+function ItemCard({ item, onImageClick }) {
+  const [hovered, setHovered] = useState(false);
+  const cardStyle = {
+    ...styles.card(item.sold),
+    ...(hovered && !item.sold ? styles.cardHover : {}),
+  };
+
+  return (
+    <div
+      style={cardStyle}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {item.sold && <span style={styles.soldBadge}>SOLD</span>}
+      <div
+        style={styles.imgWrap}
+        onClick={() => item.image && onImageClick(item.image)}
+      >
+        {item.image ? (
+          <img src={item.image} alt={item.name} style={styles.img} loading="lazy" referrerPolicy="no-referrer" />
+        ) : (
+          <span style={styles.imgPlaceholder}>📷</span>
+        )}
+      </div>
+      <div style={styles.cardBody}>
+        <p style={styles.itemName}>{item.name}</p>
+        {item.category && <span style={styles.categoryTag}>{item.category}</span>}
+        <p style={styles.price}>{formatPrice(item.price)}</p>
+        {item.details && <p style={styles.details}>{linkify(item.details)}</p>}
+      </div>
+    </div>
+  );
+}
+
+// ─── App ─────────────────────────────────────────────────────────
+export default function App() {
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [sortDir, setSortDir] = useState(null);
+  const [hideSold, setHideSold] = useState(false);
+  const [lightboxSrc, setLightboxSrc] = useState(null);
+  const intervalRef = useRef(null);
+
+  const fetchData = useCallback(async () => {
+    try {
+      const res = await fetch(SHEET_CSV_URL);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const csv = await res.text();
+      setItems(parseItems(csv));
+      setError(null);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+    intervalRef.current = setInterval(fetchData, REFRESH_INTERVAL_MS);
+    return () => clearInterval(intervalRef.current);
+  }, [fetchData]);
+
+  const categories = ["All", ...new Set(items.map((i) => i.category).filter(Boolean))].sort(
+    (a, b) => (a === "All" ? -1 : b === "All" ? 1 : a.localeCompare(b))
+  );
+
+  let filtered = items;
+  if (activeCategory !== "All") {
+    filtered = filtered.filter((i) => i.category === activeCategory);
+  }
+  if (hideSold) {
+    filtered = filtered.filter((i) => !i.sold);
+  }
+  if (sortDir) {
+    filtered = [...filtered].sort((a, b) =>
+      sortDir === "asc" ? a.price - b.price : b.price - a.price
+    );
+  }
+
+  const cycleSortDir = () => {
+    setSortDir((prev) => (prev === null ? "asc" : prev === "asc" ? "desc" : null));
+  };
+
+  const sortLabel =
+    sortDir === "asc"
+      ? "Price: Low → High"
+      : sortDir === "desc"
+        ? "Price: High → Low"
+        : "Sort by Price";
+
+  return (
+    <div style={styles.body}>
+      <header style={styles.header}>
+        <h1 style={styles.title}>Prescott 20A-26 Senior Sale</h1>
+        <p style={styles.subtitle}>Take our shit. I know you want it.</p>
+        <div style={styles.contact}>
+          Want something? Text or email{" "}
+          <strong>{CONTACT_NAME} </strong>
+          to claim.
+          <br />
+          <a href={`tel:${CONTACT_PHONE}`} style={styles.contactLink}>
+            {CONTACT_PHONE}
+          </a>
+          {" · "}
+          <a href={`mailto:${CONTACT_EMAIL}`} style={styles.contactLink}>
+            {CONTACT_EMAIL}
+          </a>
+        </div>
+      </header>
+
+      <div style={styles.filterBar}>
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            style={styles.chip(activeCategory === cat)}
+            onClick={() => setActiveCategory(cat)}
+          >
+            {cat}
+          </button>
+        ))}
+        <button style={styles.sortBtn(sortDir !== null)} onClick={cycleSortDir}>
+          {sortLabel}
+        </button>
+        <label style={styles.toggle}>
+          <input
+            type="checkbox"
+            checked={hideSold}
+            onChange={(e) => setHideSold(e.target.checked)}
+          />
+          Hide sold
+        </label>
+        <button style={styles.refreshBtn} onClick={fetchData}>
+          ↻ Refresh
+        </button>
+      </div>
+
+      {loading ? (
+        <p style={styles.loading}>Loading items…</p>
+      ) : error ? (
+        <p style={styles.empty}>
+          Could not load items. Make sure the CSV URL is set.
+          <br />
+          <span style={{ fontSize: "0.85rem" }}>{error}</span>
+        </p>
+      ) : filtered.length === 0 ? (
+        <p style={styles.empty}>No items to show.</p>
+      ) : (
+        <div style={styles.grid}>
+          {filtered.map((item, idx) => (
+            <ItemCard key={idx} item={item} onImageClick={setLightboxSrc} />
+          ))}
+        </div>
+      )}
+
+      <footer style={styles.footer}>Made with ☕ and senioritis</footer>
+
+      <Lightbox src={lightboxSrc} onClose={() => setLightboxSrc(null)} />
+    </div>
+  );
+}
