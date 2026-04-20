@@ -18,14 +18,19 @@ function toDriveDirectUrl(url) {
 
 function parseItems(csv) {
   const { data } = Papa.parse(csv, { header: true, skipEmptyLines: true });
-  return data.map((row) => ({
-    name: (row.name || "").trim(),
-    category: (row.category || "").trim(),
-    price: parseFloat(row.price) || 0,
-    image: toDriveDirectUrl((row.image || "").trim()),
-    details: (row.details || "").trim(),
-    sold: (row.sold || "").trim().toUpperCase() === "TRUE",
-  }));
+  return data.map((row) => {
+    const images = ["image 1", "image 2", "image 3"]
+      .map((key) => toDriveDirectUrl((row[key] || "").trim()))
+      .filter(Boolean);
+    return {
+      name: (row.name || "").trim(),
+      category: (row.category || "").trim(),
+      price: parseFloat(row.price) || 0,
+      images,
+      details: (row.details || "").trim(),
+      sold: (row.sold || "").trim().toUpperCase() === "TRUE",
+    };
+  });
 }
 
 function formatPrice(price) {
@@ -270,6 +275,45 @@ const styles = {
     fontSize: 32,
     cursor: "pointer",
     lineHeight: 1,
+    zIndex: 2,
+  },
+  lightboxNav: {
+    position: "absolute",
+    top: "50%",
+    transform: "translateY(-50%)",
+    background: "rgba(0,0,0,0.5)",
+    border: "none",
+    color: "#fff",
+    fontSize: 40,
+    cursor: "pointer",
+    padding: "12px 16px",
+    lineHeight: 1,
+    zIndex: 2,
+    borderRadius: 8,
+  },
+  cardNav: {
+    position: "absolute",
+    top: "50%",
+    transform: "translateY(-50%)",
+    background: "rgba(0,0,0,0.35)",
+    border: "none",
+    color: "#fff",
+    fontSize: 22,
+    cursor: "pointer",
+    padding: "8px 6px",
+    lineHeight: 1,
+    zIndex: 2,
+    opacity: 0.7,
+    transition: "opacity 0.15s",
+  },
+  cardDots: {
+    position: "absolute",
+    bottom: 8,
+    left: "50%",
+    transform: "translateX(-50%)",
+    display: "flex",
+    gap: 5,
+    zIndex: 2,
   },
   empty: {
     textAlign: "center",
@@ -286,32 +330,86 @@ const styles = {
 };
 
 // ─── Components ──────────────────────────────────────────────────
-function Lightbox({ src, onClose }) {
+function Lightbox({ images, index, onClose }) {
+  const [current, setCurrent] = useState(index);
+
   useEffect(() => {
-    const handleKey = (e) => e.key === "Escape" && onClose();
+    setCurrent(index);
+  }, [index]);
+
+  useEffect(() => {
+    if (!images || images.length === 0) return;
+    const handleKey = (e) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowRight") setCurrent((c) => (c + 1) % images.length);
+      if (e.key === "ArrowLeft") setCurrent((c) => (c - 1 + images.length) % images.length);
+    };
     document.addEventListener("keydown", handleKey);
     return () => document.removeEventListener("keydown", handleKey);
-  }, [onClose]);
+  }, [onClose, images]);
 
-  if (!src) return null;
+  if (!images || images.length === 0) return null;
   return (
     <div style={styles.overlay} onClick={onClose}>
       <button style={styles.closeBtn} onClick={onClose} aria-label="Close">
         ×
       </button>
-      <img
-        src={src}
-        alt="Full size"
-        style={styles.lightboxImg}
-        onClick={(e) => e.stopPropagation()}
-        referrerPolicy="no-referrer"
-      />
+      {images.length > 1 && (
+        <>
+          <button
+            style={{ ...styles.lightboxNav, left: 16 }}
+            onClick={(e) => { e.stopPropagation(); setCurrent((c) => (c - 1 + images.length) % images.length); }}
+            aria-label="Previous"
+          >
+            ‹
+          </button>
+          <button
+            style={{ ...styles.lightboxNav, right: 16 }}
+            onClick={(e) => { e.stopPropagation(); setCurrent((c) => (c + 1) % images.length); }}
+            aria-label="Next"
+          >
+            ›
+          </button>
+        </>
+      )}
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }} onClick={(e) => e.stopPropagation()}>
+        <img
+          src={images[current]}
+          alt="Full size"
+          style={styles.lightboxImg}
+          referrerPolicy="no-referrer"
+        />
+        {images.length > 1 && (
+          <div style={{ display: "flex", gap: 8 }}>
+            {images.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrent(i)}
+                style={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: "50%",
+                  border: "none",
+                  background: i === current ? "#fff" : "rgba(255,255,255,0.4)",
+                  cursor: "pointer",
+                  padding: 0,
+                  transition: "background 0.15s",
+                }}
+                aria-label={`Image ${i + 1}`}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
 
 function ItemCard({ item, onImageClick }) {
   const [hovered, setHovered] = useState(false);
+  const [imgIndex, setImgIndex] = useState(0);
+  const hasImages = item.images.length > 0;
+  const hasMultiple = item.images.length > 1;
   const cardStyle = {
     ...styles.card(item.sold),
     ...(hovered && !item.sold ? styles.cardHover : {}),
@@ -325,13 +423,41 @@ function ItemCard({ item, onImageClick }) {
     >
       {item.sold && <span style={styles.soldBadge}>SOLD</span>}
       <div
-        style={styles.imgWrap}
-        onClick={() => item.image && onImageClick(item.image)}
+        style={{ ...styles.imgWrap, position: "relative" }}
+        onClick={() => hasImages && onImageClick(item.images, imgIndex)}
       >
-        {item.image ? (
-          <img src={item.image} alt={item.name} style={styles.img} loading="lazy" referrerPolicy="no-referrer" />
+        {hasImages ? (
+          <img src={item.images[imgIndex]} alt={item.name} style={styles.img} loading="lazy" referrerPolicy="no-referrer" />
         ) : (
           <span style={styles.imgPlaceholder}>📷</span>
+        )}
+        {hasMultiple && (
+          <>
+            <button
+              style={{ ...styles.cardNav, left: 0, borderRadius: "0 4px 4px 0" }}
+              onClick={(e) => { e.stopPropagation(); setImgIndex((i) => (i - 1 + item.images.length) % item.images.length); }}
+              aria-label="Previous image"
+            >‹</button>
+            <button
+              style={{ ...styles.cardNav, right: 0, borderRadius: "4px 0 0 4px" }}
+              onClick={(e) => { e.stopPropagation(); setImgIndex((i) => (i + 1) % item.images.length); }}
+              aria-label="Next image"
+            >›</button>
+            <div style={styles.cardDots}>
+              {item.images.map((_, i) => (
+                <span
+                  key={i}
+                  style={{
+                    width: 7,
+                    height: 7,
+                    borderRadius: "50%",
+                    background: i === imgIndex ? "#fff" : "rgba(255,255,255,0.5)",
+                    transition: "background 0.15s",
+                  }}
+                />
+              ))}
+            </div>
+          </>
         )}
       </div>
       <div style={styles.cardBody}>
@@ -352,7 +478,8 @@ export default function App() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [sortDir, setSortDir] = useState(null);
   const [hideSold, setHideSold] = useState(false);
-  const [lightboxSrc, setLightboxSrc] = useState(null);
+  const [lightboxImages, setLightboxImages] = useState(null);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
   const intervalRef = useRef(null);
 
   const fetchData = useCallback(async () => {
@@ -469,14 +596,14 @@ export default function App() {
       ) : (
         <div style={styles.grid}>
           {filtered.map((item, idx) => (
-            <ItemCard key={idx} item={item} onImageClick={setLightboxSrc} />
+            <ItemCard key={item.name + item.category} item={item} onImageClick={(imgs, idx) => { setLightboxImages(imgs); setLightboxIndex(idx); }} />
           ))}
         </div>
       )}
 
       <footer style={styles.footer}>Made with ☕ and senioritis</footer>
 
-      <Lightbox src={lightboxSrc} onClose={() => setLightboxSrc(null)} />
+      <Lightbox images={lightboxImages} index={lightboxIndex} onClose={() => setLightboxImages(null)} />
     </div>
   );
 }
