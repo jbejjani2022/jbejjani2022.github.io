@@ -145,10 +145,10 @@ const styles = {
   },
   grid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-    gap: 24,
-    padding: "0 24px 48px",
-    maxWidth: 1200,
+    gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))",
+    gap: 32,
+    padding: "0 48px 64px",
+    maxWidth: 1600,
     margin: "0 auto",
   },
   card: (sold) => ({
@@ -161,25 +161,28 @@ const styles = {
     transition: "transform 0.15s, box-shadow 0.15s",
     position: "relative",
     cursor: "default",
+    display: "flex",
+    flexDirection: "column",
+    height: 505,
   }),
   cardHover: {
     transform: "translateY(-2px)",
     boxShadow: "0 4px 12px rgba(0,0,0,0.12)",
   },
   imgWrap: {
-    width: "100%",
-    aspectRatio: "4/3",
+    flex: 1,
+    minHeight: 0,
     overflow: "hidden",
-    background: "#f3f4f6",
+    background: "#ffffff",
     cursor: "pointer",
     display: "flex",
-    alignItems: "center",
+    alignItems: "flex-start",
     justifyContent: "center",
   },
   img: {
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
+    maxWidth: "100%",
+    maxHeight: "100%",
+    objectFit: "contain",
     display: "block",
   },
   imgPlaceholder: {
@@ -224,7 +227,7 @@ const styles = {
     lineHeight: 1.5,
     wordBreak: "break-word",
     display: "-webkit-box",
-    WebkitLineClamp: 5,
+    WebkitLineClamp: 2,
     WebkitBoxOrient: "vertical",
     overflow: "hidden",
   },
@@ -316,25 +319,30 @@ const styles = {
     position: "absolute",
     top: "50%",
     transform: "translateY(-50%)",
-    background: "rgba(0,0,0,0.35)",
-    border: "none",
+    background: "rgba(0,0,0,0.6)",
+    border: "2px solid rgba(255,255,255,0.5)",
     color: "#fff",
-    fontSize: 22,
+    fontSize: 28,
     cursor: "pointer",
-    padding: "8px 6px",
+    padding: "10px 8px",
     lineHeight: 1,
     zIndex: 2,
-    opacity: 0.7,
+    opacity: 1,
     transition: "opacity 0.15s",
   },
-  cardDots: {
+  imgCounter: {
     position: "absolute",
-    bottom: 8,
-    left: "50%",
-    transform: "translateX(-50%)",
-    display: "flex",
-    gap: 5,
+    top: 10,
+    right: 10,
+    background: "rgba(0,0,0,0.55)",
+    color: "#fff",
+    fontSize: "0.78rem",
+    fontWeight: 600,
+    padding: "3px 8px",
+    borderRadius: 999,
+    boxShadow: "0 1px 4px rgba(0,0,0,0.4)",
     zIndex: 2,
+    letterSpacing: "0.03em",
   },
   empty: {
     textAlign: "center",
@@ -474,19 +482,8 @@ function ItemCard({ item, onImageClick }) {
               onClick={(e) => { e.stopPropagation(); setImgIndex((i) => (i + 1) % item.images.length); }}
               aria-label="Next image"
             >›</button>
-            <div style={styles.cardDots}>
-              {item.images.map((_, i) => (
-                <span
-                  key={i}
-                  style={{
-                    width: 7,
-                    height: 7,
-                    borderRadius: "50%",
-                    background: i === imgIndex ? "#fff" : "rgba(255,255,255,0.5)",
-                    transition: "background 0.15s",
-                  }}
-                />
-              ))}
+            <div style={styles.imgCounter}>
+              {imgIndex + 1}/{item.images.length}
             </div>
           </>
         )}
