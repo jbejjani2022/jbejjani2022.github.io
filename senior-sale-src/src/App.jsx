@@ -145,9 +145,9 @@ const styles = {
   },
   grid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))",
+    gridTemplateColumns: "repeat(auto-fill, minmax(min(340px, 100%), 1fr))",
     gap: 32,
-    padding: "0 48px 64px",
+    paddingBottom: 64,
     maxWidth: 1600,
     margin: "0 auto",
   },
@@ -633,7 +633,7 @@ export default function App() {
       ) : filtered.length === 0 ? (
         <p style={styles.empty}>No items to show.</p>
       ) : (
-        <div style={styles.grid}>
+        <div style={styles.grid} className="item-grid">
           {filtered.map((item, idx) => (
             <ItemCard key={item.name + item.category} item={item} onImageClick={(imgs, idx) => { setLightboxImages(imgs); setLightboxIndex(idx); }} />
           ))}
