@@ -217,6 +217,27 @@ const styles = {
     lineHeight: 1.5,
     wordBreak: "break-word",
   },
+  detailsClamped: {
+    fontSize: "0.88rem",
+    color: MUTED,
+    marginTop: 8,
+    lineHeight: 1.5,
+    wordBreak: "break-word",
+    display: "-webkit-box",
+    WebkitLineClamp: 5,
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden",
+  },
+  seeMoreBtn: {
+    background: "none",
+    border: "none",
+    padding: "2px 0 0",
+    color: ACCENT,
+    fontSize: "0.82rem",
+    fontWeight: 600,
+    cursor: "pointer",
+    display: "block",
+  },
   soldBadge: {
     position: "absolute",
     top: 12,
@@ -408,6 +429,16 @@ function Lightbox({ images, index, onClose }) {
 function ItemCard({ item, onImageClick }) {
   const [hovered, setHovered] = useState(false);
   const [imgIndex, setImgIndex] = useState(0);
+  const [expanded, setExpanded] = useState(false);
+  const [isTruncatable, setIsTruncatable] = useState(false);
+  const detailsRef = useRef(null);
+
+  useEffect(() => {
+    if (detailsRef.current && !expanded) {
+      setIsTruncatable(detailsRef.current.scrollHeight > detailsRef.current.clientHeight);
+    }
+  }, [item.details, expanded]);
+
   const hasImages = item.images.length > 0;
   const hasMultiple = item.images.length > 1;
   const cardStyle = {
@@ -464,7 +495,18 @@ function ItemCard({ item, onImageClick }) {
         <p style={styles.itemName}>{item.name}</p>
         {item.category && <span style={styles.categoryTag}>{item.category}</span>}
         <p style={styles.price}>{formatPrice(item.price)}</p>
-        {item.details && <p style={styles.details}>{linkify(item.details)}</p>}
+        {item.details && (
+          <>
+            <p ref={detailsRef} style={expanded ? styles.details : styles.detailsClamped}>
+              {linkify(item.details)}
+            </p>
+            {(isTruncatable || expanded) && (
+              <button style={styles.seeMoreBtn} onClick={() => setExpanded((e) => !e)}>
+                {expanded ? "See Less" : "See More"}
+              </button>
+            )}
+          </>
+        )}
       </div>
     </div>
   );
