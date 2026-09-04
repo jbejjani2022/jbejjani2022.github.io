@@ -54,7 +54,7 @@ URL: https://github.com/jbejjani2022/deep-leapr
 [PROJECT: When Honest Work Becomes Impossible: Coding Agents Under Pressure]
 Category: Research
 Description: Experiments and talk for Professor Boaz Barak's graduate seminar, Topics in Foundations of ML: AI Alignment and Safety. Demonstrated how impossible tasks and threats to autonomy and capabilities can elicit evaluation hacking by coding agents. Highlighted the challenges of measuring misaligned behaviors with situational awareness as a growing concern.
-URL: https://boazbk.github.io/mltheoryseminar/#lecture-oct-23
+URL: https://boazbk.github.io/mltheoryseminar/fall2025/#lecture-oct-23
 
 [PROJECT: The Emergence of Complex Behavior in Large-Scale Ecological Environments]
 Category: Research
