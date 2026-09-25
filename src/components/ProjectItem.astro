@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { marked } from 'marked';
+import ExternalArrow from './ExternalArrow.astro';
 
 type Props = CollectionEntry<'projects'>['data'];
 const { name, url, github, youtube, description } = Astro.props;
@@ -24,10 +25,7 @@ const descriptionHtml = (marked.parseInline(description, { async: false }) as st
       url ? (
         <a class="name" href={url} target="_blank" rel="noopener">
           {name}
-          {/* Non-breaking space keeps the arrow with the name. */}
-          <span class="ext" aria-label="(opens in a new tab)">
-            {'\u00a0↗'}
-          </span>
+          <ExternalArrow />
         </a>
       ) : (
         <span class="name plain">{name}</span>
@@ -55,10 +53,6 @@ const descriptionHtml = (marked.parseInline(description, { async: false }) as st
   .name {
     font-weight: 600;
     margin-right: 0.35em;
-  }
-  .ext {
-    font-size: 0.75em;
-    font-weight: 400;
   }
   .name.plain {
     color: var(--text);

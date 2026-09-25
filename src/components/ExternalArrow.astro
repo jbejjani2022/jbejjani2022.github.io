@@ -1,0 +1,34 @@
+---
+// A small "↗" drawn as SVG, marking links that open elsewhere. The Unicode ↗ renders as a color
+// emoji on iOS, so this is used instead. It inherits the link's color, and the non-breaking space
+// inside the no-wrap span keeps it on the same line as the word before it.
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<span class:list={['ext-arrow', className]}
+  >{' '}<svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"><path d="M7 17 17 7"></path><path d="M8 7h9v9"></path></svg
+  ><span class="sr-only">(opens in a new tab)</span></span
+>
+
+<style>
+  .ext-arrow {
+    white-space: nowrap;
+  }
+  svg {
+    display: inline-block;
+    width: 0.62em;
+    height: 0.62em;
+    vertical-align: 0.02em;
+  }
+</style>

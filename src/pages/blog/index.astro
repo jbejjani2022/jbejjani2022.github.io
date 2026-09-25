@@ -1,6 +1,7 @@
 ---
 import Page from '../../layouts/Page.astro';
 import Authors from '../../components/Authors.astro';
+import ExternalArrow from '../../components/ExternalArrow.astro';
 import { formatDate, getPosts, titleHtml } from '../../lib/data';
 
 const posts = await getPosts();
@@ -20,10 +21,7 @@ const years = [...new Set(posts.map((p) => p.data.date.getUTCFullYear()))];
                 {data.externalUrl ? (
                   <a class="title" href={data.externalUrl} target="_blank" rel="noopener">
                     <Fragment set:html={titleHtml(data.title)} />
-                    {/* Non-breaking space keeps the arrow on the title's last line. */}
-                    <span class="ext" aria-label="(opens in a new tab)">
-                      {'\u00a0↗'}
-                    </span>
+                    <ExternalArrow />
                   </a>
                 ) : (
                   <a class="title" href={`/blog/${id}/`}>
@@ -69,9 +67,6 @@ const years = [...new Set(posts.map((p) => p.data.date.getUTCFullYear()))];
   .title {
     font-size: 1.1em;
     font-weight: 500;
-  }
-  .ext {
-    font-size: 0.8em;
   }
   li :global(.post-authors) {
     margin-top: 0.15rem;

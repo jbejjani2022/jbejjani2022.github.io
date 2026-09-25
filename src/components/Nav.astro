@@ -1,6 +1,7 @@
 ---
 // The six section links. Used by the site header: one row on wide screens, a vertical list in the mobile menu.
 import { NAV } from '../config';
+import ExternalArrow from './ExternalArrow.astro';
 
 interface Props {
   class?: string;
@@ -24,11 +25,7 @@ const isCurrent = (href: string) => path.startsWith(href);
             {...(item.external ? { target: '_blank', rel: 'noopener' } : {})}
           >
             {item.label}
-            {item.external && (
-              <span class="ext" aria-label="(opens in a new tab)">
-                ↗
-              </span>
-            )}
+            {item.external && <ExternalArrow />}
           </a>
         </li>
       ))
@@ -50,10 +47,6 @@ const isCurrent = (href: string) => path.startsWith(href);
   }
   a {
     white-space: nowrap;
-  }
-  .ext {
-    margin-left: 0.1em;
-    font-size: 0.75em;
   }
   .vertical li {
     padding: 0.2rem 0;
