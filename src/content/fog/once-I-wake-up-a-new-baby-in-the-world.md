@@ -26,7 +26,7 @@ I wonder what it'd feel like to be a Mountain.
 What would matter then?
 What would I know?
 Or be a *plant*! That would feel nice probably.
-A green vibration through roots in sunny soil.
+A green vibration through roots in deep warm soil.
 Maybe I'll see
 once I wake up a new baby in the world
 or realize all that's a buncha bullshit
