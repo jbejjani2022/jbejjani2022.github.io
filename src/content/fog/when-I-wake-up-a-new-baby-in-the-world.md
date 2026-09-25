@@ -23,7 +23,7 @@ I wonder what it'd feel like to be a mountain.
 What would matter? What problems would I have then?
 Be a plant! That would feel nice probably.
 A green vibration with roots in sunny soil.
-maybe tomorrow
+Maybe tomorrow
 once I wake up a new baby in the world
 
-(Or will that all feel like bullshit?)
+(or will all that feel like bullshit?)
