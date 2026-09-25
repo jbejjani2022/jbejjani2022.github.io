@@ -1,0 +1,34 @@
+---
+// Responsive, lazy-loaded YouTube embed (privacy-enhanced domain, no cookies until play).
+interface Props {
+  id: string; // the video id, e.g. "1WSElNVMAU8" from https://youtu.be/1WSElNVMAU8
+  start?: number; // start time in seconds (the "t=" in a shared link)
+  title: string; // accessible name for the player
+}
+const { id, start, title } = Astro.props;
+const src = `https://www.youtube-nocookie.com/embed/${id}${start ? `?start=${start}` : ''}`;
+---
+
+<div class="video">
+  <iframe
+    src={src}
+    title={title}
+    loading="lazy"
+    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen></iframe>
+</div>
+
+<style>
+  .video {
+    margin: 1.4rem 0 1.8rem;
+    aspect-ratio: 16 / 9;
+    background: var(--code-bg);
+  }
+  iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+</style>

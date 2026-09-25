@@ -1,0 +1,94 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import headshot from '../assets/headshot.png';
+import { SITE } from '../config';
+
+// The address is only ever written as "user[at]domain" (see config.ts). The two halves go into
+// data attributes and are joined by the click handler below, so the full address never appears
+// as one string in the HTML or JS. Without JS the link falls back to the footer.
+const [mailUser, mailDomain] = SITE.email.split('[at]');
+---
+
+<Base>
+  <div class="wrap">
+    <Header />
+    <main class="landing">
+      <h1 class="sr-only">{SITE.name}</h1>
+      <Image
+        src={headshot}
+        alt="Photo of Joseph Bejjani"
+        widths={[240, 480]}
+        sizes="240px"
+        loading="eager"
+        fetchpriority="high"
+        class="photo"
+      />
+      <div class="intro">
+        <p>
+          I'm a researcher working on understanding powerful artificial intelligence and its risks in order to develop
+          better systems for aligning it with human goals.
+        </p>
+        <p>
+          I’m currently pursuing a PhD in computer science at the University of Toronto co-advised by <a
+            href="https://timrudner.com"
+            target="_blank"
+            rel="noopener">Tim Rudner</a
+          > and <a href="https://www.cs.toronto.edu/~duvenaud/" target="_blank" rel="noopener">David Duvenaud</a>. I'm
+          grateful to be supported by the <a href="https://vectorinstitute.ai" target="_blank" rel="noopener"
+            >Vector Institute</a
+          > and the <a href="https://www.cooperativeai.com" target="_blank" rel="noopener">Cooperative AI Foundation</a>.
+        </p>
+        <p>
+          Feel free to <a href="#contact" class="mail-link" data-user={mailUser} data-domain={mailDomain}
+            >reach out</a
+          >!
+        </p>
+      </div>
+    </main>
+  </div>
+</Base>
+
+<script is:inline>
+  document.querySelectorAll('a.mail-link').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.href = 'mailto:' + link.dataset.user + String.fromCharCode(64) + link.dataset.domain;
+    });
+  });
+</script>
+
+<style>
+  .landing {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    column-gap: 2.5rem;
+    align-items: start;
+    padding-top: 4vh;
+  }
+  .landing :global(.photo) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .intro p {
+    margin: 0 0 1rem;
+  }
+  :global(body:has(.landing) .site-footer) {
+    margin-top: 12vh;
+  }
+
+  @media (max-width: 599px) {
+    .landing {
+      grid-template-columns: minmax(0, 1fr);
+      padding-top: 0;
+    }
+    .landing :global(.photo) {
+      max-width: 240px;
+    }
+    .intro {
+      margin-top: 1.5rem;
+    }
+  }
+</style>

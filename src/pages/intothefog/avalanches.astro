@@ -1,0 +1,48 @@
+---
+// Avalanches (formerly /misc/): word avalanches from src/data/avalanches.yaml. Each scenario
+// opens to reveal its key.
+import Fog from '../../layouts/Fog.astro';
+import FogNav from '../../components/FogNav.astro';
+import { inFileOrder } from '../../lib/data';
+
+const avalanches = await inFileOrder('avalanches');
+---
+
+<Fog title="Avalanches — Into the Fog" description="Word avalanches: scenarios whose descriptions collapse into a string of near-homophones.">
+  <main class="fog">
+    <article>
+      <h1 class="piece-title">Avalanches</h1>
+
+      <div class="fog-text">
+        <p><a href="https://www.reddit.com/r/WordAvalanches/wiki/index/" target="_blank" rel="noopener">What is this?</a></p>
+        {/* Hidden for now; delete the comment markers to show again.
+        <p>
+          As of 12/08/25, <a href="https://chatgpt.com/share/69379c3d-36ac-8003-8ce7-a3ad4b7000ec" target="_blank" rel="noopener"
+            >ChatGPT (free plan GPT-4o) can’t generate one zero-shot and still has a hard time after an example and some
+            correction.</a
+          >{' '}
+          <a href="https://claude.ai/share/08e4a4b7-2c67-43d2-b31b-2a5cd32f0829" target="_blank" rel="noopener"
+            >Claude Sonnet 4.5 seems to understand what’s going on slightly better, but still struggles.</a
+          >
+        </p>
+        <p>Click to reveal.</p>
+        */}
+      </div>
+
+      <ul class="avalanches">
+        {
+          avalanches.map((a) => (
+            <li>
+              <details>
+                <summary>{a.scenario}</summary>
+                <p class="avalanche-key">→ {a.key}</p>
+              </details>
+            </li>
+          ))
+        }
+      </ul>
+    </article>
+
+    <FogNav href="/intothefog/avalanches/" />
+  </main>
+</Fog>

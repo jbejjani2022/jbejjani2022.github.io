@@ -1,0 +1,13 @@
+---
+import Page from '../layouts/Page.astro';
+import ProjectItem from '../components/ProjectItem.astro';
+import { inFileOrder } from '../lib/data';
+
+const items = await inFileOrder('projects');
+---
+
+<Page title="Projects" description="Software and research projects by Joseph Bejjani.">
+  <ul class="rows">
+    {items.map((item) => <ProjectItem {...item} />)}
+  </ul>
+</Page>

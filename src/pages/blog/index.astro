@@ -1,0 +1,90 @@
+---
+import Page from '../../layouts/Page.astro';
+import Authors from '../../components/Authors.astro';
+import { formatDate, getPosts, titleHtml } from '../../lib/data';
+
+const posts = await getPosts();
+const years = [...new Set(posts.map((p) => p.data.date.getUTCFullYear()))];
+---
+
+<Page title="Blog" description="Writing by Joseph Bejjani on AI alignment, reinforcement learning, and language models.">
+  {
+    years.map((year) => (
+      <section class="year">
+        <h2>{year}</h2>
+        <ul>
+          {posts
+            .filter((p) => p.data.date.getUTCFullYear() === year)
+            .map(({ id, data }) => (
+              <li>
+                {data.externalUrl ? (
+                  <a class="title" href={data.externalUrl} target="_blank" rel="noopener">
+                    <Fragment set:html={titleHtml(data.title)} />
+                    {/* Non-breaking space keeps the arrow on the title's last line. */}
+                    <span class="ext" aria-label="(opens in a new tab)">
+                      {'\u00a0↗'}
+                    </span>
+                  </a>
+                ) : (
+                  <a class="title" href={`/blog/${id}/`}>
+                    <Fragment set:html={titleHtml(data.title)} />
+                  </a>
+                )}
+                {data.authors && <Authors authors={data.authors} class="post-authors" />}
+                <p class="meta">
+                  <time datetime={data.date.toISOString().slice(0, 10)}>{formatDate(data.date)}</time>
+                  {data.externalSource && ` · ${data.externalSource}`}
+                </p>
+              </li>
+            ))}
+        </ul>
+      </section>
+    ))
+  }
+  <p class="rss"><a href="/blog/rss.xml">rss</a></p>
+</Page>
+
+<style>
+  .year + .year {
+    margin-top: 2.2rem;
+  }
+  h2 {
+    margin: 0 0 0.8rem;
+    font-size: 0.95em;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--text-2);
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    line-height: 1.45;
+  }
+  li + li {
+    margin-top: 1.1rem;
+  }
+  .title {
+    font-size: 1.1em;
+    font-weight: 500;
+  }
+  .ext {
+    font-size: 0.8em;
+  }
+  li :global(.post-authors) {
+    margin-top: 0.15rem;
+  }
+  .meta {
+    margin: 0.15rem 0 0;
+    font-size: 0.9em;
+  }
+  .rss {
+    margin-top: 2.5rem;
+    font-size: var(--small-size);
+  }
+  .rss a {
+    color: var(--text-2);
+  }
+</style>

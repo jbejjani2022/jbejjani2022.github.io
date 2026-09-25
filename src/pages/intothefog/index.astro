@@ -1,0 +1,88 @@
+---
+import type { ImageMetadata } from 'astro';
+import { getImage } from 'astro:assets';
+import Fog from '../../layouts/Fog.astro';
+import { getFogIndex } from '../../lib/data';
+
+const entries = await getFogIndex();
+
+// Every image in src/assets/fog/hedgehogs/ is optimized at build time. The page is static, so a
+// small inline script picks one at random on each load; without JS the first one shows.
+const sketches = Object.entries(
+  import.meta.glob<{ default: ImageMetadata }>('../../assets/fog/hedgehogs/*.{png,jpg,jpeg,webp,avif}', {
+    eager: true,
+  }),
+)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([, mod]) => mod.default);
+// Every sketch renders at the same width, whatever its natural size. The file is generated at up to
+// 2x that width (never upscaled past the original) so it stays crisp on dense screens.
+const HEDGEHOG_WIDTH = 170;
+const hedgehogs = await Promise.all(
+  sketches.map(async (src) => {
+    const img = await getImage({ src, width: Math.min(src.width, HEDGEHOG_WIDTH * 2), format: 'webp' });
+    return {
+      src: img.src,
+      width: HEDGEHOG_WIDTH,
+      height: Math.round((HEDGEHOG_WIDTH * src.height) / src.width),
+    };
+  }),
+);
+const [firstHedgehog] = hedgehogs;
+// The introduction, one string per paragraph (HTML allowed: use <em> for titles and foreign words).
+// The first paragraph, with tags stripped, doubles as the page's meta description.
+const intro = [
+  'In Slavic folklore, the hedgehog is wise in the way a child is, a quiet seeker who can identify the <em>raskovnik</em>, a magical herb that unlocks doors and uncovers hidden treasures.',
+  'In the 1975 Soviet animated film <em>Ёжик в тумане</em> (<em>Hedgehog in the Fog</em>), the spiky seeker wanders with childlike wonder into the unknown, pondering the mist and mysteries of his peculiar existence.',
+  'This assortment of writings, sketches, paintings, and meanderings makes up something of my permanently-in-progress homage to Hedgehog the character and the symbol. My primary audience is my future self, who might find it interesting to see what I was curious about and whether I found anything along the way, or, at the very least, had some fun in the fog.',
+];
+const description = intro[0].replace(/<[^>]+>/g, '');
+---
+
+<Fog title="Into the Fog" description={description}>
+  <main class="fog">
+    <h1 class="fog-title">Into the Fog</h1>
+
+    {
+      firstHedgehog && (
+        <div class="fog-image">
+          <img
+            id="hedgehog"
+            src={firstHedgehog.src}
+            width={firstHedgehog.width}
+            height={firstHedgehog.height}
+            alt="A pen sketch of a hedgehog"
+            data-options={JSON.stringify(hedgehogs)}
+          />
+          <script is:inline>
+            // Runs before the image paints: swap in a random hedgehog.
+            (() => {
+              const img = document.getElementById('hedgehog');
+              const options = JSON.parse(img.dataset.options);
+              const pick = options[Math.floor(Math.random() * options.length)];
+              img.src = pick.src;
+              img.width = pick.width;
+              img.height = pick.height;
+            })();
+          </script>
+        </div>
+      )
+    }
+
+    <div class="fog-description">
+      {intro.map((paragraph) => <p set:html={paragraph} />)}
+    </div>
+
+    <ul class="fog-list">
+      {
+        entries.map((entry) => (
+          <li>
+            <a href={entry.href}>{entry.title}</a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="fog-home"><a href="/">josephbejjani.com</a></p>
+  </main>
+</Fog>

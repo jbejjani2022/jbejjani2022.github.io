@@ -1,0 +1,278 @@
+/* Blog post layout and prose. Loaded only by layouts/Post.astro.
+ *
+ * Breakpoints (DESIGN.md §7.1):
+ *   ≥ 1400px     fixed TOC in the left gutter, sidenotes in the right margin, article centered
+ *   1100–1399px  "Contents" <details> above the article, sidenotes in the right margin,
+ *                article shifted left to make room
+ *   < 1100px     "Contents" <details>, sidenotes toggle inline
+ */
+
+:root {
+  --sidenote-width: 240px;
+  --sidenote-gap: 30px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@media (min-width: 1100px) and (max-width: 1399px) {
+  .wrap.post-shell {
+    max-width: calc(var(--measure) + var(--sidenote-width) + var(--sidenote-gap) + 2 * var(--gutter));
+    padding-right: calc(var(--gutter) + var(--sidenote-width) + var(--sidenote-gap));
+  }
+}
+
+/* ---- Header ---------------------------------------------------------- */
+
+.post-header {
+  text-align: center;
+  margin-bottom: 2.6rem;
+}
+.post-header::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 1px;
+  margin: 1.8rem auto 0;
+  background: var(--rule);
+}
+.post-title {
+  font-size: 40px;
+  line-height: 1.2;
+  letter-spacing: 0.02rem;
+  font-weight: 500;
+  margin: 0 0 0.9rem;
+}
+.post-authors {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.45;
+}
+.post-date {
+  margin: 0.2rem 0 0;
+  font-size: 0.85em;
+  color: var(--text-2);
+}
+@media (max-width: 599px) {
+  .post-title {
+    font-size: 32px;
+  }
+}
+
+/* ---- Prose ----------------------------------------------------------- */
+
+.prose {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  line-height: 1.7;
+}
+/* A faint underline so links in running text don't rely on color alone. */
+.prose a:not(.heading-anchor) {
+  text-decoration: underline;
+  text-decoration-color: rgba(31, 78, 140, 0.3);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+.prose a:not(.heading-anchor):hover {
+  text-decoration-color: currentColor;
+}
+
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  text-align: left;
+  hyphens: manual;
+  scroll-margin-top: 1.5rem;
+}
+.prose h2 {
+  font-size: 30px;
+}
+.prose h3 {
+  font-size: 25px;
+}
+.prose h4 {
+  font-size: 21px;
+}
+.prose h5,
+.prose h6 {
+  font-size: 19px;
+}
+.heading-anchor {
+  margin-left: 0.35em;
+  color: var(--text-2);
+  opacity: 0;
+  font-weight: 400;
+  transition: opacity 0.15s ease;
+}
+.heading-anchor::after {
+  content: '#';
+}
+.heading-anchor:hover {
+  text-decoration: none;
+  color: var(--accent);
+}
+.prose :is(h2, h3, h4, h5, h6):hover .heading-anchor {
+  opacity: 1;
+}
+
+.prose li {
+  margin-bottom: 0.35rem;
+}
+.prose li > ul,
+.prose li > ol {
+  margin: 0.35rem 0 0;
+}
+
+.prose pre,
+.prose code {
+  text-align: left;
+  hyphens: none;
+}
+
+.prose figure {
+  margin: 1.6rem 0;
+  text-align: center;
+}
+.prose figure img {
+  display: block;
+  margin: 0 auto;
+}
+.prose figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.85em;
+  line-height: 1.5;
+  color: var(--text-2);
+  text-align: left;
+}
+
+.prose blockquote {
+  margin-left: 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--rule);
+  font-style: italic;
+  color: var(--text-2);
+}
+
+.prose hr {
+  width: 80px;
+  margin: 2.2rem auto;
+  border: 0;
+  border-top: 1px solid var(--rule);
+}
+
+/* Tables scroll sideways instead of widening the page. */
+.prose table {
+  display: block;
+  max-width: 100%;
+  width: max-content;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.88em;
+  line-height: 1.45;
+  text-align: left;
+  hyphens: manual;
+}
+.prose th,
+.prose td {
+  padding: 0.4rem 0.8rem 0.4rem 0;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+}
+.prose th {
+  font-weight: 600;
+  border-bottom-color: var(--text-2);
+}
+.prose tr:last-child td {
+  border-bottom: 0;
+}
+
+.prose .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.2rem 0;
+}
+
+/* ---- Sidenotes ------------------------------------------------------- */
+
+.sn-ref {
+  font-size: 0.7em;
+  line-height: 0;
+  color: var(--accent);
+  padding: 0 0.05em;
+}
+.sn-toggle {
+  cursor: pointer;
+}
+.sn-checkbox {
+  display: none;
+}
+.sidenote {
+  float: right;
+  clear: right;
+  width: var(--sidenote-width);
+  margin: 0.3rem calc(-1 * (var(--sidenote-width) + var(--sidenote-gap))) 1rem 0;
+  font-size: 14.5px;
+  line-height: 1.45;
+  color: var(--text-2);
+  text-align: left;
+  hyphens: manual;
+  font-style: normal;
+  font-weight: 400;
+}
+.sn-num {
+  font-size: 0.75em;
+  vertical-align: super;
+  line-height: 0;
+  color: var(--accent);
+}
+
+@media (max-width: 1099px) {
+  /* Visually hidden but focusable, so the note can be opened from the keyboard. */
+  .sn-checkbox {
+    display: inline;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .sn-checkbox:focus-visible + .sn-toggle {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+  .sidenote {
+    display: none;
+  }
+  .sn-checkbox:checked + .sn-toggle + .sidenote {
+    display: block;
+    float: none;
+    width: auto;
+    margin: 0.6rem 0 0.8rem 1.2rem;
+    padding-left: 0.8rem;
+    border-left: 2px solid var(--rule);
+  }
+}
+
+@media print {
+  .sidenote {
+    display: block;
+    float: none;
+    width: auto;
+    margin: 0.4rem 0 0.4rem 1.2rem;
+  }
+  .toc-sidebar,
+  .toc-inline,
+  .site-header,
+  .site-footer {
+    display: none;
+  }
+}

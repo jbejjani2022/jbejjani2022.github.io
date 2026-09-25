@@ -1,0 +1,54 @@
+# Projects, rendered on /projects/ in this exact order.
+#
+# Fields:
+#   name:        string (required). Links to `url` if set.
+#   url:         project/live-site URL (optional)
+#   github:      code URL, shown as [github] (optional)
+#   youtube:     YouTube channel or video URL, shown as [youtube] after [github] (optional)
+#   description: one line (required). Inline markdown links like [text](https://…) are allowed.
+
+- name: The Golden Arm
+  url: https://goldenarmtheater.com
+  github: https://github.com/jbejjani2022/golden-arm
+  description: Harvard's student-run movie theater, built with my friends with love.
+
+- name: Mechagogue
+  github: https://github.com/aaronwalsman/mechagogue
+  description: \'Teacher of Machines,\' a JAX-based framework for reinforcement learning, supervised learning, and evolutionary algorithms.
+
+- name: Marcella Vlahos
+  url: https://marcellavlahos.com
+  github: https://github.com/jbejjani2022/works-of-arts
+  description: A professional artist's portfolio.
+
+- name: Le Petit Desk
+  url: https://lepetitdesk.com
+  github: https://github.com/jbejjani2022/le-petit-desk
+  youtube: https://www.youtube.com/@LePetitDesk
+  description: Harvard's NPR Tiny Desk spin-off, where turtles wander(ed).
+
+- name: SlavicGPT
+  github: https://github.com/jbejjani2022/SlavicGPT
+  description: From-scratch GPTs trained on Russian text and Slavic literature.
+
+# - name: VioLibrary
+#   github: https://github.com/jbejjani2022/VioLibrary
+#   description: Search violin recital repertoire, get personalized recommendations, and build recital programs.
+
+# - name: MiniDiffusion
+#   github: https://github.com/jbejjani2022/MiniDiffusion
+#   description: A PyTorch diffusion model for image generation, trained on MNIST and CIFAR-10.
+
+- name: bardle
+  url: https://josephbejjani.com/bardle/
+  github: https://github.com/jbejjani2022/bardle
+  description: A Shakespearean Wordle, with the Bard reacting as you play.
+
+- name: SnakeCube
+  github: https://github.com/jbejjani2022/SnakeCube
+  youtube: https://youtu.be/e_J05hN6BZY?si=MN9TmjE6Tno0HQzn
+  description: Snake reimagined on a rotation-controlled LED cube.
+
+# - name: MiniML
+#   github: https://github.com/jbejjani2022/MiniML
+#   description: A series of OCaml metacircular interpreters with varying semantics.

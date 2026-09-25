@@ -1,0 +1,90 @@
+# Research, rendered on /research/ in this exact order (top of file = top of page).
+#
+# Fields:
+#   title:   string (required)
+#   year:    number (required)
+#   venue:   string, peer-reviewed venue only (optional; the line is omitted if unset)
+#   authors: list of strings (required). "Joseph Bejjani" renders bold; add "*" for equal contribution.
+#   links:   list of { label, url }, rendered as [label] in order (optional)
+#   image:   filename in src/assets/research/ (optional thumbnail)
+
+- title: The Emergence of Complex Behavior in Large-Scale Ecological Environments
+  year: 2025
+  authors:
+    - Joseph Bejjani
+    - Chase Van Amburg
+    - Chengrui Wang
+    - Chloe Huangyuan Su
+    - Sarah M. Pratt
+    - Yasin Mazloumi
+    - Naeem Khoshnevis
+    - Sham M. Kakade
+    - Kianté Brantley
+    - Aaron Walsman
+  links:
+    - { label: arxiv, url: "https://arxiv.org/abs/2510.18221" }
+    - { label: code, url: "https://github.com/jbejjani2022/ecological-emergent-behavior" }
+    - { label: news, url: "https://kempnerinstitute.harvard.edu/news/what-happens-when-ai-isnt-trained-but-evolves/" }
+  image: emergence.png
+
+- title: "DIRT: The Distributed Intelligent Replicator Toolkit"
+  year: 2025
+  venue: Poster, International Conference on Artificial Life
+  authors:
+    - Chengrui Wang
+    - Chase Van Amburg
+    - Chloe Huangyuan Su
+    - Joseph Bejjani
+    - Sarah M. Pratt
+    - Yasin Mazloumi
+    - Naeem Khoshnevis
+    - Sham M. Kakade
+    - Kianté Brantley
+    - Aaron Walsman
+  links:
+    - { label: code, url: "https://github.com/aaronwalsman/dirt" }
+  image: dirt.png
+
+- title: "When Agents Prefer Hacking To Failure: Evaluating Misalignment Under Pressure"
+  year: 2025
+  authors: [Joseph Bejjani, Itamar Rocha Filho, Haichuan Wang, Zidi Xiong]
+  links:
+    - { label: lesswrong, url: "https://www.lesswrong.com/posts/AJANBeJb2p39su6F9/cs2881r-week-8-when-agents-prefer-hacking-to-failure" }
+    - { label: talk, url: "https://boazbk.github.io/mltheoryseminar/fall2025/#lecture-oct-23" }
+  image: hack.png
+
+- title: Programmatic Interpretability for Reward Model Debugging
+  year: 2025
+  authors: [Joseph Bejjani, Max Peng, Kayden Kehe]
+  links:
+    - { label: pdf, url: "https://drive.google.com/file/d/1wR5Y1xRprA9m4iy0uN0seGKCG2yrVlL5/view?usp=sharing" }
+    - { label: code, url: "https://github.com/jbejjani2022/deep-leapr" }
+
+- title: Evolutionary Alignment
+  year: 2025
+  authors: [Joseph Bejjani*, Itamar Rocha Filho*, Core Francisco Park]
+  links:
+    - { label: pdf, url: "https://drive.google.com/file/d/16McClLBCSU7pgTV-NyVssfjJYrDlq8hF/view?usp=sharing" }
+    - { label: code, url: "https://github.com/jbejjani2022/es-fine-tuning-paper" }
+
+- title: "Explain This, Pruner! The Effect of Zero-Order Pruning on LLM Explainability and Curvature"
+  year: 2025
+  venue: The Harvard Undergraduate Research Journal, Vol. 15, No. 2
+  authors: [Joseph Bejjani, Camilo Brown-Pinilla, David Ettel]
+  links:
+    - { label: paper, url: "https://www.thurj.com/spring-2025-research/jbejjanietal" }
+    - { label: code, url: "https://github.com/camilobrownpinilla/Explain-This-Pruner" }
+
+- title: Large Motion Diffusion Models
+  year: 2025
+  authors: [Camilo Brown-Pinilla, Joseph Bejjani]
+  links:
+    - { label: code, url: "https://github.com/jbejjani2022/InferBiomechanics" }
+    - { label: talk, url: "https://youtu.be/x0D_LVvm8WY?t=300" }
+  image: motion.png
+
+- title: "Prune As You Tune: LoRA-Enabled Model Compression"
+  year: 2024
+  authors: [Joseph Bejjani, Amulya Garimella, Swati Goel, Mohammed Sakib]
+  links:
+    - { label: code, url: "https://github.com/jbejjani2022/prune-as-you-tune" }

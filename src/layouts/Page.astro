@@ -1,0 +1,24 @@
+---
+// A plain subpage: header, an h1, then the page content in the content column.
+import Base from './Base.astro';
+import Header from '../components/Header.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  // Hide the visible h1 (e.g. when the page renders its own).
+  hideTitle?: boolean;
+}
+const { title, description, hideTitle = false } = Astro.props;
+---
+
+<Base title={title} description={description}>
+  <slot name="head" slot="head" />
+  <div class="wrap">
+    <Header />
+    <main>
+      {!hideTitle && <h1>{title}</h1>}
+      <slot />
+    </main>
+  </div>
+</Base>

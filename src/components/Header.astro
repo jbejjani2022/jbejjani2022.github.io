@@ -1,0 +1,116 @@
+---
+// Site header on every main-site page: name on the left, section links in one row on the right.
+// Under 780px the links collapse into a <details> menu, so it works without JavaScript.
+import Nav from './Nav.astro';
+import { SITE } from '../config';
+---
+
+<header class="site-header">
+  <a class="name" href="/">{SITE.name}</a>
+  <Nav class="nav-desktop" />
+  <details class="menu">
+    <summary aria-label="Menu" aria-controls="mobile-nav">
+      <span class="burger" aria-hidden="true"><span></span><span></span><span></span></span>
+    </summary>
+    <Nav layout="vertical" class="nav-mobile" id="mobile-nav" />
+  </details>
+</header>
+
+<script is:inline>
+  // Polish only: the menu works without this. Keeps the button label in sync with its state.
+  document.querySelectorAll('details.menu').forEach((menu) => {
+    const summary = menu.querySelector('summary');
+    menu.addEventListener('toggle', () => summary.setAttribute('aria-label', menu.open ? 'Close menu' : 'Menu'));
+  });
+</script>
+
+<style>
+  .site-header {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    column-gap: 2rem;
+    margin: 2.5rem 0 3rem;
+  }
+  .name {
+    font-size: var(--title-size);
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+  .name:hover {
+    text-decoration: none;
+    color: var(--accent);
+  }
+  .site-header :global(.nav a) {
+    color: var(--text-2);
+  }
+  .site-header :global(.nav a.current),
+  .site-header :global(.nav a:hover) {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .menu {
+    display: none;
+    flex-basis: 100%;
+  }
+  summary {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  .burger {
+    position: relative;
+    width: 20px;
+    height: 13px;
+  }
+  .burger span {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background: var(--text);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .burger span:nth-child(1) { top: 0; }
+  .burger span:nth-child(2) { top: 5.75px; }
+  .burger span:nth-child(3) { top: 11.5px; }
+  .menu[open] .burger span:nth-child(1) { transform: translateY(5.75px) rotate(45deg); }
+  .menu[open] .burger span:nth-child(2) { opacity: 0; }
+  .menu[open] .burger span:nth-child(3) { transform: translateY(-5.75px) rotate(-45deg); }
+  .site-header :global(.nav-mobile) {
+    margin-top: 0.6rem;
+  }
+
+  @media (max-width: 779px) {
+    .site-header {
+      margin-top: 1.5rem;
+    }
+    .site-header :global(.nav-desktop) {
+      display: none;
+    }
+    .menu {
+      display: block;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .burger span {
+      transition: none;
+    }
+  }
+</style>

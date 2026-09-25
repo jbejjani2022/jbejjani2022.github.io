@@ -1,0 +1,29 @@
+---
+// Bottom navigation for an Into the Fog page: previous, all, next (index order), with ← / → / Esc keys.
+import { getFogIndex } from '../lib/data';
+
+interface Props {
+  href: string; // this page's path, e.g. "/intothefog/fog/"
+}
+const { href } = Astro.props;
+const index = await getFogIndex();
+const i = index.findIndex((entry) => entry.href === href);
+if (i === -1) throw new Error(`FogNav: ${href} is not in the Into the Fog index.`);
+const prev = index[i - 1];
+const next = index[i + 1];
+---
+
+<nav class="piece-nav" aria-label="Pieces">
+  {prev && <a href={prev.href} rel="prev" data-key="ArrowLeft">← {prev.title}</a>}
+  <a href="/intothefog/" data-key="Escape">All</a>
+  {next && <a href={next.href} rel="next" data-key="ArrowRight">{next.title} →</a>}
+</nav>
+
+<script is:inline>
+  // ← / → for previous / next piece, Esc for the index. Ignored with modifier keys held.
+  document.addEventListener('keydown', (e) => {
+    if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    const link = document.querySelector(`.piece-nav a[data-key="${e.key}"]`);
+    if (link) window.location.href = link.href;
+  });
+</script>

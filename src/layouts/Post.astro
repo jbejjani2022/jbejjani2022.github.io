@@ -1,0 +1,36 @@
+---
+import 'katex/dist/katex.min.css';
+import '../styles/post.css';
+import type { MarkdownHeading } from 'astro';
+import type { CollectionEntry } from 'astro:content';
+import Base from './Base.astro';
+import Header from '../components/Header.astro';
+import Toc from '../components/Toc.astro';
+import { formatDate, OWNER, plainTitle, titleHtml } from '../lib/data';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  headings: MarkdownHeading[];
+}
+const { post, headings } = Astro.props;
+const { title, date, description, authors = [OWNER], toc } = post.data;
+---
+
+<Base title={plainTitle(title)} description={description} type="article" wrapClass="post-shell">
+  <div class="wrap post-shell" id="top">
+    <Header />
+    {toc && <Toc headings={headings} title={title} />}
+    <main>
+      <article>
+        <header class="post-header">
+          <h1 class="post-title" set:html={titleHtml(title)} />
+          <p class="post-authors">{authors.join(', ')}</p>
+          <p class="post-date"><time datetime={date.toISOString().slice(0, 10)}>{formatDate(date)}</time></p>
+        </header>
+        <div class="prose">
+          <slot />
+        </div>
+      </article>
+    </main>
+  </div>
+</Base>

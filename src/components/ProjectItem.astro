@@ -1,0 +1,71 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { marked } from 'marked';
+
+type Props = CollectionEntry<'projects'>['data'];
+const { name, url, github, youtube, description } = Astro.props;
+
+// Bracketed links after the name, in this order.
+const links = [
+  { label: 'github', href: github },
+  { label: 'youtube', href: youtube },
+].filter((l): l is { label: string; href: string } => Boolean(l.href));
+
+// Inline markdown only (links, emphasis). Links open in a new tab like the rest of the row.
+const descriptionHtml = (marked.parseInline(description, { async: false }) as string).replaceAll(
+  '<a href=',
+  '<a target="_blank" rel="noopener" href=',
+);
+---
+
+<li>
+  <div class="line1">
+    {
+      url ? (
+        <a class="name" href={url} target="_blank" rel="noopener">
+          {name}
+          {/* Non-breaking space keeps the arrow with the name. */}
+          <span class="ext" aria-label="(opens in a new tab)">
+            {'\u00a0↗'}
+          </span>
+        </a>
+      ) : (
+        <span class="name plain">{name}</span>
+      )
+    }
+    {
+      links.length > 0 && (
+        <span class="bracket-links">
+          {links.map((l) => (
+            <a href={l.href} target="_blank" rel="noopener">
+              [{l.label}]
+            </a>
+          ))}
+        </span>
+      )
+    }
+  </div>
+  <p class="description" set:html={descriptionHtml} />
+</li>
+
+<style>
+  li {
+    line-height: 1.5;
+  }
+  .name {
+    font-weight: 600;
+    margin-right: 0.35em;
+  }
+  .ext {
+    font-size: 0.75em;
+    font-weight: 400;
+  }
+  .name.plain {
+    color: var(--text);
+  }
+  .description {
+    margin: 0.15rem 0 0;
+    font-size: 0.95em;
+    color: var(--text-2);
+  }
+</style>

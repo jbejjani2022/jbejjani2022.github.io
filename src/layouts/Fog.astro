@@ -1,0 +1,25 @@
+---
+// Into the Fog: its own fonts and CSS, no main-site header, footer, or styles.
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/600.css';
+import '@fontsource/ibm-plex-mono/700.css';
+import '@fontsource/ibm-plex-mono/400-italic.css';
+import '../styles/fog.css';
+import Head from '../components/Head.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <Head title={title} description={description} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

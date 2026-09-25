@@ -1,0 +1,184 @@
+/* Into the Fog. A standalone journal: shares nothing visual with the main site.
+ * Plain and matter-of-fact, like a typed notebook: one monospace face, black on white,
+ * everything left-aligned. */
+
+:root {
+  --fog-bg: #ffffff;
+  --fog-ink: #000000;
+  --fog-font: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fog-font);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--fog-ink);
+  background: var(--fog-bg);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+:focus-visible {
+  outline: 1px solid var(--fog-ink);
+  outline-offset: 3px;
+}
+
+.fog {
+  max-width: 44em; /* room for ~70-character lines before a poem line wraps */
+  margin: 0 auto;
+  padding: 10vh 20px 3rem;
+}
+
+/* ---- Index ----------------------------------------------------------- */
+
+.fog-title {
+  margin: 0;
+  font-size: 1.3em;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.fog-image {
+  margin: 2rem 0 0;
+}
+.fog-image img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+.fog-description {
+  margin: 2rem 0 0;
+  max-width: 36em;
+}
+.fog-description p {
+  margin: 0 0 1em;
+}
+.fog-description p:last-child {
+  margin-bottom: 0;
+}
+.fog-list {
+  list-style: none;
+  margin: 2.5rem 0 0;
+  padding: 0;
+}
+.fog-list li + li {
+  margin-top: 0.15em;
+}
+
+.fog-home {
+  margin: 4rem 0 0;
+}
+
+/* ---- Piece ----------------------------------------------------------- */
+
+.piece-title {
+  margin: 0 0 2rem;
+  font-size: 1em;
+  font-weight: 700;
+}
+
+.poem p {
+  margin: 0 0 1.65em;
+}
+.poem p:last-child {
+  margin-bottom: 0;
+}
+
+.prose-piece p {
+  margin: 0 0 1.65em;
+}
+
+.attribution {
+  margin: 2rem 0 0;
+}
+
+/* One link per line: previous, all, next. Long titles never wrap into each other. */
+.piece-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2em;
+  margin: 5rem 0 0;
+}
+
+/* Images in pieces (sketches, drawings): full column width, stacked with a little air between. */
+.fog figure {
+  margin: 0 0 1.65em;
+}
+.fog figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Links inside a piece's text are underlined so they read as links in all-black type. */
+.prose-piece a,
+.poem a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+/* ---- Avalanches ------------------------------------------------------ */
+
+/* Links inside running text are underlined so they read as links in all-black type. */
+.fog-text p {
+  margin: 0 0 1em;
+}
+.fog-text a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+.avalanches {
+  margin: 2.5rem 0 0;
+  padding-left: 2em;
+  list-style: none;
+}
+/* Typed "*" bullets, hanging in the left margin. */
+.avalanches li {
+  position: relative;
+}
+.avalanches li::before {
+  content: '*';
+  position: absolute;
+  left: -2em;
+}
+.avalanches li + li {
+  margin-top: 1.1em;
+}
+.avalanches summary {
+  cursor: pointer;
+  list-style: none;
+}
+.avalanches summary::-webkit-details-marker {
+  display: none;
+}
+.avalanches summary:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+.avalanche-key {
+  margin: 0.5em 0 0;
+}

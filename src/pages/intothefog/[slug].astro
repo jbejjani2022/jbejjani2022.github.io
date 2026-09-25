@@ -1,0 +1,30 @@
+---
+import { render } from 'astro:content';
+import Fog from '../../layouts/Fog.astro';
+import FogNav from '../../components/FogNav.astro';
+import { getPieces } from '../../lib/data';
+
+export async function getStaticPaths() {
+  const pieces = await getPieces();
+  return pieces.map((piece) => ({ params: { slug: piece.id }, props: { piece } }));
+}
+
+const { piece } = Astro.props;
+const { title, type, attribution } = piece.data;
+const { Content } = await render(piece);
+---
+
+<Fog title={`${title} — Into the Fog`}>
+  <main class="fog">
+    <article>
+      <h1 class="piece-title">{title}</h1>
+      {/* Poems keep their line breaks; prose, sketches, and paintings are ordinary paragraphs and images. */}
+      <div class:list={[type === 'poem' ? 'poem' : 'prose-piece', `piece-${type}`]}>
+        <Content />
+        {attribution && <p class="attribution">— {attribution}</p>}
+      </div>
+    </article>
+
+    <FogNav href={`/intothefog/${piece.id}/`} />
+  </main>
+</Fog>

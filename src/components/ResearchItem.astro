@@ -1,0 +1,110 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import Authors from './Authors.astro';
+
+type Props = CollectionEntry<'research'>['data'];
+const { title, year, venue, authors, links, image } = Astro.props;
+
+const thumbnails = import.meta.glob<{ default: ImageMetadata }>('../assets/research/*.{png,jpg,jpeg,webp,avif,gif}');
+const thumbPath = image ? `../assets/research/${image}` : undefined;
+if (thumbPath && !thumbnails[thumbPath]) {
+  throw new Error(`research.yaml: "${title}" sets image: ${image}, but src/assets/research/${image} does not exist.`);
+}
+const thumb = thumbPath ? (await thumbnails[thumbPath]()).default : undefined;
+---
+
+<li class:list={['item', { 'has-thumb': thumb }]}>
+  {
+    thumb && (
+      <div class="thumb">
+        <Image src={thumb} alt="" widths={[112, 224]} sizes="112px" />
+      </div>
+    )
+  }
+  <div class="body">
+    <div class="line1">
+      <span class="title-wrap">
+        <strong class="title">{title}</strong>
+        {
+          links.length > 0 && (
+            <span class="bracket-links">
+              {links.map((l) => (
+                <a href={l.url} target="_blank" rel="noopener">
+                  [{l.label}]
+                </a>
+              ))}
+            </span>
+          )
+        }
+      </span>
+      <span class="year">{year}</span>
+    </div>
+    {venue && <p class="venue">{venue}</p>}
+    <Authors authors={authors} />
+  </div>
+</li>
+
+<style>
+  .item.has-thumb {
+    display: flex;
+    gap: 1rem;
+  }
+  .thumb {
+    position: relative;
+    flex: none;
+    width: 112px;
+    align-self: stretch;
+    border: 1px solid var(--rule);
+    overflow: hidden;
+  }
+  .thumb :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .body {
+    flex: 1;
+    min-width: 0;
+    line-height: 1.5;
+  }
+  .line1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+  }
+  /* Lets the title shrink (and long words wrap) instead of pushing the year off narrow screens. */
+  .title-wrap {
+    min-width: 0;
+  }
+  .title {
+    font-weight: 600;
+    color: var(--text);
+    margin-right: 0.35em;
+  }
+  .year {
+    flex: none;
+    white-space: nowrap;
+    font-size: 0.9em;
+    color: var(--text-2);
+  }
+  .venue {
+    margin: 0.1rem 0 0;
+    font-style: italic;
+    color: var(--text-2);
+  }
+  .body :global(.authors) {
+    margin-top: 0.15rem;
+  }
+
+  /* Thumbnails crowd the text on phones, so hide them there. */
+  @media (max-width: 599px) {
+    .thumb {
+      display: none;
+    }
+  }
+</style>

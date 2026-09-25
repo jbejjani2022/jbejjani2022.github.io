@@ -1,0 +1,166 @@
+/* Main-site styles. Light mode only. Into the Fog does not load this file. */
+
+:root {
+  --bg: #ffffff;
+  --text: #1a1a1a;
+  --text-2: #6b6b6b; /* secondary: dates, authors, meta */
+  --rule: #e6e6e6; /* horizontal separators */
+  --accent: #1f4e8c; /* links: muted ink blue */
+  --code-bg: #f6f6f4;
+  --measure: 710px; /* content column max-width */
+  --title-size: 24px; /* site name in the header and page titles (h1) */
+  --small-size: 16.5px; /* footer, TOC, small links */
+  --gutter: 35px;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'EB Garamond Variable', 'EB Garamond', Georgia, serif;
+  font-size: 19px;
+  line-height: 1.65;
+  letter-spacing: 0.01rem;
+  color: var(--text);
+  background: var(--bg);
+  font-kerning: normal;
+  font-feature-settings: 'kern' 1;
+  -webkit-font-smoothing: antialiased;
+  overflow-wrap: break-word;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 1px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 500;
+  line-height: 1.25;
+  margin: 1.8em 0 0.6em;
+}
+h1 {
+  font-size: var(--title-size);
+  line-height: 1.3;
+  margin: 0 0 1.4rem;
+}
+
+p,
+ul,
+ol,
+blockquote,
+pre,
+table,
+figure {
+  margin: 0 0 1.05rem;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: var(--mono);
+  font-size: 0.85em;
+}
+:not(pre) > code {
+  background: var(--code-bg);
+  border-radius: 3px;
+  padding: 0.1em 0.3em;
+}
+pre {
+  padding: 12px;
+  overflow-x: auto;
+  background: var(--code-bg);
+  border-radius: 3px;
+  line-height: 1.5;
+}
+pre code {
+  font-size: 1em;
+}
+/* Shiki sets an inline background; keep blocks on the site's code background. */
+pre.astro-code {
+  background-color: var(--code-bg) !important;
+}
+
+.wrap {
+  max-width: calc(var(--measure) + 2 * var(--gutter));
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+@media (max-width: 599px) {
+  :root {
+    --gutter: 20px;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Shared row list used by Research, Projects, and Word Avalanches. */
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+}
+.rows > li {
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.rows > li:last-child {
+  border-bottom: 0;
+}
+.bracket-links {
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+.bracket-links a + a {
+  margin-left: 0.3em;
+}
+.note {
+  margin-top: 0.8rem;
+  font-size: 0.85em;
+  color: var(--text-2);
+}
+.meta {
+  color: var(--text-2);
+}

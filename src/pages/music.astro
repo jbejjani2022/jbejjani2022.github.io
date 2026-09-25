@@ -1,0 +1,36 @@
+---
+import Page from '../layouts/Page.astro';
+import YouTube from '../components/YouTube.astro';
+---
+
+<Page title="Music" description="Violin, orchestral and chamber music, Le Petit Desk, and covers.">
+  <p>
+    I play violin whenever I can in orchestras and chamber groups. I spent a lot of my time as an
+    undergrad with <a href="https://bachsocietyorchestra.org" target="_blank" rel="noopener">The Bach Society Orchestra</a
+    >{' '}and played gigs for weddings and things with <a
+      href="https://jbejjani2022.github.io/eliot-quartet/"
+      target="_blank"
+      rel="noopener">The Eliot Quartet</a
+    >.
+  </p>
+
+  <p>I got to perform with a lot of incredible musicians:</p>
+  <YouTube
+    id="TZ3n3u07WGA"
+    title="Beethoven, Choral Fantasy, op. 80: Harvard Bach Society Orchestra with the Harvard University Choir"
+  />
+  <YouTube id="lZEGLH5UZ0w" start={4858} title="MUS189 Concert, Harvard Music Department" />
+  <YouTube id="kzw3_SlWN5c" start={1347} title="Chamber Music Ensemble (Music 189) Final Performance, Harvard Music Department" />
+
+  <p>
+    My friends and I started <a href="https://lepetitdesk.com" target="_blank" rel="noopener">Le Petit Desk</a>, an NPR
+    Tiny Desk spin-off at Harvard. There we played the Western premiere (we think) of Myaskovsky’s 4th String Quartet:
+  </p>
+  <YouTube id="1WSElNVMAU8" start={813} title="Le Petit Desk April Jam: Myaskovsky Quartet No. 4" />
+
+  <p>
+    We also made some covers, like <a href="https://www.youtube.com/watch?v=5auZcc_5UBM" target="_blank" rel="noopener"
+      >this</a
+    > one and <a href="https://www.youtube.com/watch?v=ZLqk_ALxqeI" target="_blank" rel="noopener">this</a>.
+  </p>
+</Page>

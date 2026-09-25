@@ -1,0 +1,56 @@
+---
+import Icon from './Icon.astro';
+import { SOCIALS } from '../config';
+---
+
+<footer class="site-footer" id="contact">
+  <ul>
+    {
+      SOCIALS.map((s) => (
+        <li>
+          <Icon name={s.icon} size={15} />
+          {s.href ? (
+            <a href={s.href} target="_blank" rel="noopener" aria-label={`${s.label}: ${s.text}`}>
+              {s.text}
+            </a>
+          ) : (
+            <span aria-label={`${s.label}: ${s.text}`}>{s.text}</span>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: 2.5rem;
+    padding: 1rem 0 2.5rem;
+    border-top: 1px solid var(--rule);
+    font-size: var(--small-size);
+    color: var(--text-2);
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1.6rem;
+  }
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+  }
+  li :global(.icon) {
+    flex: none;
+  }
+  a {
+    color: var(--text-2);
+  }
+  a:hover {
+    color: var(--accent);
+  }
+</style>

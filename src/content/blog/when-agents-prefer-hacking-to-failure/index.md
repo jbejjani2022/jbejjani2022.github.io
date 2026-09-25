@@ -1,0 +1,8 @@
+---
+title: "When Agents Prefer Hacking To Failure: Evaluating Misalignment Under Pressure"
+date: 2025-11-09
+description: "What do agents do when they face obstacles to a goal? If the only path to a goal requires misaligned action, will they choose it or accept failure? We build off Anthropic's work on Agentic Misalignment to investigate these questions in an agentic coding environment."
+authors: [Joseph Bejjani, Itamar Rocha Filho, Haichuan Wang, Zidi Xiong]
+externalUrl: https://www.lesswrong.com/posts/AJANBeJb2p39su6F9/cs2881r-week-8-when-agents-prefer-hacking-to-failure
+externalSource: LessWrong
+---

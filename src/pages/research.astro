@@ -1,0 +1,22 @@
+---
+import Page from '../layouts/Page.astro';
+import ResearchItem from '../components/ResearchItem.astro';
+import { inFileOrder } from '../lib/data';
+
+const items = await inFileOrder('research');
+const hasEqualContribution = items.some((item) => item.authors.some((a) => a.includes('*')));
+---
+
+<Page title="Research" description="Research by Joseph Bejjani on AI alignment, multi-agent systems, and emergent behavior.">
+  <p class="intro">You can find more of my work and thinking in my <a href="/blog/">blog</a>.</p>
+  <ul class="rows">
+    {items.map((item) => <ResearchItem {...item} />)}
+  </ul>
+  {hasEqualContribution && <p class="note">* equal contribution</p>}
+</Page>
+
+<style>
+  .intro {
+    margin: 0 0 1.6rem;
+  }
+</style>

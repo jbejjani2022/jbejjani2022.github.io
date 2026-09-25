@@ -1,0 +1,33 @@
+---
+// Comma-separated author list with the owner's name in bold.
+import { isOwner } from '../lib/data';
+
+interface Props {
+  authors: string[];
+  class?: string;
+}
+const { authors, class: className } = Astro.props;
+---
+
+<p class:list={['authors', className]}>
+  {
+    authors.map((author, i) => (
+      <>
+        {isOwner(author) ? <strong class="owner">{author}</strong> : author}
+        {i < authors.length - 1 && ', '}
+      </>
+    ))
+  }
+</p>
+
+<style>
+  .authors {
+    margin: 0;
+    font-size: 0.9em;
+    color: var(--text-2);
+  }
+  .owner {
+    font-weight: 600;
+    color: var(--text);
+  }
+</style>

@@ -1,0 +1,61 @@
+---
+// The six section links. Used by the site header: one row on wide screens, a vertical list in the mobile menu.
+import { NAV } from '../config';
+
+interface Props {
+  class?: string;
+  layout?: 'row' | 'vertical';
+  id?: string;
+}
+const { class: className, layout = 'row', id } = Astro.props;
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => path.startsWith(href);
+---
+
+<nav class:list={['nav', layout, className]} aria-label="Sections" id={id}>
+  <ul>
+    {
+      NAV.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class:list={{ current: isCurrent(item.href) }}
+            aria-current={isCurrent(item.href) ? 'page' : undefined}
+            {...(item.external ? { target: '_blank', rel: 'noopener' } : {})}
+          >
+            {item.label}
+            {item.external && (
+              <span class="ext" aria-label="(opens in a new tab)">
+                ↗
+              </span>
+            )}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .row ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    column-gap: 1.1em;
+  }
+  a {
+    white-space: nowrap;
+  }
+  .ext {
+    margin-left: 0.1em;
+    font-size: 0.75em;
+  }
+  .vertical li {
+    padding: 0.2rem 0;
+  }
+</style>
