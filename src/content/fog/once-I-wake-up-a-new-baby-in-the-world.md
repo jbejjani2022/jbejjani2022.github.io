@@ -6,23 +6,27 @@ type: poem
 
 We're each of us many people in one;
 we conflict with ourselves,
-contradict ourselves in every second
-——who in you is you?
+contradict ourselves,
+transform ourselves in every second——
+who in you is You?
 I'm sometimes very cynical and other times very idealistic and naive.
-Everyone knows everything.
+I know nothing.
 
-I don't understand why we have this weird Brain
+I don't understand why we have this mystery Brain
 and how it came to be this way, asking about itself.
+Self-deluding Shapeshifter,
+reporting for duty.
 A mirror looking for itself in itself
 in itself
 in itself
 in itself
+Everyone *knows* everything.
 
-I know nothing.
 I wonder what it'd feel like to be a Mountain.
-What would matter? What problems would I have then?
+What would matter then?
+What would I know?
 Or be a *plant*! That would feel nice probably.
 A green vibration through roots in sunny soil.
-Maybe tomorrow,
+Maybe I'll see
 once I wake up a new baby in the world
-(or will all that feel like bullshit?)
+or realize all that's a buncha bullshit
