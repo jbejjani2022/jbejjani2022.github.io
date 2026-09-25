@@ -22,7 +22,7 @@ To test on your phone: `npm run preview -- --host` and open the LAN URL it print
 | What | Where |
 |---|---|
 | Name, socials, nav | `src/config.ts` |
-| Into the Fog hedgehog sketches | `src/assets/fog/hedgehogs/` |
+| Into the Fog homepage sketches | `src/assets/fog/hedgehogs/` |
 | Landing text | `src/pages/index.astro` |
 | About | `src/pages/about.astro` |
 | Research list | `src/data/research.yaml` |
@@ -115,7 +115,7 @@ Add an entry to `src/data/projects.yaml`:
   description: One line. Inline [markdown links](https://…) work.
 ```
 
-## Poem or prose (Into the Fog)
+## Into the Fog pieces
 
 Create `src/content/fog/<slug>.md`. The piece appears at `/intothefog/<slug>/`. The index is sorted newest first by `date`, which is never displayed.
 
@@ -163,9 +163,4 @@ The custom domain comes from the repo's Pages settings; `public/CNAME` keeps it 
 
 ### The old Jekyll site
 
-The previous site is archived, not deleted:
-
-- On GitHub, in the `jekyll-archive` branch of this repo (full history).
-- Locally, in `~/Projects/jbejjani2022.github.io-jekyll` (not linked to any remote). That's also where the senior-sale page and its source (`senior-sale-src/`) live now.
-
-To roll back in an emergency: in Settings → Pages, set Source to "Deploy from a branch" and pick `jekyll-archive` / root.
+is archived in the `jekyll-archive` branch of this repo.
