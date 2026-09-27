@@ -5,5 +5,5 @@ type: poem
 ---
 
 Lazy winds in trees
-try to sound like distant streams
+try to sound like busy streams
 They are no different
