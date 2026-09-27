@@ -1,9 +1,9 @@
 ---
-title: "They are no different"
-date: 2026-09-27
+title: "Clouds of Koh Phangan"
+date: 2026-07-16
 type: poem
 ---
 
-Lazy winds in trees
-try to sound like distant streams
-They are no different
+Clouds hang above isles
+stretching in expectation
+of hot jungle rains
