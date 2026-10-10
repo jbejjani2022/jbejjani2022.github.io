@@ -10,14 +10,16 @@ I think he'd rather be barefoot
 (the better for skipping small talk)
 
 The guy on drums has a cap at the slightest angle and a jaw ajar
-and opens his eyes wide-to-the-max to make sure he can see each and every molecule shake
+and opens his eyes wide-to-the-max to make sure he can see
+each and every molecule shake
 and rejoice with them in their shaking
 
-The guy on sax wears a turtleneck and knows real sadness and real funk too
+The guy on sax wears a turtleneck and knows real sadness
+and real funk too
 and asks us to know it with him
 
 The guy on guitar wears a pink neckerchief taking shelter below beard
-and multiplies the strings under his ecstatic fingers
+and multiplies the strings under ecstatic fingers
 outdoing Jesus and his fish
 
 <p>no-boot-foot-feeler<br>
@@ -26,6 +28,6 @@ outdoing Jesus and his fish
 <span style="padding-left:6ch">miracle-fingered-multiplier</span><br>
 pour paints into my ears<br>
 pour and pour paints<br>
-paints whose colors have no name<br>
+paints whose colors have no names<br>
 splattered instantly against the backs of my eyelids<br>
 by Mr. Mind the Drummer who splatters patterns out of paints</p>
