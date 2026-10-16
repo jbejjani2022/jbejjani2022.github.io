@@ -30,12 +30,15 @@ export const isOwner = (author: string) => author.startsWith(OWNER);
 export const formatDate = (date: Date) =>
   date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 
+/** A piece's medium: a markdown piece's `type`, or `puzzle` for standalone pages like Avalanches. */
+export type FogMedium = CollectionEntry<'fog'>['data']['type'] | 'puzzle';
+
 /** One entry in the Into the Fog index: a markdown piece, or a standalone page like Avalanches. */
-export type FogEntry = { title: string; href: string; date: Date; placeholder: boolean };
+export type FogEntry = { title: string; href: string; date: Date; medium: FogMedium; placeholder: boolean };
 
 // Into the Fog pages that aren't markdown pieces. `date` places them in the index (newest first).
 const FOG_PAGES: FogEntry[] = [
-  { title: 'Avalanches', href: '/intothefog/avalanches/', date: new Date('2024-01-01'), placeholder: false },
+  { title: 'Avalanches', href: '/intothefog/avalanches/', date: new Date('2024-01-01'), medium: 'puzzle', placeholder: false },
 ];
 
 /** Everything listed on the Into the Fog index, newest first. Also defines prev/next order. */
@@ -44,6 +47,7 @@ export async function getFogIndex(): Promise<FogEntry[]> {
     title: data.title,
     href: `/intothefog/${id}/`,
     date: data.date,
+    medium: data.type,
     placeholder: data.placeholder,
   }));
   return [...pieces, ...FOG_PAGES].sort((a, b) => b.date.valueOf() - a.date.valueOf());

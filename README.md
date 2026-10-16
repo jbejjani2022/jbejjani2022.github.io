@@ -117,7 +117,7 @@ Add an entry to `src/data/projects.yaml`:
 
 ## Into the Fog pieces
 
-Create `src/content/fog/<slug>.md`. The piece appears at `/intothefog/<slug>/`. The index is sorted newest first by `date`, which is never displayed.
+Create `src/content/fog/<slug>.md`. The piece appears at `/intothefog/<slug>/`. The index is sorted newest first by `date`, which is never displayed. Filters above the list (all · poems · paintings · panels · prose · puzzlings) show one medium at a time, picked by `type` (sketches are "panels"; standalone pages like Avalanches are "puzzlings"). A filter appears once it has a piece; labels and order live in `MEDIUMS` in `src/pages/intothefog/index.astro`.
 
 ```markdown
 ---

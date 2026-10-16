@@ -75,9 +75,43 @@ a:hover {
 .fog-description p:last-child {
   margin-bottom: 0;
 }
+/* Filters: radio buttons that look like plain text links, the checked one underlined.
+ * The hiding rules are generated per medium in intothefog/index.astro. */
+.fog-filters {
+  margin: 2.5rem 0 0;
+  padding: 0;
+  border: 0;
+}
+.fog-filters input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.fog-filters label {
+  cursor: pointer;
+}
+.fog-filters label:hover,
+.fog-filters input:checked + label {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+.fog-filters input:focus-visible + label {
+  outline: 1px solid var(--fog-ink);
+  outline-offset: 3px;
+}
+.fog-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
 .fog-list {
   list-style: none;
-  margin: 2.5rem 0 0;
+  margin: 1.5rem 0 0;
   padding: 0;
 }
 .fog-list li + li {
