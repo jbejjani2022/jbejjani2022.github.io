@@ -10,6 +10,7 @@ import rehypeExternalLinks from 'rehype-external-links';
 import remarkFogBreaks from './src/plugins/remark-fog-breaks.ts';
 import rehypeSidenotes from './src/plugins/rehype-sidenotes.ts';
 import rehypeFigures from './src/plugins/rehype-figures.ts';
+import rehypeGifPlayer from './src/plugins/rehype-gif-player.ts';
 
 const SITE = 'https://josephbejjani.com';
 const LESSWRONG_POST =
@@ -58,6 +59,7 @@ export default defineConfig({
         [rehypeExternalLinks, { target: '_blank', rel: ['noopener'] }],
         rehypeSidenotes,
         rehypeFigures,
+        rehypeGifPlayer,
       ],
     }),
   },
