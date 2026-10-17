@@ -10,3 +10,6 @@ All those layers
 you and I wove around you
 maybe you can step out of them
 before we forget what we wanted so badly to protect
+
+
+*With inspiration from and appreciation for number four of Sarah Downey's ``[Hard-earned truths](https://www.sarahadowney.com/post/hard-earned-truths-i-ve-learned-about-the-universe)''*
