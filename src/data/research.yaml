@@ -70,9 +70,9 @@
 - title: "Explain This, Pruner! The Effect of Zero-Order Pruning on LLM Explainability and Curvature"
   year: 2025
   venue: The Harvard Undergraduate Research Journal, Vol. 15, No. 2
-  authors: [Joseph Bejjani, Camilo Brown-Pinilla, David Ettel]
+  authors: [Joseph Bejjani*, Camilo Brown-Pinilla*, David Ettel*]
   links:
-    - { label: paper, url: "https://www.thurj.com/spring-2025-research/jbejjanietal" }
+    - { label: paper, url: "https://www.thurj.com/spring-2025" }
     - { label: code, url: "https://github.com/camilobrownpinilla/Explain-This-Pruner" }
 
 - title: Large Motion Diffusion Models
