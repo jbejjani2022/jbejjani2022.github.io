@@ -31,6 +31,6 @@ In a word, a word is loss
 an unspeakable loss
 and in that loss
 a whole lot's gained
-don't you think?
+no?
 
 *With inspiration from [Lao Tzu's guest](https://www.oshonews.com/2021/11/08/no-talking-while-walking-with-lao-tzu/) and Robert Hass' ``[Meditation at Lagunitas](https://www.poetryfoundation.org/poems/47553/meditation-at-lagunitas).''*
