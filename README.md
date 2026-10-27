@@ -155,6 +155,54 @@ The Into the Fog index shows a random hedgehog sketch on every load, picked from
 
 Keep any other Into the Fog images under `src/assets/fog/` so they get optimized too (not in `src/pages/`, which is only for routes, and not in `public/`, which skips optimization).
 
+## Guestbook
+
+`/guestbook/` lists entries; `/guestbook/sign/` explains how to sign (for humans and AI agents) and has the form. Submissions go to a Cloudflare Worker (`guestbook-worker/`), which holds them until you approve them. Approved entries live in `src/data/guestbook.yaml` and go live with a normal commit and push.
+
+| What | Where |
+|---|---|
+| Questions, consent levels, field limits, daily cap | `src/lib/guestbook.ts` (shared by the site and the Worker) |
+| Published entries | `src/data/guestbook.yaml` |
+| Worker URL | `GUESTBOOK_API` in `src/config.ts` |
+| Signing endpoint | `guestbook-worker/src/worker.ts` |
+
+### Moderating
+
+Set `GUESTBOOK_ADMIN_TOKEN` in your shell (the token you gave the Worker; see below), then:
+
+```sh
+npm run guestbook                 # review waiting entries: approve, approve with a reply, decline, skip
+npm run guestbook -- list         # just print what's waiting
+npm run guestbook -- reply <id>   # add or replace your reply on a published entry
+```
+
+Approving writes only the entry's public fields to `src/data/guestbook.yaml`. Private notes, contact emails, and prompts not approved for publishing stay on the Worker. Then check `git diff`, commit, and push. You can also edit replies in the YAML by hand. Restart `npm run dev` to see newly approved entries locally.
+
+To pause signing (e.g. during a flood), set `PAUSED` to `"true"` in `guestbook-worker/wrangler.jsonc` and run `npm --prefix guestbook-worker run deploy`.
+
+### Adding a question
+
+Append to `QUESTIONS` in `src/lib/guestbook.ts` with a new `id`. Never change or reuse an existing id (entries refer to it); the wording can change freely. Add `from` to credit someone else's question. Redeploy the Worker afterwards so it accepts the new id.
+
+### Testing
+
+```sh
+npm test                                           # YAML writer + Worker tests (node --test)
+npm --prefix guestbook-worker run dev              # local Worker on http://127.0.0.1:8787
+PUBLIC_GUESTBOOK_API=http://127.0.0.1:8787 npm run dev   # site, signing to the local Worker
+```
+
+For the local Worker, put `ADMIN_TOKEN=...` in `guestbook-worker/.dev.vars` (gitignored), and use `GUESTBOOK_API=http://127.0.0.1:8787` with the CLI.
+
+### The Worker
+
+One-time setup, from `guestbook-worker/`:
+
+1. `npm install`, then `npx wrangler login`.
+2. `npx wrangler kv namespace create GUESTBOOK`, and put the `id` it prints into `kv_namespaces` in `wrangler.jsonc`.
+3. `npx wrangler deploy`. It serves the Worker at `guestbook.josephbejjani.com` (the `routes` entry in `wrangler.jsonc`; Cloudflare creates the DNS record), which is what `GUESTBOOK_API` in `src/config.ts` points to.
+4. `npx wrangler secret put ADMIN_TOKEN`, and enter a long random token (e.g. from `openssl rand -hex 32`). Use the same value for `GUESTBOOK_ADMIN_TOKEN`. Redeploy with `npm run deploy` after changing `worker.ts`, `validate.ts`, or `src/lib/guestbook.ts`.
+
 ## Deployment
 
 Pushing to `master` deploys the site. The `Deploy` workflow (`.github/workflows/deploy.yml`) builds it with Astro and publishes it to GitHub Pages at https://josephbejjani.com. Watch runs under the repo's **Actions** tab (about 1–2 minutes). GitHub Pages is set to **Source: GitHub Actions** in the repo's Settings → Pages.

@@ -11,7 +11,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "astro": "astro"
+    "astro": "astro",
+    "guestbook": "node --experimental-strip-types --no-warnings=ExperimentalWarning scripts/guestbook.ts",
+    "test": "node --experimental-strip-types --no-warnings=ExperimentalWarning --test scripts/*.test.ts && npm --prefix guestbook-worker test"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",

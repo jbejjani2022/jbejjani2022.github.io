@@ -9,6 +9,14 @@ export const SITE = {
   email: 'jbejjani[at]cs.toronto.edu',
 };
 
+// The guestbook's signing Worker (guestbook-worker/). To try the form against a local Worker, run
+// `PUBLIC_GUESTBOOK_API=http://127.0.0.1:8787 npm run dev`. The moderation CLI reads GUESTBOOK_API
+// instead, since it runs in plain Node, where import.meta.env doesn't exist.
+export const GUESTBOOK_API: string =
+  import.meta.env?.PUBLIC_GUESTBOOK_API ??
+  globalThis.process?.env.GUESTBOOK_API ??
+  'https://guestbook.josephbejjani.com';
+
 export type NavItem = { label: string; href: string; external?: boolean };
 
 export const NAV: NavItem[] = [

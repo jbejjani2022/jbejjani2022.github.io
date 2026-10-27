@@ -1,0 +1,19 @@
+{
+  // The guestbook's signing endpoint. See src/worker.ts for routes; README.md (repo root) for setup.
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "guestbook",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-10-01",
+  // Served at its own subdomain; deploying creates the DNS record and certificate.
+  "routes": [{ "pattern": "guestbook.josephbejjani.com", "custom_domain": true }],
+  "workers_dev": false,
+  "kv_namespaces": [
+    // `npx wrangler kv namespace create GUESTBOOK` prints the id to put here. Local dev needs none.
+    { "binding": "GUESTBOOK", "id": "b94e8836f3b649de979892f0ad9f896c" }
+  ],
+  "vars": {
+    "SITE_URL": "https://josephbejjani.com",
+    "PAUSED": "false"
+  }
+  // ADMIN_TOKEN is a secret: `npx wrangler secret put ADMIN_TOKEN`. Locally it comes from .dev.vars.
+}

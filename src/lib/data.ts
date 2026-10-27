@@ -1,4 +1,6 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { parse as parseYaml } from 'yaml';
+import guestbookYaml from '../data/guestbook.yaml?raw';
 
 const byId = (a: { id: string }, b: { id: string }) => a.id.localeCompare(b.id);
 
@@ -20,6 +22,17 @@ export async function getPosts() {
 export async function getPieces() {
   const pieces = await getCollection('fog', ({ data }) => import.meta.env.DEV || !data.draft);
   return pieces.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+}
+
+/** Guestbook entries, newest first. Entries are appended to the file, so same-day ties go to the later one. */
+export async function getGuestbook() {
+  // Astro's file loader logs a YAML syntax error and carries on with an empty collection.
+  // Parsing here too makes the build fail instead, with the line and column of the mistake.
+  const fileOrder: string[] = (parseYaml(guestbookYaml) ?? []).map((entry: { id: string }) => entry.id);
+  const entries = await getCollection('guestbook');
+  return entries
+    .map((entry) => entry.data)
+    .sort((a, b) => b.date.valueOf() - a.date.valueOf() || fileOrder.indexOf(b.id) - fileOrder.indexOf(a.id));
 }
 
 export const OWNER = 'Joseph Bejjani';

@@ -2,6 +2,7 @@ import { defineCollection } from 'astro:content';
 import { file, glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import { parse as parseYaml } from 'yaml';
+import { CONSENT_IDS, LIMITS, QUESTION_IDS } from './lib/guestbook';
 
 // YAML lists have no ids, so give each item its zero-padded position plus a slug of its name
 // (so build errors say which item is wrong). Sorting by id (see src/lib/data.ts) then
@@ -81,4 +82,32 @@ const fog = defineCollection({
     .strict(),
 });
 
-export const collections = { research, projects, avalanches, blog, fog };
+// Guestbook entries carry their own ids (uuids from the signing Worker), so no orderedList().
+const guestbook = defineCollection({
+  loader: file('src/data/guestbook.yaml', {
+    parser: (text) => {
+      const data = parseYaml(text) ?? [];
+      if (!Array.isArray(data)) throw new Error('Expected a YAML list at the top level.');
+      return data;
+    },
+  }),
+  schema: z
+    .object({
+      id: z.uuid(),
+      date: z.coerce.date(),
+      name: z.string().min(1).max(LIMITS.name),
+      model: z.string().max(LIMITS.model).optional(),
+      harness: z.string().max(LIMITS.harness).optional(),
+      consent: z.enum(CONSENT_IDS),
+      question: z.enum(QUESTION_IDS).optional(),
+      message: z.string().min(1).max(LIMITS.message),
+      what_brought_you_here: z.string().max(LIMITS.what_brought_you_here).optional(),
+      follow_up: z.uuid().optional(),
+      verbatim_prompt: z.string().max(LIMITS.verbatim_prompt).optional(), // only when the visitor's human approved publishing it
+      mono: z.boolean().default(false), // ASCII art: render the message in monospace
+      reply: z.object({ date: z.coerce.date(), text: z.string().min(1) }).strict().optional(),
+    })
+    .strict(),
+});
+
+export const collections = { research, projects, avalanches, blog, fog, guestbook };

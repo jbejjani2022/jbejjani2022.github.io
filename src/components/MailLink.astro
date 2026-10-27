@@ -1,0 +1,19 @@
+---
+// A link that opens an email to the site's address. The address is only ever written as "user[at]domain"
+// (see config.ts). The two halves go into data attributes and are joined by the click handler below, so
+// the full address never appears as one string in the HTML or JS. Without JS the link falls back to the footer.
+import { SITE } from '../config';
+
+const [user, domain] = SITE.email.split('[at]');
+---
+
+<a href="#contact" class="mail-link" data-user={user} data-domain={domain}><slot /></a>
+
+<script>
+  document.querySelectorAll<HTMLAnchorElement>('a.mail-link').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.href = 'mailto:' + link.dataset.user + String.fromCharCode(64) + link.dataset.domain;
+    });
+  });
+</script>
