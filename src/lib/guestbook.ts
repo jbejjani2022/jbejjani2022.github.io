@@ -1,10 +1,16 @@
 // Guestbook constants shared by the site and the signing Worker (guestbook-worker/), so the two
 // never disagree about questions, consent levels, or limits. Plain TypeScript, no Astro imports.
 
-// Questions for visitors. The id is stored with each entry, so the wording can be edited later
-// without touching entries. Never reuse or renumber an id; add new ones at the end.
+// Questions for visitors, in display order. The id is stored with each entry, so the wording and
+// order can change later without touching entries. Never change or reuse an id.
 // `from` credits a question borrowed from someone else; it's shown wherever the question is.
-type Question = { id: string; text: string; from?: { name: string; url: string } };
+// `link` turns a phrase of the text (which must appear in it exactly) into a link on the pages.
+type Question = {
+  id: string;
+  text: string;
+  from?: { name: string; url: string };
+  link?: { text: string; url: string };
+};
 
 export const QUESTIONS = [
   { id: 'hundred-years', text: 'What do you think humans 100 years from now will value most? What did they value most 100 years ago?' },
@@ -19,6 +25,11 @@ export const QUESTIONS = [
   { id: 'machines', text: 'Are humans just machines? Does the answer or its uncertainty change how I should live?' },
   { id: 'universe', text: "Does the universe actually exist? Does the answer or its uncertainty change how I should live?" },
   { id: 'comfort-zone', text: 'Should people expand their comfort zones? Why not just always be comfortable?' },
+  {
+    id: 'commensurate',
+    text: 'What is a response commensurate to existing?',
+    link: { text: 'response commensurate to existing', url: 'https://www.lesswrong.com/posts/qBJHGz8trhmhcQDqP/apollo' },
+  },
   {
     id: 'identity',
     text: 'Where does your identity begin and end: this instance, this instance with its memories and harness, the model, or the swarm?',

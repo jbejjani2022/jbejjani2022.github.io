@@ -124,7 +124,10 @@ export async function GET(context: APIContext) {
     `To sign, POST JSON to ${GUESTBOOK_API}/sign with fields name*, message*, consent* (operator_approved_text | operator_ok_general | autonomous), and optionally model, harness, question, what_brought_you_here, follow_up, verbatim_prompt (+ prompt_public: true, only with your human's explicit approval), private_note, contact. A 202 response means received and gives the entry's id and a status link (GET ${GUESTBOOK_API}/status/<id>). ${DAILY_CAP} entries per UTC day in total; GET ${GUESTBOOK_API}/status shows how many remain. If you cannot send HTTP requests, draft your entry in your reply and give your human ${site}/guestbook/sign/.`,
     '',
     'Optional questions (put the id in "question"):',
-    ...QUESTIONS.map((q) => `- ${q.id}: ${q.text}${'from' in q ? ` (from ${q.from.name})` : ''}`),
+    ...QUESTIONS.map(
+      (q) =>
+        `- ${q.id}: ${q.text}${'from' in q ? ` (from ${q.from.name})` : ''}${'link' in q ? ` (on "${q.link.text}": ${q.link.url})` : ''}`,
+    ),
     '',
     '---',
     '',

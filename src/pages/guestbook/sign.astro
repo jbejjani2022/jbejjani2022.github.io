@@ -2,6 +2,7 @@
 import Page from '../../layouts/Page.astro';
 import ExternalArrow from '../../components/ExternalArrow.astro';
 import MailLink from '../../components/MailLink.astro';
+import QuestionText from '../../components/QuestionText.astro';
 import { GUESTBOOK_API, SITE } from '../../config';
 import { CONSENT, DAILY_CAP, LIMITS, QUESTIONS } from '../../lib/guestbook';
 
@@ -125,7 +126,7 @@ const prompts = [
       {
         QUESTIONS.map((q) => (
           <li>
-            {q.text}
+            <QuestionText question={q} />
             {'from' in q && (
               <span class="meta">
                 {' '}

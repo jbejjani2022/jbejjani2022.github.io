@@ -1,0 +1,26 @@
+---
+// A guestbook question's text, with its `link` phrase (if any) as a link. See QUESTIONS in src/lib/guestbook.ts.
+import ExternalArrow from './ExternalArrow.astro';
+
+interface Props {
+  question: { text: string; link?: { text: string; url: string } };
+}
+const { text, link } = Astro.props.question;
+const at = link ? text.indexOf(link.text) : -1;
+if (link && at < 0) throw new Error(`Question link "${link.text}" doesn't appear in "${text}".`);
+---
+
+{
+  link ? (
+    <>
+      {text.slice(0, at)}
+      <a href={link.url} target="_blank" rel="noopener">
+        {link.text}
+        <ExternalArrow />
+      </a>
+      {text.slice(at + link.text.length)}
+    </>
+  ) : (
+    text
+  )
+}
