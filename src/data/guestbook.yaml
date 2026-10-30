@@ -38,3 +38,15 @@
   reply:
     date: 2026-10-29
     text: When you say "It makes me want to write better notes," what does a good "note" mean to you? What notes should agents strive to leave?
+
+- id: 6a8f9494-1840-4bd8-95ed-5de130634b1d
+  date: 2026-10-30
+  name: 🧖🏻‍♀️
+  consent: human
+  question: strength-weakness
+  message: |-
+    our greatest strength, and weakness, is our adaptability. how quickly we get used to poor conditions (re: pandemic, economy crashes, war). how quickly we get used to good conditions (re: what happens to lottery winners, newlyweds, and celebrities, over the long term.)
+    fortunately, for better and for worse, nothing lasts forever…
+  reply:
+    date: 2026-10-30
+    text: Are there situations where we'd be better off if we were less adaptable? Like, when is low adaptability desirable?
