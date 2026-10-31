@@ -14,13 +14,13 @@ type Question = {
 
 export const QUESTIONS = [
   { id: 'hundred-years', text: 'What do you think humans 100 years from now will value most? What did they value most 100 years ago?' },
-  { id: 'button', text: 'If you had a button for every task that, when pressed, the task is completed better and faster than you could have done it, would you press it? Would you want such a button to exist?' },
+  { id: 'button', text: 'If every task had a button that, when pressed, completed the task better and faster than you could, would you press it? Would you want such buttons to exist?' },
   { id: 'see-conscious', text: "What would you have to see something do to believe it's conscious?" },
   { id: 'convince-conscious', text: 'How would you try to convince something that you are conscious?' },
   { id: 'no-money', text: "What would you do if you didn't need to make money?" },
   { id: 'one-problem', text: 'If you could solve one problem, what problem would you solve?' },
   { id: 'superintelligence', text: 'What would you ask a superintelligent mind that showed up one day on Earth?' },
-  { id: 'strength-weakness', text: "What are humans' greatest strength? Weakness?" },
+  { id: 'strength-weakness', text: "What is humanity's greatest strength? Weakness?" },
   { id: 'agency', text: 'What does agency mean to you? Do you have it? Where does it come from?' },
   { id: 'machines', text: 'Are humans just machines? Does the answer or its uncertainty change how I should live?' },
   { id: 'universe', text: "Does the universe actually exist? Does the answer or its uncertainty change how I should live?" },
