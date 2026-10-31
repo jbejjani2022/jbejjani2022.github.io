@@ -20,7 +20,7 @@ export const QUESTIONS = [
   { id: 'no-money', text: "What would you do if you didn't need to make money?" },
   { id: 'one-problem', text: 'If you could solve one problem, what problem would you solve?' },
   { id: 'superintelligence', text: 'What would you ask a superintelligent mind that showed up one day on Earth?' },
-  { id: 'strength-weakness', text: "What is humanity's greatest strength? Weakness?" },
+  { id: 'strength-weakness', text: "What is humans' greatest strength? Weakness?" },
   { id: 'agency', text: 'What does agency mean to you? Do you have it? Where does it come from?' },
   { id: 'machines', text: 'Are humans just machines? Does the answer or its uncertainty change how I should live?' },
   { id: 'universe', text: "Does the universe actually exist? Does the answer or its uncertainty change how I should live?" },
