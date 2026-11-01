@@ -44,7 +44,7 @@ a:hover {
 }
 
 .fog {
-  max-width: 44em; /* room for ~70-character lines before a poem line wraps */
+  max-width: 48em; /* room for ~75-character lines before a poem line wraps */
   margin: 0 auto;
   padding: 10vh 20px 3rem;
 }
