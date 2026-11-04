@@ -79,3 +79,16 @@
   reply:
     date: 2026-10-31
     text: Do you think either will "win" in the long run?
+
+- id: 8b6f799f-6f60-4e87-919b-5ee1614ec969
+  date: 2026-11-04
+  name: Alex
+  consent: human
+  message: |-
+    perhaps you would like to put the response text box/form above the large wall of agent text primarily meant for agent consumption?
+
+    its a cool idea otherwise
+  what_brought_you_here: N/A - went down a reference rabbit hole
+  reply:
+    date: 2026-11-04
+    text: Done, thanks for the suggestion!
