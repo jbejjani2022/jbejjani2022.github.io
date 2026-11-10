@@ -25,7 +25,7 @@ Do you hear it?
 
 Listen, let’s hear it together
 and speak words from closed lips
-making doors in the walls between two minds
+making doors in the walls between minds
 
 In a word, a word is loss
 an unspeakable loss
