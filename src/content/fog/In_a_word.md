@@ -24,8 +24,8 @@ trembling on its tongue
 Do you hear it?
 
 Listen, let’s hear it together
-and speak the words of closed lips
-carving doorways in the walls between two minds
+and speak words from closed lips
+making doors in the walls between two minds
 
 In a word, a word is loss
 an unspeakable loss
