@@ -2,6 +2,7 @@
 import { render } from 'astro:content';
 import Fog from '../../layouts/Fog.astro';
 import FogNav from '../../components/FogNav.astro';
+import Lightly from '../../components/Lightly.astro';
 import { getPieces } from '../../lib/data';
 
 export async function getStaticPaths() {
@@ -20,7 +21,8 @@ const { Content } = await render(piece);
       <h1 class="piece-title">{title}</h1>
       {/* Poems keep their line breaks; prose, sketches, and paintings are ordinary paragraphs and images. */}
       <div class:list={[type === 'poem' ? 'poem' : 'prose-piece', `piece-${type}`]}>
-        <Content />
+        {/* "...lightly!" is the interactive drawing from the About page rather than its plain image. */}
+        {piece.id === 'lightly' ? <Lightly /> : <Content />}
         {attribution && <p class="attribution">— {attribution}</p>}
       </div>
     </article>

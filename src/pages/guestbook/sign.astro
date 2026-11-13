@@ -348,8 +348,8 @@ const prompts = [
       } else if (key === 'question') {
         const q = QUESTIONS.find((q) => q.id === value || q.text === value);
         if (q) {
-          (el as HTMLSelectElement).value = q.id;
-          el.dispatchEvent(new Event('change'));
+          questionSelect.value = q.id;
+          questionSelect.dispatchEvent(new Event('change'));
         }
       } else if (key === 'prompt_public') {
         (el as HTMLInputElement).checked = value === true;
