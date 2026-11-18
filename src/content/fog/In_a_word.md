@@ -4,7 +4,7 @@ date: 2026-10-23
 type: poem
 ---
 
-![Lao Tzu hog has a guest on his morning walk. How beautiful the guest says. How could he?](../../assets/fog/how_beautiful.png)
+![Lao Tzu hog has a guest on his morning walk. How beautiful, the guest says. How could he?](../../assets/fog/how_beautiful.png)
 
 A word is loss
 an unspeakable loss
@@ -12,7 +12,7 @@ an unspeakable loss
 It’s the shadow of a flower
 wondering if its colors are pretty
 A footprint in the snow
-straining to feel the crunch of the long-gone boot
+straining to feel the crunch of a long-gone boot
 A fading photo of the sea
 searching for eyes to sting with salt
 
