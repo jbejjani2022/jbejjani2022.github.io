@@ -59,7 +59,8 @@ export default defineConfig({
         [rehypeExternalLinks, { target: '_blank', rel: ['noopener'] }],
         rehypeSidenotes,
         rehypeFigures,
-        rehypeGifPlayer,
+        // Rendered markdown is cached; bump `version` after changing what the plugin outputs.
+        [rehypeGifPlayer, { version: 2 }],
       ],
     }),
   },

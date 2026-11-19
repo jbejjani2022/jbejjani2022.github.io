@@ -165,8 +165,22 @@ a:hover {
 }
 
 /* GIF player (src/scripts/gif-player.ts): one quiet line of plain-text buttons under the image. */
-.gif-player img {
+/* The stills are stacked over the original image, which keeps the figure's size. */
+.gif-stage {
+  position: relative;
   cursor: pointer;
+}
+.fog figure img.gif-frame {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  opacity: 0;
+}
+.fog figure img.gif-frame.is-shown {
+  opacity: 1;
+}
+.fog figure img.gif-frame.is-fading-in {
+  z-index: 1;
 }
 .gif-controls {
   display: flex;

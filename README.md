@@ -139,6 +139,8 @@ For **prose**, set `type: prose` and write each paragraph as a single line, with
 
 For a **sketch** or **painting**, set `type: sketch` or `type: painting`, put the image in `src/assets/fog/`, and reference it as `![description](../../assets/fog/your-image.png)`. Any text after the image is its caption, written like prose. The type is added to the page as a class (`piece-sketch`, `piece-painting`), so each kind can be styled separately later.
 
+An animated **GIF** in a piece (also under `src/assets/fog/`) gets a pause / step-through player automatically. A crossfade drawn into the GIF as a run of quick in-between frames (150 ms or less each) is recognised at build time and replayed as a real fade between the two stills, so it is smooth, and stepping by hand skips it. To give a GIF alternate versions, save them beside it as `name.<anything>.gif` (e.g. `you_conscious.gif` and `you_conscious.swapped.gif`) and reference only `name.gif` in the markdown. The page starts on a random version and picks again at random on every replay. It changes version at the last resting frame that looks the same in all of them, so end the loop by fading from such a frame back to the first one and the change is never a jump. Versions should have the same number of frames. If a GIF change doesn't show up in `npm run dev`, restart it with `npm run dev -- --force` (rendered pages are cached).
+
 ### Removing the placeholders
 
 The 11 public-domain placeholder pieces have `placeholder: true`. To remove them:
