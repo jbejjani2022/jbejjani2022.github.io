@@ -9,9 +9,9 @@ type: poem
 A word is loss
 an unspeakable loss
 
-It’s the shadow of a flower
+A flower's shadow
 wondering if its colors are pretty
-A footprint in the snow
+A snowprint
 straining to feel the crunch of a long-gone boot
 A fading photo of the sea
 searching for eyes to sting with salt
@@ -29,7 +29,7 @@ making doors in the walls between minds
 
 In a word, a word is loss
 an unspeakable loss
-and in that loss
+And in that loss
 a whole lot's gained
 no?
 
