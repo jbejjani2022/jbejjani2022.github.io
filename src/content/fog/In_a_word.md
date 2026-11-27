@@ -29,6 +29,7 @@ making doors in the walls between minds
 
 In a word, a word is loss
 an unspeakable loss
+
 And in that loss
 a whole lot's gained
 no?
