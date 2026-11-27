@@ -9,9 +9,8 @@ type: prose
 > in search of what's numinous
 > in them
 
-*Sunday, 22 March 2026*
-
-*A talk with a peregrino, after 8 days and 189 km on foot brought me to Santiago, Spain.*
+*Sunday, 22 March 2026.*
+*A talk between two peregrinos.*
 
 "People are so nice. And the pilgrim culture is cool."
 
