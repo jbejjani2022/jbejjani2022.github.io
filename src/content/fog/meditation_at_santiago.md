@@ -11,7 +11,7 @@ type: prose
 
 *Sunday, 22 March 2026*
 
-*A conversation with a peregrino, after 8 days and 189 km on foot brought me to Santiago, Spain.*
+*A talk with a peregrino, after 8 days and 189 km on foot brought me to Santiago, Spain.*
 
 "People are so nice. And the pilgrim culture is cool."
 

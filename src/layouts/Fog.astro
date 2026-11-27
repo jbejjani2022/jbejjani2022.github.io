@@ -6,6 +6,7 @@ import '@fontsource/ibm-plex-mono/700.css';
 import '@fontsource/ibm-plex-mono/400-italic.css';
 import '../styles/fog.css';
 import Head from '../components/Head.astro';
+import ogImage from '../assets/fog/hedgehogs/hedgehog_11.png';
 
 interface Props {
   title: string;
@@ -17,7 +18,7 @@ const { title, description } = Astro.props;
 <!doctype html>
 <html lang="en">
   <head>
-    <Head title={title} description={description} />
+    <Head title={title} description={description} image={ogImage} />
   </head>
   <body>
     <slot />
